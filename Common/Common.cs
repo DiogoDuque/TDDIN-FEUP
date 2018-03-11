@@ -24,10 +24,12 @@ namespace Common
      **/
     public class User
     {
-        private string name { get; }
-        private string nickname { get; }
-        private string password { get; }
-
+        private string name;
+        private string nickname;
+        private string password;
+        public string Name { get;}
+        public string Nickname { get; }
+        public string Password { get; }
         public User(string name, string nickname, string password)
         {
             this.name = name;
@@ -42,10 +44,18 @@ namespace Common
             if (item == null)
                 return false;
 
-            if (this.nickname.Equals(item.nickname))
+            Console.WriteLine(this.nickname.Equals(item.nickname));
+            Console.WriteLine(this.name.ToLower().Equals(item.name.ToLower()));
+            if (this.nickname.Equals(item.nickname) || 
+                this.name.ToLower().Equals(item.name.ToLower()))
                 return true;
             else
                 return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return nickname.GetHashCode();
         }
     }
 }

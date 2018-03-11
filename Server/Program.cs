@@ -18,7 +18,7 @@ namespace Server
         }
     }
 
-    class Coordinator
+    public class Coordinator : MarshalByRefObject
     {
         /**
          * double -> Diginote.serialNumber
@@ -27,9 +27,27 @@ namespace Server
         Dictionary<double, string> ownershipTable;
         HashSet<User> usersList;
 
+        public Coordinator()
+        {
+            this.ownershipTable = new Dictionary<double, string>();
+            this.usersList = new HashSet<User>();
+        }
+
+        public Dictionary<double, string> OwnershipTable
+        {
+            get => ownershipTable;
+        }
+        public HashSet<User> UsersList
+        {
+            get => usersList;
+        }
+
         public void register(User user)
         {
-            usersList.Add(user);
+            if(!usersList.Add(user))
+            {
+                Console.WriteLine("User with nickname " + user.Nickname + " already exists");
+            }
         }
     }
 }
