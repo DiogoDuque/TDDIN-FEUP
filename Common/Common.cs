@@ -27,14 +27,31 @@ namespace Common
         private string name;
         private string nickname;
         private string password;
-        public string Name { get;}
-        public string Nickname { get; }
-        public string Password { get; }
+        private bool isLoggedIn;
+        public string Name
+        {
+            get => name;
+        }
+        public string Nickname
+        {
+            get => nickname;
+        }
+        public string Password
+        {
+            get => password;
+        }
+
+        public bool IsLoggedIn
+        {
+            get => isLoggedIn;
+            set => isLoggedIn = value;
+        }
         public User(string name, string nickname, string password)
         {
             this.name = name;
             this.nickname = nickname;
             this.password = password;
+            this.isLoggedIn = false;
         }
 
         public override bool Equals(object obj)
@@ -44,8 +61,6 @@ namespace Common
             if (item == null)
                 return false;
 
-            Console.WriteLine(this.nickname.Equals(item.nickname));
-            Console.WriteLine(this.name.ToLower().Equals(item.name.ToLower()));
             if (this.nickname.Equals(item.nickname) || 
                 this.name.ToLower().Equals(item.name.ToLower()))
                 return true;

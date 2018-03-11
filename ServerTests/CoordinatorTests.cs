@@ -19,16 +19,26 @@ namespace Server.Tests
             User u1 = new User("Jose C", "jc", "1234");
             User u2 = new User("Jos", "jc", "1244");
             User u3 = new User("Jose C", "joca", "1234");
-            Console.WriteLine(c.UsersList.Count);
             c.register(u1);
-            Console.WriteLine(c.UsersList.Count);
             c.register(u2);
-            Console.WriteLine(c.UsersList.Count);
             Assert.IsTrue(c.UsersList.Count == 1);
-            Console.WriteLine("Test passed");
             c.register(u3);
-            Console.WriteLine(c.UsersList.Count);
             Assert.IsTrue(c.UsersList.Count == 2);
+        }
+
+        [TestMethod()]
+        public void logInTest()
+        {
+            User u1 = new User("Jose C", "jc", "1234");
+            User u2 = new User("Jos", "jc", "1244");
+            Dictionary<string, User> usersList = new Dictionary<string, User>();
+            usersList.Add(u1.Nickname, u1);
+            Coordinator c = new Coordinator(usersList);
+
+            c.logIn(u1);
+            Assert.IsTrue(u1.IsLoggedIn);
+            c.logIn(u2);
+            Assert.IsFalse(u2.IsLoggedIn);
         }
     }
 }
