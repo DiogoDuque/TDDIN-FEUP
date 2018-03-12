@@ -30,15 +30,17 @@ namespace Server.Tests
         public void logInTest()
         {
             User u1 = new User("Jose C", "jc", "1234");
-            User u2 = new User("Jos", "jc", "1244");
+            User u2 = new User("Jos", "jcz", "1244");
             Dictionary<string, User> usersList = new Dictionary<string, User>();
+            u2.IsLoggedIn = true;
             usersList.Add(u1.Nickname, u1);
+            usersList.Add(u2.Nickname, u2);
             Coordinator c = new Coordinator(usersList);
 
-            c.logIn(u1);
+            Assert.IsTrue(c.logIn(u1));
             Assert.IsTrue(u1.IsLoggedIn);
-            c.logIn(u2);
-            Assert.IsFalse(u2.IsLoggedIn);
+            Assert.IsFalse(c.logIn(u2));
+            Assert.IsTrue(u2.IsLoggedIn);
         }
 
         [TestMethod()]
@@ -49,6 +51,34 @@ namespace Server.Tests
             Coordinator c = new Coordinator();
 
             c.logIn(u1);
+        }
+
+        [TestMethod()]
+        public void logOutTest()
+        {
+            User u1 = new User("Jose C", "jc", "1234");
+            User u2 = new User("Jos", "jck", "1244");
+            u1.IsLoggedIn = true;
+            u2.IsLoggedIn = false;
+            Dictionary<string, User> usersList = new Dictionary<string, User>();
+            usersList.Add(u1.Nickname, u1);
+            usersList.Add(u2.Nickname, u2);
+            Coordinator c = new Coordinator(usersList);
+
+            Assert.IsTrue(c.logOut(u1));
+            Assert.IsFalse(u1.IsLoggedIn);
+            Assert.IsFalse(c.logOut(u2));
+            Assert.IsFalse(u2.IsLoggedIn);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "Should throw an exception because user is not registered")]
+        public void logOutExceptionTest()
+        {
+            User u1 = new User("Jose C", "jc", "1234");
+            Coordinator c = new Coordinator();
+
+            c.logOut(u1);
         }
     }
 }
