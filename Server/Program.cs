@@ -57,14 +57,39 @@ namespace Server
             }
         }
 
+        /**
+         * Returns true if user was logged out, 
+         **/
         public bool logIn(User user)
         {
             if (usersList.ContainsKey(user.Nickname))
             {
-                return usersList[user.Nickname].IsLoggedIn = true;
+                if (usersList[user.Nickname].IsLoggedIn)
+                    return false;
+                else
+                {
+                    usersList[user.Nickname].IsLoggedIn = true;
+                    return true;
+                }
             }
             else
-                return false;
+                throw new System.ArgumentException("User is not registered");
+        }
+
+        public bool logOut(User user)
+        {
+            if(usersList.ContainsKey(user.Nickname))
+            {
+                if (!usersList[user.Nickname].IsLoggedIn)
+                    return false;
+                else
+                {
+                    usersList[user.Nickname].IsLoggedIn = false;
+                    return true;
+                }
+            }
+            else
+                throw new System.ArgumentException("User is not registered");
         }
     }
 }

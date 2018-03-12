@@ -40,5 +40,15 @@ namespace Server.Tests
             c.logIn(u2);
             Assert.IsFalse(u2.IsLoggedIn);
         }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "Should throw an exception because user is not registered")]
+        public void logInExceptionTest()
+        {
+            User u1 = new User("Jose C", "jc", "1234");
+            Coordinator c = new Coordinator();
+
+            c.logIn(u1);
+        }
     }
 }
