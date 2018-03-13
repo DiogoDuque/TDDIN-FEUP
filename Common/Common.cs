@@ -22,6 +22,7 @@ namespace Common
     /**
      * Nickname should be unique
      **/
+    [Serializable]
     public class User
     {
         private string name;

@@ -48,7 +48,7 @@ namespace Server
             get => usersList;
         }
 
-        public void register(User user)
+        public void Register(User user)
         {
             Console.WriteLine("user trying to register: " + user);
             if(!usersList.ContainsKey(user.Nickname))
