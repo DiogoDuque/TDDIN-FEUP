@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    class Program
+    class Server
     {
         static void Main(string[] args)
         {
@@ -48,8 +48,9 @@ namespace Server
             get => usersList;
         }
 
-        public void register(User user)
+        public void Register(User user)
         {
+            Console.WriteLine("user trying to register: " + user);
             if(!usersList.ContainsKey(user.Nickname))
             {
                 usersList.Add(user.Nickname, user);
