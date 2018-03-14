@@ -19,10 +19,10 @@ namespace Server.Tests
             User u1 = new User("Jose C", "jc", "1234");
             User u2 = new User("Jos", "jc", "1244");
             User u3 = new User("Jose C", "joca", "1234");
-            c.register(u1);
-            c.register(u2);
+            c.Register(u1);
+            c.Register(u2);
             Assert.IsTrue(c.UsersList.Count == 1);
-            c.register(u3);
+            c.Register(u3);
             Assert.IsTrue(c.UsersList.Count == 2);
         }
 

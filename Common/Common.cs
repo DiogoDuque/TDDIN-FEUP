@@ -73,5 +73,10 @@ namespace Common
         {
             return nickname.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return "[" + name + "|" + nickname + "|" + isLoggedIn.ToString() + "]";
+        }
     }
 }

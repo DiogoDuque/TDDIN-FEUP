@@ -29,12 +29,14 @@ namespace Server
 
         public Coordinator()
         {
+            Console.WriteLine("Called Constructor");
             this.ownershipTable = new Dictionary<double, string>();
             this.usersList = new Dictionary<string, User>();
         }
 
         public Coordinator(Dictionary<string, User> usersList)
         {
+            Console.WriteLine("Called Constructor");
             this.ownershipTable = new Dictionary<double, string>();
             this.usersList = usersList;
         }
@@ -48,13 +50,21 @@ namespace Server
             get => usersList;
         }
 
-        public void Register(User user)
+        /**
+         * Registers the user if he isn't yet in the usersList
+         **/
+        public bool Register(User user)
         {
-            Console.WriteLine("user trying to register: " + user);
-            if(!usersList.ContainsKey(user.Nickname))
+            if (!usersList.ContainsKey(user.Nickname))
             {
                 usersList.Add(user.Nickname, user);
-                Console.WriteLine("User with nickname " + user.Nickname + " already exists");
+                Console.WriteLine("REGISTER: Success");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("REGISTER: Failure");
+                return false;
             }
         }
 
@@ -79,7 +89,7 @@ namespace Server
 
         public bool logOut(User user)
         {
-            if(usersList.ContainsKey(user.Nickname))
+            if (usersList.ContainsKey(user.Nickname))
             {
                 if (!usersList[user.Nickname].IsLoggedIn)
                     return false;

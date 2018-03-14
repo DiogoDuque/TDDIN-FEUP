@@ -14,11 +14,15 @@ namespace TDIN_FEUP
         static void Main(string[] args)
         {
             RemotingConfiguration.Configure("Client.exe.config",false);
-            Console.WriteLine("Ready to register");
+            Console.WriteLine("Ready to register. Press enter...");
+            Console.ReadLine();
+
             User u1 = new User("Diogo","DD","quefixe");
             Coordinator coordinator = new Coordinator();
-            coordinator.Register(u1);
-            Console.WriteLine("Registered");
+            if (coordinator.Register(u1))
+                Console.WriteLine("User " + u1.ToString() + "successfully registered");
+            else
+                Console.WriteLine("Could not register user");
             Console.ReadLine();
         }
     }
