@@ -66,28 +66,21 @@ namespace TDIN_FEUP
 
         private static bool Logout(Coordinator coordinator)
         {
-            Console.Write("Name: ");
-            string name = Console.ReadLine();
             Console.Write("Nickname: ");
             string nickname = Console.ReadLine();
-            Console.Write("Password: ");
-            string password = Console.ReadLine();
-            User user = new User(name, nickname, password);
 
-            return coordinator.logOut(user);
+            return coordinator.logOut(nickname);
         }
 
+        //TODO Falta hashar a password
         private static bool Login(Coordinator coordinator)
         {
-            Console.Write("Name: ");
-            string name = Console.ReadLine();
             Console.Write("Nickname: ");
             string nickname = Console.ReadLine();
             Console.Write("Password: ");
             string password = Console.ReadLine();
-            User user = new User(name, nickname, password);
 
-            return coordinator.LogIn(user);
+            return coordinator.LogIn(nickname, password);
         }
 
         private static User Register(Coordinator coordinator)

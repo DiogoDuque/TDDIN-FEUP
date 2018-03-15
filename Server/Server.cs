@@ -69,6 +69,13 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Logs a user in.
+        /// PASSWORD MUST BE HASHED BEFORE
+        /// </summary>
+        /// <param name="nickname"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool LogIn(string nickname, string password)
         {
             if (usersList.ContainsKey(nickname))
