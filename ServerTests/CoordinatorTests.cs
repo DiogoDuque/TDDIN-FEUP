@@ -37,9 +37,9 @@ namespace Server.Tests
             usersList.Add(u2.Nickname, u2);
             Coordinator c = new Coordinator(usersList);
 
-            Assert.IsTrue(c.LogIn(u1));
+            Assert.IsTrue(c.LogIn(u1.Nickname, u1.Password));
             Assert.IsTrue(u1.IsLoggedIn);
-            Assert.IsFalse(c.LogIn(u2));
+            Assert.IsFalse(c.LogIn(u2.Nickname, u2.Password));
             Assert.IsTrue(u2.IsLoggedIn);
         }
 
@@ -50,7 +50,7 @@ namespace Server.Tests
             User u1 = new User("Jose C", "jc", "1234");
             Coordinator c = new Coordinator();
 
-            c.LogIn(u1);
+            c.LogIn(u1.Nickname, u1.Password);
         }
 
         [TestMethod()]
@@ -65,9 +65,9 @@ namespace Server.Tests
             usersList.Add(u2.Nickname, u2);
             Coordinator c = new Coordinator(usersList);
 
-            Assert.IsTrue(c.logOut(u1));
+            Assert.IsTrue(c.logOut(u1.Nickname));
             Assert.IsFalse(u1.IsLoggedIn);
-            Assert.IsFalse(c.logOut(u2));
+            Assert.IsFalse(c.logOut(u2.Nickname));
             Assert.IsFalse(u2.IsLoggedIn);
         }
 
@@ -78,7 +78,7 @@ namespace Server.Tests
             User u1 = new User("Jose C", "jc", "1234");
             Coordinator c = new Coordinator();
 
-            c.logOut(u1);
+            c.logOut(u1.Nickname);
         }
     }
 }

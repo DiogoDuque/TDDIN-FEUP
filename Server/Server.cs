@@ -50,52 +50,58 @@ namespace Server
             get => usersList;
         }
 
-        /**
-         * Registers the user if he isn't yet in the usersList
-         **/
+        /// <summary>
+        /// Registers a user in the server database.
+        /// PASSWORD MUST BE HASHED
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public bool Register(User user)
         {
             if (!usersList.ContainsKey(user.Nickname))
             {
                 usersList.Add(user.Nickname, user);
-                Console.WriteLine("REGISTER: Success");
                 return true;
             }
             else
             {
-                Console.WriteLine("REGISTER: Failure");
                 return false;
             }
         }
 
-        /**
-         * Returns true if user was logged out, 
-         **/
-        public bool LogIn(User user)
+        public bool LogIn(string nickname, string password)
         {
-            if (usersList.ContainsKey(user.Nickname))
+            if (usersList.ContainsKey(nickname))
             {
-                if (usersList[user.Nickname].IsLoggedIn)
-                    return false;
+                if (usersList[nickname].Password == password)
+                {
+                    if (usersList[nickname].IsLoggedIn)
+                        return false;
+                    else
+                    {
+                        usersList[nickname].IsLoggedIn = true;
+                        return true;
+                    }
+                }
                 else
                 {
-                    usersList[user.Nickname].IsLoggedIn = true;
-                    return true;
+                    //TODO Sera que devia lançar uma excepção aqui? Ou acima, no Loggedin?
+                    return false;
                 }
             }
             else
                 throw new System.ArgumentException("User is not registered");
         }
 
-        public bool logOut(User user)
+        public bool logOut(string nickname)
         {
-            if (usersList.ContainsKey(user.Nickname))
+            if (usersList.ContainsKey(nickname))
             {
-                if (!usersList[user.Nickname].IsLoggedIn)
+                if (!usersList[nickname].IsLoggedIn)
                     return false;
                 else
                 {
-                    usersList[user.Nickname].IsLoggedIn = false;
+                    usersList[nickname].IsLoggedIn = false;
                     return true;
                 }
             }
