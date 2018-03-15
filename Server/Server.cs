@@ -71,7 +71,7 @@ namespace Server
         /**
          * Returns true if user was logged out, 
          **/
-        public bool logIn(User user)
+        public bool LogIn(User user)
         {
             if (usersList.ContainsKey(user.Nickname))
             {
