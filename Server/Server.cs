@@ -26,12 +26,14 @@ namespace Server
          **/
         Dictionary<double, string> ownershipTable;
         Dictionary<string, User> usersList;
+        float diginoteQuote;
 
         public Coordinator()
         {
             Console.WriteLine("Called Constructor");
             this.ownershipTable = new Dictionary<double, string>();
             this.usersList = new Dictionary<string, User>();
+            this.diginoteQuote = 1;
         }
 
         public Coordinator(Dictionary<string, User> usersList)
@@ -39,6 +41,7 @@ namespace Server
             Console.WriteLine("Called Constructor");
             this.ownershipTable = new Dictionary<double, string>();
             this.usersList = usersList;
+            this.diginoteQuote = 1;
         }
 
         public Dictionary<double, string> OwnershipTable
@@ -48,6 +51,22 @@ namespace Server
         public Dictionary<string, User> UsersList
         {
             get => usersList;
+        }
+
+        public float DiginoteQuote
+        {
+            get => diginoteQuote;
+            set
+            {
+                if(value > 0)
+                {
+                    diginoteQuote = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Quote cannot be null or negative");
+                }
+            }
         }
 
         /// <summary>
