@@ -9,10 +9,10 @@ namespace Common
     [Serializable]
     public class Diginote
     {
-        private double serialNumber { get; }
+        private long serialNumber { get; }
         private int facialValue { get; set; }
 
-        public Diginote(double serial)
+        public Diginote(long serial)
         {
             facialValue = 1;
             serialNumber = serial;
