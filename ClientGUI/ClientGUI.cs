@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace ClientGUI
 {
-    static class Program
+    static class ClientGUI
     {
         /// <summary>
         /// The main entry point for the application.

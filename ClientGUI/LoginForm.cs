@@ -16,7 +16,6 @@ namespace ClientGUI
     public partial class LoginForm : Form
     {
         private Coordinator coordinator;
-        private User currentUser;
         public LoginForm()
         {
             InitializeComponent();
@@ -37,7 +36,10 @@ namespace ClientGUI
             {
                 if (coordinator.LogIn(username, Utils.GetSha256FromString(password)))
                 {
-                    logBox.Text = "SUCCESS";
+                    logBox.Text = "";
+                    this.Hide();
+                    OperationsForm opsForm = new OperationsForm(username);
+                    opsForm.ShowDialog();
                 }
                 else logBox.Text = "This username is already logged in!";
             } catch(ArgumentException ex)
@@ -53,10 +55,7 @@ namespace ClientGUI
             string password = registerPasswordTextBox.Text;
             User user = new User(name, username, Utils.GetSha256FromString(password));
             if (coordinator.Register(user))
-            {
-                currentUser = user;
                 logBox.Text = "Registered new user!";
-            }
             else logBox.Text = "That username already exists!\n\rPlease choose a new one!";
         }
     }
