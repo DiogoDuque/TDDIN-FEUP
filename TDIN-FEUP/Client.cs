@@ -69,7 +69,7 @@ namespace TDIN_FEUP
             Console.Write("Nickname: ");
             string nickname = Console.ReadLine();
 
-            return coordinator.logOut(nickname);
+            return coordinator.LogOut(nickname);
         }
 
         //TODO Falta hashar a password

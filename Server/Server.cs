@@ -1,4 +1,5 @@
 ﻿using Common;
+using Database;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -12,35 +13,12 @@ namespace Server
 {
     class Server
     {
-        public static string dbFilename = "Diginotes.sqlite";
         static void Main(string[] args)
         {
-            if (!File.Exists(Directory.GetCurrentDirectory() + "/" + dbFilename))
-                initializeDb();
             RemotingConfiguration.Configure("Server.exe.config", false);
             Console.WriteLine("Server initialized. Press enter to exit");
             Console.ReadLine();
         }
-
-        static void initializeDb()
-        {
-            SQLiteConnection.CreateFile(dbFilename);
-            SQLiteConnection db = new SQLiteConnection("Data Source=" + Server.dbFilename+";Version=3;");
-            db.Open();
-            SQLiteCommand createDatabase = new SQLiteCommand(
-                "CREATE TABLE users (id INTEGER PRIMARY KEY," +
-                "name VARCHAR(50) NOT NULL," +
-                "nickname VARCHAR(30) NOT NULL," +
-                "password VARCHAR(64) NOT NULL);" +
-                "CREATE TABLE digicoins(" +
-                "serialNumber INTEGER PRIMARY KEY," +
-                "facialValue INTEGER," +
-                "idUser INTEGER REFERENCES users(id) NOT NULL); ",
-                db
-                );
-            createDatabase.ExecuteNonQuery();
-        }
-        
     }
 
     public class Coordinator : MarshalByRefObject
@@ -49,32 +27,30 @@ namespace Server
          * double -> Diginote.serialNumber
          * string -> User.nickname
          **/
-        Dictionary<double, string> ownershipTable;
+        Dictionary<long, string> ownershipTable;
         Dictionary<string, User> usersList;
         float diginoteQuote;
-        SQLiteConnection db;
+        DiginoteDB db;
 
         public Coordinator()
         {
             Console.WriteLine("Called Constructor");
-            this.ownershipTable = new Dictionary<double, string>();
+            this.ownershipTable = new Dictionary<long, string>();
             this.usersList = new Dictionary<string, User>();
             this.diginoteQuote = 1;
-            this.db = new SQLiteConnection("Data Source=" + Server.dbFilename + ";Version=3;");
-            this.db.Open();
+            this.db = new DiginoteDB();
         }
 
         public Coordinator(Dictionary<string, User> usersList)
         {
             Console.WriteLine("Called Constructor");
-            this.ownershipTable = new Dictionary<double, string>();
+            this.ownershipTable = new Dictionary<long, string>();
             this.usersList = usersList;
             this.diginoteQuote = 1;
-            this.db = new SQLiteConnection("Data Source=" + Server.dbFilename + ";Version=3;");
-            this.db.Open();
+            this.db = new DiginoteDB();
         }
 
-        public Dictionary<double, string> OwnershipTable
+        public Dictionary<long, string> OwnershipTable
         {
             get => ownershipTable;
         }
@@ -99,7 +75,7 @@ namespace Server
             }
         }
 
-        public SQLiteConnection Db
+        public DiginoteDB Db
         {
             get => db;
         }
@@ -115,7 +91,7 @@ namespace Server
             if (!usersList.ContainsKey(user.Nickname))
             {
                 usersList.Add(user.Nickname, user);
-                registerUserDB(user);
+                db.registerUser(user);
                 return true;
             }
             else
@@ -155,7 +131,7 @@ namespace Server
                 throw new System.ArgumentException("User is not registered");
         }
 
-        public bool logOut(string nickname)
+        public bool LogOut(string nickname)
         {
             if (usersList.ContainsKey(nickname))
             {
@@ -171,13 +147,11 @@ namespace Server
                 throw new System.ArgumentException("User is not registered");
         }
 
-        void registerUserDB(User user)
+        public bool AddDiginote(string nickname)
         {
-            SQLiteCommand register = new SQLiteCommand(
-                "insert into users(name, nickname, password) values(\""
-                + user.Name + "\",\"" + user.Nickname + "\",\"" + user.Password + "\");",
-                db);
-            register.ExecuteNonQuery();
+            long serialNumber = ownershipTable.Count + 1;
+            Diginote note = new Diginote(serialNumber);
+            return true;
         }
     }
 }
