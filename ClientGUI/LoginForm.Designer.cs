@@ -1,6 +1,6 @@
 ﻿namespace ClientGUI
 {
-    partial class Form1
+    partial class LoginForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             this.loginGroupBox = new System.Windows.Forms.GroupBox();
+            this.loginButton = new System.Windows.Forms.Button();
             this.loginPasswordLabel = new System.Windows.Forms.Label();
             this.loginPasswordTextBox = new System.Windows.Forms.TextBox();
             this.loginUsernameLabel = new System.Windows.Forms.Label();
             this.loginUsernameTextBox = new System.Windows.Forms.TextBox();
-            this.loginButton = new System.Windows.Forms.Button();
             this.registerGroupBox = new System.Windows.Forms.GroupBox();
+            this.registerNameLabel = new System.Windows.Forms.Label();
+            this.registerNameTextBox = new System.Windows.Forms.TextBox();
             this.registerButton = new System.Windows.Forms.Button();
             this.registerPasswordLabel = new System.Windows.Forms.Label();
             this.registerPasswordTextBox = new System.Windows.Forms.TextBox();
             this.registerUsernameLabel = new System.Windows.Forms.Label();
             this.registerUsernameTextBox = new System.Windows.Forms.TextBox();
-            this.registerNameLabel = new System.Windows.Forms.Label();
-            this.registerNameTextBox = new System.Windows.Forms.TextBox();
             this.logBox = new System.Windows.Forms.TextBox();
             this.title = new System.Windows.Forms.Label();
             this.loginGroupBox.SuspendLayout();
@@ -62,7 +62,17 @@
             this.loginGroupBox.TabIndex = 2;
             this.loginGroupBox.TabStop = false;
             this.loginGroupBox.Text = "Login";
-            this.loginGroupBox.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // loginButton
+            // 
+            this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.loginButton.Location = new System.Drawing.Point(86, 281);
+            this.loginButton.Name = "loginButton";
+            this.loginButton.Size = new System.Drawing.Size(115, 44);
+            this.loginButton.TabIndex = 4;
+            this.loginButton.Text = "Login";
+            this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
             // loginPasswordLabel
             // 
@@ -101,16 +111,6 @@
             this.loginUsernameTextBox.Size = new System.Drawing.Size(183, 30);
             this.loginUsernameTextBox.TabIndex = 0;
             // 
-            // loginButton
-            // 
-            this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.loginButton.Location = new System.Drawing.Point(86, 281);
-            this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(115, 44);
-            this.loginButton.TabIndex = 4;
-            this.loginButton.Text = "Login";
-            this.loginButton.UseVisualStyleBackColor = true;
-            // 
             // registerGroupBox
             // 
             this.registerGroupBox.Controls.Add(this.registerNameLabel);
@@ -128,6 +128,24 @@
             this.registerGroupBox.TabStop = false;
             this.registerGroupBox.Text = "Register";
             // 
+            // registerNameLabel
+            // 
+            this.registerNameLabel.AutoSize = true;
+            this.registerNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.registerNameLabel.Location = new System.Drawing.Point(13, 174);
+            this.registerNameLabel.Name = "registerNameLabel";
+            this.registerNameLabel.Size = new System.Drawing.Size(77, 26);
+            this.registerNameLabel.TabIndex = 6;
+            this.registerNameLabel.Text = "Name:";
+            // 
+            // registerNameTextBox
+            // 
+            this.registerNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.registerNameTextBox.Location = new System.Drawing.Point(18, 203);
+            this.registerNameTextBox.Name = "registerNameTextBox";
+            this.registerNameTextBox.Size = new System.Drawing.Size(183, 30);
+            this.registerNameTextBox.TabIndex = 5;
+            // 
             // registerButton
             // 
             this.registerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
@@ -137,6 +155,7 @@
             this.registerButton.TabIndex = 4;
             this.registerButton.Text = "Register";
             this.registerButton.UseVisualStyleBackColor = true;
+            this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
             // 
             // registerPasswordLabel
             // 
@@ -174,24 +193,6 @@
             this.registerUsernameTextBox.Name = "registerUsernameTextBox";
             this.registerUsernameTextBox.Size = new System.Drawing.Size(183, 30);
             this.registerUsernameTextBox.TabIndex = 0;
-            // 
-            // registerNameLabel
-            // 
-            this.registerNameLabel.AutoSize = true;
-            this.registerNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.registerNameLabel.Location = new System.Drawing.Point(13, 174);
-            this.registerNameLabel.Name = "registerNameLabel";
-            this.registerNameLabel.Size = new System.Drawing.Size(77, 26);
-            this.registerNameLabel.TabIndex = 6;
-            this.registerNameLabel.Text = "Name:";
-            // 
-            // registerNameTextBox
-            // 
-            this.registerNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.registerNameTextBox.Location = new System.Drawing.Point(18, 203);
-            this.registerNameTextBox.Name = "registerNameTextBox";
-            this.registerNameTextBox.Size = new System.Drawing.Size(183, 30);
-            this.registerNameTextBox.TabIndex = 5;
             // 
             // logBox
             // 

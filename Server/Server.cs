@@ -152,7 +152,7 @@ namespace Server
                 }
             }
             else
-                throw new System.ArgumentException("User is not registered");
+                throw new System.ArgumentException("User is not registered!");
         }
 
         public bool logOut(string nickname)
