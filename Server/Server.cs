@@ -155,7 +155,7 @@ namespace Server
                 throw new System.ArgumentException("User is not registered!");
         }
 
-        public bool logOut(string nickname)
+        public bool LogOut(string nickname)
         {
             if (usersList.ContainsKey(nickname))
             {

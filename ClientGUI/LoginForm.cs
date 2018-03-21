@@ -38,8 +38,11 @@ namespace ClientGUI
                 {
                     logBox.Text = "";
                     this.Hide();
-                    OperationsForm opsForm = new OperationsForm(username);
-                    opsForm.ShowDialog();
+                    OperationsForm opsForm = new OperationsForm(coordinator, username);
+                    if (opsForm.ShowDialog() == DialogResult.OK)
+                        logBox.Text = username + " logged out.";
+                    else logBox.Text = "You were not properly logged in!";
+                    this.Show();
                 }
                 else logBox.Text = "This username is already logged in!";
             } catch(ArgumentException ex)

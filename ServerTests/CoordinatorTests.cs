@@ -65,9 +65,9 @@ namespace Server.Tests
             usersList.Add(u2.Nickname, u2);
             Coordinator c = new Coordinator(usersList);
 
-            Assert.IsTrue(c.logOut(u1.Nickname));
+            Assert.IsTrue(c.LogOut(u1.Nickname));
             Assert.IsFalse(u1.IsLoggedIn);
-            Assert.IsFalse(c.logOut(u2.Nickname));
+            Assert.IsFalse(c.LogOut(u2.Nickname));
             Assert.IsFalse(u2.IsLoggedIn);
         }
 
@@ -78,7 +78,7 @@ namespace Server.Tests
             User u1 = new User("Jose C", "jc", "1234");
             Coordinator c = new Coordinator();
 
-            c.logOut(u1.Nickname);
+            c.LogOut(u1.Nickname);
         }
     }
 }
