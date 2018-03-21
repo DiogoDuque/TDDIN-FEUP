@@ -222,6 +222,7 @@
             this.Controls.Add(this.logBox);
             this.Controls.Add(this.registerGroupBox);
             this.Controls.Add(this.loginGroupBox);
+            this.MaximizeBox = false;
             this.Name = "LoginForm";
             this.Text = "Diginote Exchange System Client";
             this.Load += new System.EventHandler(this.Form1_Load);

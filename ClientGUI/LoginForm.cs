@@ -44,11 +44,12 @@ namespace ClientGUI
                     else logBox.Text = "You were not properly logged in!";
                     this.Show();
                 }
-                else logBox.Text = "This username is already logged in!";
+                else logBox.Text = "There was a problem with your credentials! Please try again.";
             } catch(ArgumentException ex)
             {
                 logBox.Text = ex.Message;
             }
+            loginPasswordTextBox.Text = "";
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -57,9 +58,14 @@ namespace ClientGUI
             string name = registerNameTextBox.Text;
             string password = registerPasswordTextBox.Text;
             User user = new User(name, username, Utils.GetSha256FromString(password));
-            if (coordinator.Register(user))
+            if (coordinator.Register(user)) {
                 logBox.Text = "Registered new user!";
-            else logBox.Text = "That username already exists!\n\rPlease choose a new one!";
+                loginUsernameTextBox.Text = username;
+                registerUsernameTextBox.Text = "";
+                registerNameTextBox.Text = "";
+            }
+            else logBox.Text = "That username already exists!\r\nPlease choose a new one!";
+            registerPasswordTextBox.Text = "";
         }
     }
 }

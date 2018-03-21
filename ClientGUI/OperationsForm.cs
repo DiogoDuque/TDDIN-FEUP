@@ -16,23 +16,40 @@ namespace ClientGUI
         private Coordinator coordinator;
         private string username;
 
+        private const int CP_NOCLOSE_BUTTON = 0x200;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams myCp = base.CreateParams;
+                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
+                return myCp;
+            }
+        }
+
         public OperationsForm(Coordinator coordinator, string username)
         {
             this.coordinator = coordinator;
             this.username = username;
             InitializeComponent();
             welcomeLabel.Text = "Hello "+username;
-            updateSystemInfo();
+            updateInfo();
         }
 
-        private void updateSystemInfo()
+        private void updateInfo()
         {
             currentQuoteTextBox.Text = coordinator.DiginoteQuote.ToString();
+            //TODO update system selling orders
+            //TODO update system purchase orders
+
+            //TODO update my diginotes
+            //TODO update my selling orders
+            //TODO update my purchase orders
         }
 
-        private void systemInfoUpdateButton_Click(object sender, EventArgs e)
+        private void infoUpdateButton_Click(object sender, EventArgs e)
         {
-            updateSystemInfo();
+            updateInfo();
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
@@ -40,6 +57,17 @@ namespace ClientGUI
             if (coordinator.LogOut(username))
                 this.DialogResult = DialogResult.OK;
             else this.DialogResult = DialogResult.No;
+        }
+
+        private void OperationsForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void submitMyOrders_Click(object sender, EventArgs e)
+        {
+            //TODO submit new orders
+            updateInfo();
         }
     }
 }
