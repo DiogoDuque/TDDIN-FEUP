@@ -60,6 +60,8 @@ namespace Database
                 + user.Name + "\",\"" + user.Nickname + "\",\"" + user.Password + "\");",
                 db);
             register.ExecuteNonQuery();
+
+            register.Dispose();
         }
 
         public void registerDiginote(long serialNumber, string ownerNickname)
@@ -81,6 +83,10 @@ namespace Database
                 serialNumber.ToString() + ",1," + ownerId.ToString() + ");",
                 db);
             registerNote.ExecuteNonQuery();
+
+            getOwnerId.Dispose();
+            reader.Dispose();
+            registerNote.Dispose();
 
         }
 

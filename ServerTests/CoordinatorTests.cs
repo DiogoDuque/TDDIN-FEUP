@@ -24,6 +24,9 @@ namespace Server.Tests
             Assert.IsTrue(c.UsersList.Count == 1);
             c.Register(u3);
             Assert.IsTrue(c.UsersList.Count == 2);
+            c.Db.Db.Close();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         [TestMethod()]
@@ -41,16 +44,28 @@ namespace Server.Tests
             Assert.IsTrue(u1.IsLoggedIn);
             Assert.IsFalse(c.LogIn(u2.Nickname, u2.Password));
             Assert.IsTrue(u2.IsLoggedIn);
+            c.Db.Db.Close();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException), "Should throw an exception because user is not registered")]
         public void logInExceptionTest()
         {
             User u1 = new User("Jose C", "jc", "1234");
             Coordinator c = new Coordinator(true);
 
-            c.LogIn(u1.Nickname, u1.Password);
+            try
+            {
+                c.LogIn(u1.Nickname, u1.Password); //This should throw the exception
+                Assert.Fail();
+            }
+            catch (ArgumentException)
+            {
+                c.Db.Db.Close();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
         }
 
         [TestMethod()]
@@ -69,16 +84,28 @@ namespace Server.Tests
             Assert.IsFalse(u1.IsLoggedIn);
             Assert.IsFalse(c.LogOut(u2.Nickname));
             Assert.IsFalse(u2.IsLoggedIn);
+            c.Db.Db.Close();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentException), "Should throw an exception because user is not registered")]
         public void logOutExceptionTest()
         {
             User u1 = new User("Jose C", "jc", "1234");
             Coordinator c = new Coordinator(true);
 
-            c.LogOut(u1.Nickname);
+            try
+            {
+                c.LogOut(u1.Nickname); //This should throw an exception
+                Assert.Fail();
+            }
+            catch(ArgumentException)
+            {
+                c.Db.Db.Close();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
         }
 
         [TestMethod()]
@@ -102,6 +129,9 @@ namespace Server.Tests
             Assert.IsTrue(c.NotesList[1].OwnerNickname == userNickname);
             Assert.IsTrue(c.OwnershipTable[1] == userNickname);
 
+            c.Db.Db.Close();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }
