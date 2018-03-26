@@ -9,13 +9,32 @@ namespace Common
     [Serializable]
     public class Diginote
     {
-        private long serialNumber { get; }
-        private int facialValue { get; set; }
+        private long serialNumber;
+        private int facialValue;
+        private string ownerNickname;
 
-        public Diginote(long serial)
+        public long SerialNumber
+        {
+            get => serialNumber;
+        }
+
+        public int FacialValue
+        {
+            get => facialValue;
+            set => facialValue = value;
+        }
+
+        public string OwnerNickname
+        {
+            get => ownerNickname;
+            set => ownerNickname = value;
+        }
+
+        public Diginote(long serial, string owner)
         {
             facialValue = 1;
             serialNumber = serial;
+            ownerNickname = owner;
         }
     }
 

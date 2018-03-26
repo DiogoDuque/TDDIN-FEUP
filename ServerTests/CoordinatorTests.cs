@@ -15,7 +15,7 @@ namespace Server.Tests
         [TestMethod()]
         public void registerTest()
         {
-            Coordinator c = new Coordinator();
+            Coordinator c = new Coordinator(true);
             User u1 = new User("Jose C", "jc", "1234");
             User u2 = new User("Jos", "jc", "1244");
             User u3 = new User("Jose C", "joca", "1234");
@@ -35,7 +35,7 @@ namespace Server.Tests
             u2.IsLoggedIn = true;
             usersList.Add(u1.Nickname, u1);
             usersList.Add(u2.Nickname, u2);
-            Coordinator c = new Coordinator(usersList);
+            Coordinator c = new Coordinator(usersList, true);
 
             Assert.IsTrue(c.LogIn(u1.Nickname, u1.Password));
             Assert.IsTrue(u1.IsLoggedIn);
@@ -48,7 +48,7 @@ namespace Server.Tests
         public void logInExceptionTest()
         {
             User u1 = new User("Jose C", "jc", "1234");
-            Coordinator c = new Coordinator();
+            Coordinator c = new Coordinator(true);
 
             c.LogIn(u1.Nickname, u1.Password);
         }
@@ -63,7 +63,7 @@ namespace Server.Tests
             Dictionary<string, User> usersList = new Dictionary<string, User>();
             usersList.Add(u1.Nickname, u1);
             usersList.Add(u2.Nickname, u2);
-            Coordinator c = new Coordinator(usersList);
+            Coordinator c = new Coordinator(usersList, true);
 
             Assert.IsTrue(c.LogOut(u1.Nickname));
             Assert.IsFalse(u1.IsLoggedIn);
@@ -76,9 +76,32 @@ namespace Server.Tests
         public void logOutExceptionTest()
         {
             User u1 = new User("Jose C", "jc", "1234");
-            Coordinator c = new Coordinator();
+            Coordinator c = new Coordinator(true);
 
             c.LogOut(u1.Nickname);
+        }
+
+        [TestMethod()]
+        public void createDiginoteTest()
+        {
+            string userNickname = "jc";
+            User u1 = new User("Jose C", userNickname, "1234");
+            Dictionary<string, User> usersList = new Dictionary<string, User>();
+            usersList.Add(u1.Nickname, u1);
+            Coordinator c = new Coordinator(usersList, true);
+            c.Db.registerUser(u1); //TODO THIS DEPENDS ON registerUser function. Should not depende, and be more "hardcoded"
+
+            Assert.IsTrue(c.NotesList.Count == 0);
+            Assert.IsTrue(c.OwnershipTable.Count == 0);
+
+            //Serial number of diginote created should be 1
+            Assert.IsTrue(c.CreateDiginote(userNickname));
+
+            Assert.IsTrue(c.NotesList.Count == 1);
+            Assert.IsTrue(c.OwnershipTable.Count == 1);
+            Assert.IsTrue(c.NotesList[1].OwnerNickname == userNickname);
+            Assert.IsTrue(c.OwnershipTable[1] == userNickname);
+
         }
     }
 }

@@ -86,6 +86,10 @@
       <Project>{CD1C933E-E666-49F2-AFC2-7007CDE933E6}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{A656E144-0BD9-489F-AFCA-156775D57F5C}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{338F4269-1124-4794-A2F2-2AF7E6C4831A}</Project>
       <Name>Server</Name>

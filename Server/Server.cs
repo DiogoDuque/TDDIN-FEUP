@@ -29,34 +29,55 @@ namespace Server
          **/
         Dictionary<long, string> ownershipTable;
         Dictionary<string, User> usersList;
+        Dictionary<long, Diginote> notesList;
         float diginoteQuote;
         DiginoteDB db;
 
-        public Coordinator()
-        {
-            Console.WriteLine("Called Constructor");
-            this.ownershipTable = new Dictionary<long, string>();
-            this.usersList = new Dictionary<string, User>();
-            this.diginoteQuote = 1;
-            this.db = new DiginoteDB();
-        }
 
-        public Coordinator(Dictionary<string, User> usersList)
+        //CONSTRUCTORS
+        /// <summary>
+        /// Deletes and creates a new Database if dbreset is true
+        /// </summary>
+        /// <param name="usersList"></param>
+        /// <param name="dbreset"></param>
+        public Coordinator(Dictionary<string, User> usersList, bool dbreset = false)
         {
             Console.WriteLine("Called Constructor");
             this.ownershipTable = new Dictionary<long, string>();
             this.usersList = usersList;
+            this.notesList = new Dictionary<long, Diginote>();
             this.diginoteQuote = 1;
-            this.db = new DiginoteDB();
+            this.db = new DiginoteDB(dbreset);
+        }
+
+        /// <summary>
+        /// Deletes and creates a new Database if dbreset is true
+        /// </summary>
+        /// <param name="dbreset"></param>
+        public Coordinator(bool dbreset = false) : this(new Dictionary<string, User>(), dbreset) { }
+
+
+        //GETTERS AND SETTERS
+        /*
+         * Maybe we shouldnt allow the programmer to access directly to the Ownership table
+        public Dictionary<long, string> OwnershipTable
+        {
+            get => ownershipTable;
+        }
+        */
+        public Dictionary<string, User> UsersList
+        {
+            get => usersList;
+        }
+
+        public Dictionary<long, Diginote> NotesList
+        {
+            get => notesList;
         }
 
         public Dictionary<long, string> OwnershipTable
         {
             get => ownershipTable;
-        }
-        public Dictionary<string, User> UsersList
-        {
-            get => usersList;
         }
 
         public float DiginoteQuote
@@ -147,10 +168,16 @@ namespace Server
                 throw new System.ArgumentException("User is not registered");
         }
 
-        public bool AddDiginote(string nickname)
+        public bool CreateDiginote(string ownerNickname)
         {
+            if (!usersList.ContainsKey(ownerNickname))
+                throw new ArgumentException("Nickname doesnt exist");
+
             long serialNumber = ownershipTable.Count + 1;
-            Diginote note = new Diginote(serialNumber);
+            Diginote note = new Diginote(serialNumber, ownerNickname);
+            notesList.Add(serialNumber, note);
+            ownershipTable.Add(serialNumber, ownerNickname);
+            db.registerDiginote(serialNumber, ownerNickname);
             return true;
         }
     }
