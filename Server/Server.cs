@@ -56,6 +56,13 @@ namespace Server
         /// <param name="dbreset"></param>
         public Coordinator(bool dbreset = false) : this(new Dictionary<string, User>(), dbreset) { }
 
+        public Coordinator(Dictionary<string, User> usersList, Dictionary<long, Diginote> notesList, 
+            Dictionary<long, string> ownershipTable, bool dbreset = false) : this(usersList, dbreset)
+        {
+            this.ownershipTable = ownershipTable;
+            this.notesList = notesList;
+        }
+
 
         //GETTERS AND SETTERS
         /*
@@ -179,6 +186,49 @@ namespace Server
             ownershipTable.Add(serialNumber, ownerNickname);
             db.registerDiginote(serialNumber, ownerNickname);
             return true;
+        }
+
+        /// <summary>
+        /// Transfers a quantity of diginotes from the first user to the second
+        /// </summary>
+        /// <param name="oldOwnerNickname"></param>
+        /// <param name="newOwnerNickname"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        public bool TransferDiginotes(string oldOwnerNickname, string newOwnerNickname, int quantity)
+        {
+            List<Diginote> oldOwnerDiginotes = new List<Diginote>();
+            bool ownerHasEnough = false;
+
+            foreach (KeyValuePair<long, string> entry in ownershipTable)
+            {
+                if(entry.Value == oldOwnerNickname)
+                {
+                    oldOwnerDiginotes.Add(notesList[entry.Key]);
+                }
+
+                if (oldOwnerDiginotes.Count == quantity)
+                {
+                    ownerHasEnough = true;
+                    break;
+                }
+            }
+
+            if(ownerHasEnough)
+            {
+                foreach(Diginote note in oldOwnerDiginotes)
+                {
+                    note.OwnerNickname = newOwnerNickname;
+                    ownershipTable[note.SerialNumber] = newOwnerNickname;
+                    db.transferDiginote(note.SerialNumber, newOwnerNickname);
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

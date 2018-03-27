@@ -67,15 +67,7 @@ namespace Database
         public void registerDiginote(long serialNumber, string ownerNickname)
         {
             //Get owner ID in the database
-            SQLiteCommand getOwnerId = new SQLiteCommand(
-                "select id from users where nickname = \"" + ownerNickname + "\"",
-                db);
-            SQLiteDataReader reader = getOwnerId.ExecuteReader();
-            int ownerId;
-            if (reader.Read())
-                ownerId = reader.GetInt32(0); //TODO Nao consigo ainda obter o valor, da erro
-            else
-                throw new Exception("Could not get ownerID from database");
+            int ownerId = getUserId(ownerNickname);
 
             //Insert new diginote
             SQLiteCommand registerNote = new SQLiteCommand(
@@ -84,10 +76,52 @@ namespace Database
                 db);
             registerNote.ExecuteNonQuery();
 
-            getOwnerId.Dispose();
-            reader.Dispose();
             registerNote.Dispose();
 
+        }
+
+        public void transferDiginote(long serialNumber, string newOwnerNickname)
+        {
+            int newOwnerId = getUserId(newOwnerNickname);
+
+            if(updateDiginote(serialNumber, newOwnerId) < 1)
+            {
+                throw new ArgumentException("Diginote serial number " + serialNumber.ToString() + " does not exist");
+            }
+        }
+
+        private int getUserId(string nickname)
+        {
+            SQLiteCommand getOwnerId = new SQLiteCommand(
+                "select id from users where nickname = \"" + nickname + "\"",
+                db);
+            SQLiteDataReader reader = getOwnerId.ExecuteReader();
+            int ownerId;
+            if (reader.Read())
+            {
+                ownerId = reader.GetInt32(0);
+
+                getOwnerId.Dispose();
+                reader.Dispose();
+            }
+            else
+            {
+                getOwnerId.Dispose();
+                reader.Dispose();
+                throw new Exception("Could not get ownerID from database");
+            }
+
+            return ownerId;
+        }
+
+        private int updateDiginote(long serialNumber, int idUser, int facialValue = 1)
+        {
+            SQLiteCommand update = new SQLiteCommand(
+                "update diginotes set facialValue = " + facialValue.ToString() +
+                ", idUser = " + idUser.ToString() + " where serialNumber = " + serialNumber.ToString() + ";"
+                , db);
+
+            return update.ExecuteNonQuery();
         }
 
     }
