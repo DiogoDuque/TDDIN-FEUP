@@ -90,6 +90,23 @@ namespace Database
             }
         }
 
+        public List<User> getAllUsers()
+        {
+            List<User> list = new List<User>();
+
+            SQLiteCommand getUsers = new SQLiteCommand(
+                "select * from users;", db);
+            SQLiteDataReader reader = getUsers.ExecuteReader();
+
+            while(reader.Read())
+            {
+                User user = new User(reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                list.Add(user);
+            }
+
+            return list;
+        }
+
         private int getUserId(string nickname)
         {
             SQLiteCommand getOwnerId = new SQLiteCommand(
@@ -123,6 +140,7 @@ namespace Database
 
             return update.ExecuteNonQuery();
         }
+
 
     }
 }

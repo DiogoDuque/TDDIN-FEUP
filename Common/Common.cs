@@ -82,8 +82,9 @@ namespace Common
             if (item == null)
                 return false;
 
-            if (this.nickname.Equals(item.nickname) || 
-                this.name.ToLower().Equals(item.name.ToLower()))
+            if (this.nickname.Equals(item.nickname) &&
+                this.name.ToLower().Equals(item.name.ToLower()) &&
+                this.password.Equals(item.password)) //TODO Acho que é só o nickname
                 return true;
             else
                 return false;
