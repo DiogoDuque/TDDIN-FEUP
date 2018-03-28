@@ -1,15 +1,9 @@
 ﻿using Common;
 using Server;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.Remoting;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Messaging;
 
 namespace ClientGUI
 {
@@ -66,6 +60,13 @@ namespace ClientGUI
             }
             else logBox.Text = "That username already exists!\r\nPlease choose a new one!";
             registerPasswordTextBox.Text = "";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageQueue sellingQueue = new MessageQueue(@".\private$\sellingOrders");
+            sellingQueue.Formatter = new BinaryMessageFormatter();
+            sellingQueue.Send("oi");
         }
     }
 }

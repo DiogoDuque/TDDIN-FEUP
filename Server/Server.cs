@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using System.Messaging;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,46 @@ namespace Server
 {
     class Server
     {
+        private static MessageQueue sellingQueue;
+        private static MessageQueue purchaseQueue;
+
         static void Main(string[] args)
         {
             RemotingConfiguration.Configure("Server.exe.config", false);
+
+            initMessageQueues();
+
             Console.WriteLine("Server initialized. Press enter to exit");
             Console.ReadLine();
+        }
+
+        private static void initMessageQueues()
+        {
+            if (MessageQueue.Exists(@".\Private$\sellingOrders"))
+            {
+                sellingQueue = new MessageQueue(@".\private$\sellingOrders");
+                sellingQueue.Formatter = new BinaryMessageFormatter();
+                sellingQueue.ReceiveCompleted += SellingQueueReceiver;
+                sellingQueue.BeginReceive();
+            }
+            else Console.WriteLine("Could not init sellingOrders MessageQueue");
+
+            if (MessageQueue.Exists(@".\Private$\purchaseOrders"))
+            {
+                /*purchaseQueue = new MessageQueue(@".\private$\purchaseOrders");
+                purchaseQueue.Formatter = new BinaryMessageFormatter();
+                purchaseQueue.ReceiveCompleted += PurchaseQueueReceiver;
+                purchaseQueue.BeginReceive();*/
+            }
+            else Console.WriteLine("Could not init purchaseOrders MessageQueue");
+        }
+
+        private static void SellingQueueReceiver(object src, ReceiveCompletedEventArgs rcea)
+        {
+            Message msg = sellingQueue.EndReceive(rcea.AsyncResult);
+            Console.WriteLine(msg.Body);
+
+            sellingQueue.BeginReceive();
         }
     }
 
