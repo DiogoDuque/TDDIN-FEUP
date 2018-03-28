@@ -35,32 +35,47 @@ namespace Server
 
 
         //CONSTRUCTORS
-        /// <summary>
-        /// Deletes and creates a new Database if dbreset is true
-        /// </summary>
-        /// <param name="usersList"></param>
-        /// <param name="dbreset"></param>
-        public Coordinator(Dictionary<string, User> usersList, bool dbreset = false)
+
+        public Coordinator()
         {
             Console.WriteLine("Called Constructor");
             this.ownershipTable = new Dictionary<long, string>();
-            this.usersList = usersList;
+            this.usersList = new Dictionary<string, User>();
             this.notesList = new Dictionary<long, Diginote>();
             this.diginoteQuote = 1;
-            this.db = new DiginoteDB(dbreset);
+            this.db = new DiginoteDB(false);
         }
 
         /// <summary>
         /// Deletes and creates a new Database if dbreset is true
         /// </summary>
         /// <param name="dbreset"></param>
-        public Coordinator(bool dbreset = false) : this(new Dictionary<string, User>(), dbreset) { }
+        public Coordinator(bool dbreset) 
+            : this(new Dictionary<string, User>(), new Dictionary<long, Diginote>(), new Dictionary<long, string>(), dbreset)
+        {
+            
+        }
+
+        /// <summary>
+        /// Deletes and creates a new Database if dbreset is true
+        /// </summary>
+        /// <param name="usersList"></param>
+        /// <param name="dbreset"></param>
+        public Coordinator(Dictionary<string, User> usersList, bool dbreset = false)
+            : this(usersList, new Dictionary<long, Diginote>(), new Dictionary<long, string>(), dbreset)
+        {
+            
+        }
 
         public Coordinator(Dictionary<string, User> usersList, Dictionary<long, Diginote> notesList, 
-            Dictionary<long, string> ownershipTable, bool dbreset = false) : this(usersList, dbreset)
+            Dictionary<long, string> ownershipTable, bool dbreset = false)
         {
+            Console.WriteLine("Called Constructor");
+            this.diginoteQuote = 1;
+            this.db = new DiginoteDB(dbreset);
             this.ownershipTable = ownershipTable;
             this.notesList = notesList;
+            this.usersList = usersList;
         }
 
 
