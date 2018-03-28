@@ -37,6 +37,21 @@ namespace Common
             serialNumber = serial;
             ownerNickname = owner;
         }
+
+        public override bool Equals(object obj)
+        {
+            Diginote item = obj as Diginote;
+
+            if (item == null)
+                return false;
+
+            if (this.serialNumber.Equals(item.serialNumber) &&
+                this.ownerNickname.Equals(item.ownerNickname) &&
+                this.facialValue.Equals(item.facialValue))
+                return true;
+            else
+                return false;
+        }
     }
 
     /**

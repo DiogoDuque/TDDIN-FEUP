@@ -53,7 +53,7 @@ namespace Database
             }
         }
 
-        public void registerUser(User user)
+        public void insertUser(User user)
         {
             SQLiteCommand register = new SQLiteCommand(
                 "insert into users(name, nickname, password) values(\""
@@ -64,7 +64,7 @@ namespace Database
             register.Dispose();
         }
 
-        public void registerDiginote(long serialNumber, string ownerNickname)
+        public void insertDiginote(long serialNumber, string ownerNickname)
         {
             //Get owner ID in the database
             int ownerId = getUserId(ownerNickname);
@@ -78,6 +78,11 @@ namespace Database
 
             registerNote.Dispose();
 
+        }
+
+        public void insertDiginote(Diginote note)
+        {
+            insertDiginote(note.SerialNumber, note.OwnerNickname);
         }
 
         public void transferDiginote(long serialNumber, string newOwnerNickname)
@@ -102,6 +107,23 @@ namespace Database
             {
                 User user = new User(reader.GetString(1), reader.GetString(2), reader.GetString(3));
                 list.Add(user);
+            }
+
+            return list;
+        }
+
+        public List<Diginote> getAllDiginotes()
+        {
+            List<Diginote> list = new List<Diginote>();
+
+            SQLiteCommand getNotes = new SQLiteCommand(
+                "select serialNumber, nickname from diginotes, users where diginotes.iduser = users.id;", db);
+            SQLiteDataReader reader = getNotes.ExecuteReader();
+
+            while(reader.Read())
+            {
+                Diginote note = new Diginote(reader.GetInt64(0), reader.GetString(1));
+                list.Add(note);
             }
 
             return list;

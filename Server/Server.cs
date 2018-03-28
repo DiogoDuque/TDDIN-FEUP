@@ -44,6 +44,7 @@ namespace Server
             this.notesList = new Dictionary<long, Diginote>();
             this.diginoteQuote = 1;
             this.db = new DiginoteDB(false);
+            LoadDataFromDatabase();
         }
 
         /// <summary>
@@ -53,7 +54,8 @@ namespace Server
         public Coordinator(bool dbreset) 
             : this(new Dictionary<string, User>(), new Dictionary<long, Diginote>(), new Dictionary<long, string>(), dbreset)
         {
-            
+            if (!dbreset)
+                LoadDataFromDatabase();
         }
 
         /// <summary>
@@ -134,7 +136,7 @@ namespace Server
             if (!usersList.ContainsKey(user.Nickname))
             {
                 usersList.Add(user.Nickname, user);
-                db.registerUser(user);
+                db.insertUser(user);
                 return true;
             }
             else
@@ -199,7 +201,7 @@ namespace Server
             Diginote note = new Diginote(serialNumber, ownerNickname);
             notesList.Add(serialNumber, note);
             ownershipTable.Add(serialNumber, ownerNickname);
-            db.registerDiginote(serialNumber, ownerNickname);
+            db.insertDiginote(serialNumber, ownerNickname);
             return true;
         }
 
@@ -243,6 +245,23 @@ namespace Server
             else
             {
                 return false;
+            }
+        }
+
+        public void LoadDataFromDatabase()
+        {
+            List<User> userList = db.getAllUsers();
+            List<Diginote> noteList = db.getAllDiginotes();
+
+            foreach(User user in userList)
+            {
+                this.usersList.Add(user.Nickname, user);
+            }
+
+            foreach(Diginote note in noteList)
+            {
+                this.notesList.Add(note.SerialNumber, note);
+                this.ownershipTable.Add(note.SerialNumber, note.OwnerNickname);
             }
         }
     }

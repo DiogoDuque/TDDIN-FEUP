@@ -14,12 +14,12 @@ namespace Database.Tests
     public class DiginoteDBTests
     {
         [TestMethod()]
-        public void registerUserTest()
+        public void RegisterUserTest()
         {
             DiginoteDB db = new DiginoteDB(true);
             User u1 = new User("Jose C", "jc", "1234");
 
-            db.registerUser(u1);
+            db.insertUser(u1);
 
             SQLiteCommand getUsers = new SQLiteCommand(
                 "select * from users;", db.Db);
@@ -33,11 +33,11 @@ namespace Database.Tests
 
             getUsers.Dispose();
             reader.Dispose();
-            closeDb(db);
+            CloseDb(db);
         }
 
         [TestMethod()]
-        public void getAllUsersTest()
+        public void GetAllUsersTest()
         {
             DiginoteDB db = new DiginoteDB(true);
             User u1 = new User("Jose C", "jc", "1234");
@@ -63,10 +63,50 @@ namespace Database.Tests
 
             insertUser1.Dispose();
             insertUser2.Dispose();
-            closeDb(db);
+            CloseDb(db);
         }
 
-        private void closeDb(DiginoteDB db)
+        [TestMethod()]
+        public void GetAllDiginotesTest()
+        {
+            DiginoteDB db = new DiginoteDB(true);
+            int userid = 1;
+            User u1 = new User("Jose C", "jc", "1234");
+            Diginote d1 = new Diginote(1, "jc");
+            Diginote d2 = new Diginote(2, "jc");
+
+            SQLiteCommand insertUser1 = new SQLiteCommand(
+                "insert into users(id, name, nickname, password) values(" + userid.ToString() + ",\""
+                + u1.Name + "\",\"" + u1.Nickname + "\",\"" + u1.Password + "\");",
+                db.Db);
+
+            SQLiteCommand insertNote1 = new SQLiteCommand(
+                "insert into diginotes(serialNumber, facialValue, idUser) values(" +
+                d1.SerialNumber.ToString() + ",1," + userid.ToString() + ");",
+                db.Db);
+
+            SQLiteCommand insertNote2 = new SQLiteCommand(
+                "insert into diginotes(serialNumber, facialValue, idUser) values(" +
+                d2.SerialNumber.ToString() + ",1," + userid.ToString() + ");",
+                db.Db);
+
+            insertUser1.ExecuteNonQuery();
+            insertNote1.ExecuteNonQuery();
+            insertNote2.ExecuteNonQuery();
+
+            List<Diginote> list = db.getAllDiginotes();
+            Assert.IsTrue(list.Count == 2);
+            Assert.IsTrue(list[0].Equals(d1));
+            Assert.IsTrue(list[1].Equals(d2));
+
+            insertUser1.Dispose();
+            insertNote1.Dispose();
+            insertNote2.Dispose();
+            CloseDb(db);
+
+        }
+
+        private void CloseDb(DiginoteDB db)
         {
             db.Db.Close();
             GC.Collect();
