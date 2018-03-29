@@ -116,6 +116,8 @@ namespace Common
         }
     }
 
+    public delegate void LogDelegate(User oldOwner, User newOwner, int quantity);
+
     public class Utils
     {
         public static string GetSha256FromString(string strData)

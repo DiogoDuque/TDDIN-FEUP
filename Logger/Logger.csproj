@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{338F4269-1124-4794-A2F2-2AF7E6C4831A}</ProjectGuid>
+    <ProjectGuid>{82F6BA76-F6A2-4079-BB9C-C7503E2297E3}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Server</RootNamespace>
-    <AssemblyName>Server</AssemblyName>
+    <RootNamespace>Logger</RootNamespace>
+    <AssemblyName>Logger</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -62,13 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Server.cs" />
+    <Compile Include="TransactionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -76,13 +74,9 @@
       <Project>{CD1C933E-E666-49F2-AFC2-7007CDE933E6}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Database\Database.csproj">
-      <Project>{A656E144-0BD9-489F-AFCA-156775D57F5C}</Project>
-      <Name>Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logger\Logger.csproj">
-      <Project>{82f6ba76-f6a2-4079-bb9c-c7503e2297e3}</Project>
-      <Name>Logger</Name>
+    <ProjectReference Include="..\Coordinator\Coordinator.csproj">
+      <Project>{8B091253-6B87-4E1D-97DD-A45FE65B4099}</Project>
+      <Name>Coordinator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

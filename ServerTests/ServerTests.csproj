@@ -87,6 +87,10 @@
       <Project>{CD1C933E-E666-49F2-AFC2-7007CDE933E6}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Coordinator\Coordinator.csproj">
+      <Project>{8B091253-6B87-4E1D-97DD-A45FE65B4099}</Project>
+      <Name>Coordinator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Database\Database.csproj">
       <Project>{A656E144-0BD9-489F-AFCA-156775D57F5C}</Project>
       <Name>Database</Name>
