@@ -116,7 +116,7 @@ namespace Common
         }
     }
 
-    public delegate void LogDelegate(User oldOwner, User newOwner, int quantity);
+    public delegate void LogDelegate(string oldOwner, string newOwner, int quantity);
 
     public class Utils
     {

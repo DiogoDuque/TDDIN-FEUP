@@ -15,31 +15,33 @@ namespace Logger
             System.Console.WriteLine("Started Logger");
             c.logger += l.RegisterLogTransaction;
             Console.ReadLine();
+            c.logger -= l.RegisterLogTransaction;
         }
     }
     
     public class TransactionLogger : MarshalByRefObject
     {
-        string logFilename;
+        public string logFilename;
 
         public TransactionLogger()
         {
             logFilename = "transactions.txt";
         }
 
-        public void RegisterLogTransaction(User oldOwner, User newOwner, int quantity)
+        public void RegisterLogTransaction(string oldOwner, string newOwner, int quantity)
         {
-            string message = oldOwner.Nickname + " sent " + quantity.ToString() + " ";
+            string message = oldOwner+ " sent " + quantity.ToString() + " ";
             if(quantity == 1)
             {
-                message = message + "diginote to " + newOwner.Nickname;
+                message = message + "diginote to " + newOwner;
             }
             else
             {
-                message = message + "diginotes to " + newOwner.Nickname;
+                message = message + "diginotes to " + newOwner;
             }
 
-            System.IO.File.WriteAllText(logFilename, message);
+            string[] argument = new string[] { message };
+            System.IO.File.AppendAllLines(logFilename, argument);
             Console.WriteLine(message);
         }
     }

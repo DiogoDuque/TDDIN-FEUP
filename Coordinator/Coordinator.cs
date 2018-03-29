@@ -228,6 +228,11 @@ namespace Coord
                     db.transferDiginote(note.SerialNumber, newOwnerNickname);
                 }
 
+                //Send transaction to the logs
+                if (this.logger != null)
+                    this.logger(oldOwnerNickname, newOwnerNickname, oldOwnerDiginotes.Count);
+                else
+                    Console.WriteLine("Logger not available");
                 return true;
             }
             else
