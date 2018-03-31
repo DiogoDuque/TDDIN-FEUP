@@ -22,22 +22,22 @@ namespace Coord
         float diginoteQuote;
         DiginoteDB db;
         public event LogDelegate logger;
-        private MessageQueue sellingQueue;
-        private MessageQueue purchaseQueue;
+        private MessageQueue sellingMessageQueue;
+        private MessageQueue buyingMessageQueue;
+        private Queue<Order> sellingOrders;
+        private Queue<Order> buyingOrders;
 
 
         //CONSTRUCTORS
 
         public Coordinator()
         {
-            new SQLiteConnection().Dispose();
-            new SQLiteCommand().Dispose();
-            GC.Collect();
-
             Console.WriteLine("Called Constructor");
             this.ownershipTable = new Dictionary<long, string>();
             this.usersList = new Dictionary<string, User>();
             this.notesList = new Dictionary<long, Diginote>();
+            this.sellingOrders = new Queue<Order>();
+            this.buyingOrders = new Queue<Order>();
             this.diginoteQuote = 1;
             this.db = new DiginoteDB(false);
             LoadDataFromDatabase();
@@ -268,6 +268,8 @@ namespace Coord
         {
             List<User> userList = db.getAllUsers();
             List<Diginote> noteList = db.getAllDiginotes();
+            sellingOrders = db.getAllSellingOrders();
+            buyingOrders = db.GetBuyingOrders();
 
             foreach (User user in userList)
             {
@@ -285,29 +287,80 @@ namespace Coord
         {
             if (MessageQueue.Exists(@".\Private$\sellingOrders"))
             {
-                sellingQueue = new MessageQueue(@".\private$\sellingOrders");
-                sellingQueue.Formatter = new BinaryMessageFormatter();
-                sellingQueue.ReceiveCompleted += SellingQueueReceiver;
-                sellingQueue.BeginReceive();
+                sellingMessageQueue = new MessageQueue(@".\private$\sellingOrders");
+                sellingMessageQueue.Formatter = new BinaryMessageFormatter();
+                sellingMessageQueue.ReceiveCompleted += SellingQueueReceiver;
+                sellingMessageQueue.BeginReceive();
             }
             else Console.WriteLine("Could not init sellingOrders MessageQueue");
 
             if (MessageQueue.Exists(@".\Private$\purchaseOrders"))
             {
-                /*purchaseQueue = new MessageQueue(@".\private$\purchaseOrders");
-                purchaseQueue.Formatter = new BinaryMessageFormatter();
-                purchaseQueue.ReceiveCompleted += PurchaseQueueReceiver;
-                purchaseQueue.BeginReceive();*/
+                buyingMessageQueue = new MessageQueue(@".\private$\purchaseOrders");
+                buyingMessageQueue.Formatter = new BinaryMessageFormatter();
+                buyingMessageQueue.ReceiveCompleted += BuyingQueueReceiver;
+                buyingMessageQueue.BeginReceive();
             }
             else Console.WriteLine("Could not init purchaseOrders MessageQueue");
         }
 
         private void SellingQueueReceiver(object src, ReceiveCompletedEventArgs rcea)
         {
-            Message msg = sellingQueue.EndReceive(rcea.AsyncResult);
-            Console.WriteLine(msg.Body);
+            Message msg = sellingMessageQueue.EndReceive(rcea.AsyncResult);
+            Order sellingOrder;
+            if (msg.Body is Order && ((Order)msg.Body).type.Equals(Order.OrderType.SELLING))
+            {
+                sellingOrder = (Order)msg.Body;
+                db.AddOrder(sellingOrder);
 
-            sellingQueue.BeginReceive();
+                //handle and trigger action if necessary
+                sellingOrders.Enqueue(sellingOrder);
+                if (buyingOrders.Count > 0)
+                {
+                    MatchOrders();
+                }
+
+                sellingMessageQueue.BeginReceive();
+            }
+            else Console.WriteLine("Invalid selling order received!");
+        }
+
+        private void BuyingQueueReceiver(object src, ReceiveCompletedEventArgs rcea)
+        {
+            Message msg = buyingMessageQueue.EndReceive(rcea.AsyncResult);
+
+            Order buyingOrder;
+            if (msg.Body is Order && ((Order)msg.Body).type.Equals(Order.OrderType.BUYING))
+            {
+                buyingOrder = (Order)msg.Body;
+                db.AddOrder(buyingOrder);
+
+                //handle and trigger action if necessary
+                buyingOrders.Enqueue(buyingOrder);
+                if (sellingOrders.Count > 0)
+                {
+                    MatchOrders();
+                }
+
+                buyingMessageQueue.BeginReceive();
+            }
+            else Console.WriteLine("Invalid buying order received!");
+        }
+
+        private void MatchOrders()
+        {
+            while(sellingOrders.Count>0 && buyingOrders.Count>0)
+            {
+                Order sellingOrder = sellingOrders.Dequeue();
+                Order buyingOrder = buyingOrders.Dequeue();
+                bool result = TransferDiginotes(sellingOrder.owner, buyingOrder.owner, 1);
+                if (result)
+                {
+                    db.RemoveOrder(sellingOrder);
+                    db.RemoveOrder(buyingOrder);
+                }
+                else Console.WriteLine("Error happened when matching orders!");
+            }
         }
     }
 }
