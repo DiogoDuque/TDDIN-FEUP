@@ -93,10 +93,6 @@ namespace ClientGUI
         {
             //TODO submit new orders
             updateInfo();
-
-            string message = "Another user has changed the diginotes quote to: \n 15 \n Do you accept this quote?\n Pressing NO will remove your pending orders";
-
-            MessageBox.Show(message, "Form Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
