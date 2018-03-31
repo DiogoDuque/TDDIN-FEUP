@@ -25,19 +25,42 @@ namespace ClientGUI
             this.coordinator = coordinator;
             this.username = username;
             InitializeComponent();
-            welcomeLabel.Text = "Hello "+username;
+            nicknameLabel.Text = "Hello "+username +" !";
             updateInfo();
         }
 
         private void updateInfo()
         {
-            currentQuoteTextBox.Text = coordinator.DiginoteQuote.ToString();
+            int numUserDiginotes = coordinator.GetUserDiginoteQuantity(username);
+            decimal diginoteQuote = (decimal)coordinator.DiginoteQuote;
+
+            //System Information
+
+            currentQuoteTextBox.Text = diginoteQuote.ToString();
             //TODO update system selling orders
             //TODO update system purchase orders
 
-            //TODO update my diginotes
+            //My Information
+
+            myDiginotesTextBox.Text = numUserDiginotes.ToString();
             //TODO update my selling orders
             //TODO update my purchase orders
+            changeQuoteSellNumeric.Value = diginoteQuote;
+            changeQuotePurchaseNumeric.Value = diginoteQuote;
+
+            //Emit Sell Order
+
+            numDiginotesSellNumeric.Maximum = numUserDiginotes;
+            numDiginotesSellNumeric.Value = numUserDiginotes;
+            remainingSellQuoteNumeric.Minimum = diginoteQuote;
+            remainingSellQuoteNumeric.Value = diginoteQuote;
+
+            //Emit Purchase Order
+
+            remainingPurchaseQuoteNumeric.Maximum = diginoteQuote;
+            remainingPurchaseQuoteNumeric.Value = diginoteQuote;
+
+
         }
 
         private void infoUpdateButton_Click(object sender, EventArgs e)
@@ -61,6 +84,83 @@ namespace ClientGUI
         {
             //TODO submit new orders
             updateInfo();
+
+            string message = "Another user has changed the diginotes quote to: \n 15 \n Do you accept this quote?\n Pressing NO will remove your pending orders";
+
+            MessageBox.Show(message, "Form Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void welcomeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void myDiginotesLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void currentQuoteTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mySellingOrdersTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void myPurchaseOrdersTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown6_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addDiginotesButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                coordinator.CreateDiginote(username);
+                updateInfo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

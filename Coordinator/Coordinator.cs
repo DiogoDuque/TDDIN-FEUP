@@ -193,6 +193,19 @@ namespace Coord
             return true;
         }
 
+        public int GetUserDiginoteQuantity(string ownerNickname)
+        {
+            int result = 0;
+
+            foreach(KeyValuePair<long, string> pair in ownershipTable)
+            {
+                if (pair.Value == ownerNickname)
+                    result += 1;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Transfers a quantity of diginotes from the first user to the second
         /// </summary>
@@ -241,6 +254,7 @@ namespace Coord
             }
         }
 
+        //TODO this should not be public, but tests need that the method is public.
         public void LoadDataFromDatabase()
         {
             List<User> userList = db.getAllUsers();
