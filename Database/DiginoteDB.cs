@@ -125,7 +125,7 @@ namespace Database
 
             while (reader.Read())
             {
-                Order order = new Order(reader.GetString(1), Order.OrderType.SELLING);
+                Order order = new Order(reader.GetString(0), Order.OrderType.SELLING);
                 list.Enqueue(order);
             }
 
@@ -142,7 +142,7 @@ namespace Database
 
             while (reader.Read())
             {
-                Order order = new Order(reader.GetString(1), Order.OrderType.BUYING);
+                Order order = new Order(reader.GetString(0), Order.OrderType.BUYING);
                 list.Enqueue(order);
             }
 
@@ -215,7 +215,7 @@ namespace Database
         {
             SQLiteCommand removeOrder = new SQLiteCommand(
                 "DELETE FROM orders WHERE owner='" + order.owner +
-                "' AND type='" + order.type.ToString() + "');",
+                "' AND type='" + order.type.ToString() + "';",
                 db);
             removeOrder.ExecuteNonQuery();
 

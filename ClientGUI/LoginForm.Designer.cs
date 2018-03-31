@@ -44,7 +44,6 @@
             this.registerPasswordTextBox = new System.Windows.Forms.TextBox();
             this.registerButton = new System.Windows.Forms.Button();
             this.logBox = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.loginGroupBox.SuspendLayout();
             this.registerGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -214,22 +213,11 @@
             this.logBox.Size = new System.Drawing.Size(219, 75);
             this.logBox.TabIndex = 6;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(99, 48);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(304, 38);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "activate Queue";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(495, 545);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.title);
             this.Controls.Add(this.logBox);
             this.Controls.Add(this.registerGroupBox);
@@ -264,7 +252,6 @@
         private System.Windows.Forms.Button registerButton;
         private System.Windows.Forms.TextBox logBox;
         private System.Windows.Forms.Label title;
-        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -29,7 +29,7 @@ namespace ClientGUI
             InitializeComponent();
             nicknameLabel.Text = "Hello "+username +" !";
             updateInfo();
-            coordinator.logger += ShowTransactionMessage;
+            //coordinator.logger += ShowTransactionMessage;
         }
 
         private void ShowTransactionMessage(string oldOwner, string newOwner, int quantity)
