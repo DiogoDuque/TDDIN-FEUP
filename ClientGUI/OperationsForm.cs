@@ -27,6 +27,15 @@ namespace ClientGUI
             InitializeComponent();
             nicknameLabel.Text = "Hello "+username +" !";
             updateInfo();
+            coordinator.logger += ShowTransactionMessage;
+        }
+
+        private void ShowTransactionMessage(string oldOwner, string newOwner, int quantity)
+        {
+            if (oldOwner == username)
+                messagesTextBox.Text += "\n" + newOwner + " purchased " + quantity.ToString() + " diginotes from you";
+            else if (newOwner == username)
+                messagesTextBox.Text += "\n You purchased " + quantity.ToString() + " diginotes from " + oldOwner;
         }
 
         private void updateInfo()
