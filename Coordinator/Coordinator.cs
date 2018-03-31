@@ -362,5 +362,33 @@ namespace Coord
                 else Console.WriteLine("Error happened when matching orders!");
             }
         }
+
+        public int GetAmountSellingOrders(string nickname = null)
+        {
+            if (nickname == null)
+                return sellingOrders.Count;
+
+            int count=0;
+            foreach(Order order in sellingOrders)
+            {
+                if (order.owner.Equals(nickname))
+                    count++;
+            }
+            return count;
+        }
+
+        public int GetAmountBuyingOrders(string nickname = null)
+        {
+            if (nickname == null)
+                return buyingOrders.Count;
+
+            int count = 0;
+            foreach (Order order in buyingOrders)
+            {
+                if (order.owner.Equals(nickname))
+                    count++;
+            }
+            return count;
+        }
     }
 }

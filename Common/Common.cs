@@ -135,6 +135,7 @@ namespace Common
         }
     }
 
+    [Serializable]
     public class Order
     {
         public enum OrderType { BUYING, SELLING};

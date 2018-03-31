@@ -203,8 +203,8 @@ namespace Database
         public void AddOrder(Order order)
         {
             SQLiteCommand registerOrder = new SQLiteCommand(
-                "insert into order(owner, type) values(" +
-                order.owner + order.type.ToString() + ");",
+                "insert into orders(owner, type) values('" +
+                order.owner + "','" + order.type.ToString() + "');",
                 db);
             registerOrder.ExecuteNonQuery();
 
@@ -214,8 +214,8 @@ namespace Database
         public void RemoveOrder(Order order)
         {
             SQLiteCommand removeOrder = new SQLiteCommand(
-                "DELETE FROM orders WHERE owner=" + order.owner +
-                "AND type='" + order.type.ToString() + "');",
+                "DELETE FROM orders WHERE owner='" + order.owner +
+                "' AND type='" + order.type.ToString() + "');",
                 db);
             removeOrder.ExecuteNonQuery();
 

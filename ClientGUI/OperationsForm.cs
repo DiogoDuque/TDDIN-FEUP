@@ -1,5 +1,7 @@
-﻿using Coord;
+﻿using Common;
+using Coord;
 using System;
+using System.Messaging;
 using System.Windows.Forms;
 
 namespace ClientGUI
@@ -46,14 +48,14 @@ namespace ClientGUI
             //System Information
 
             currentQuoteTextBox.Text = diginoteQuote.ToString();
-            //TODO update system selling orders
-            //TODO update system purchase orders
+            systemSellingOrdersTextBox.Text = coordinator.GetAmountSellingOrders().ToString();
+            systemPurchaseOrdersTextBox.Text = coordinator.GetAmountBuyingOrders().ToString();
 
             //My Information
 
             myDiginotesTextBox.Text = numUserDiginotes.ToString();
-            //TODO update my selling orders
-            //TODO update my purchase orders
+            mySellingOrdersTextBox.Text = coordinator.GetAmountSellingOrders(username).ToString();
+            myPurchaseOrdersTextBox.Text = coordinator.GetAmountBuyingOrders(username).ToString();
             changeQuoteSellNumeric.Value = diginoteQuote;
             changeQuotePurchaseNumeric.Value = diginoteQuote;
 
@@ -165,6 +167,28 @@ namespace ClientGUI
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void sendSellingOrderButton_Click(object sender, EventArgs e)
+        {
+            int nDiginotes = Convert.ToInt32(numDiginotesSellNumeric.Value);
+            MessageQueue sellingQueue = new MessageQueue(@".\private$\sellingOrders");
+            sellingQueue.Formatter = new BinaryMessageFormatter();
+            for(int i=0; i < nDiginotes; i++)
+            {
+                sellingQueue.Send(new Order(username, Order.OrderType.SELLING));
+            }
+        }
+
+        private void sendPurchasingOrderButton_Click(object sender, EventArgs e)
+        {
+            int nDiginotes = Convert.ToInt32(numDiginotesPurchaseNumeric.Value);
+            MessageQueue sellingQueue = new MessageQueue(@".\private$\purchaseOrders");
+            sellingQueue.Formatter = new BinaryMessageFormatter();
+            for (int i = 0; i < nDiginotes; i++)
+            {
+                sellingQueue.Send(new Order(username, Order.OrderType.BUYING));
             }
         }
     }
