@@ -23,6 +23,7 @@ namespace Database
             if(reset || !File.Exists(Directory.GetCurrentDirectory() + "/" + dbFilename))
             {
                 SQLiteConnection.CreateFile(dbFilename);
+                Console.WriteLine("Creating a new DB");
 
                 //Open Database connection
                 db = new SQLiteConnection("Data Source=" + dbFilename + ";Version=3;");
@@ -34,10 +35,15 @@ namespace Database
                 "name VARCHAR(50) NOT NULL," +
                 "nickname VARCHAR(30) NOT NULL," +
                 "password VARCHAR(64) NOT NULL);" +
+
                 "CREATE TABLE diginotes(" +
                 "serialNumber INTEGER PRIMARY KEY," +
                 "facialValue INTEGER," +
-                "idUser INTEGER REFERENCES users(id) NOT NULL); ",
+                "idUser INTEGER REFERENCES users(id) NOT NULL); " +
+
+                "CREATE TABLE orders(" +
+                "owner VARCHAR(30) NOT NULL,"+
+                "type VARCHAR(15) NOT NULL);",
                 db
                 );
                 createDatabase.ExecuteNonQuery();
@@ -109,6 +115,40 @@ namespace Database
             return list;
         }
 
+        public Queue<Order> getAllSellingOrders()
+        {
+            Queue<Order> list = new Queue<Order>();
+
+            SQLiteCommand GetSellingOrders = new SQLiteCommand(
+                "select owner from orders WHERE type='SELLING';", db);
+            SQLiteDataReader reader = GetSellingOrders.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Order order = new Order(reader.GetString(0), Order.OrderType.SELLING);
+                list.Enqueue(order);
+            }
+
+            return list;
+        }
+
+        public Queue<Order> GetBuyingOrders()
+        {
+            Queue<Order> list = new Queue<Order>();
+
+            SQLiteCommand getBuyingOrders = new SQLiteCommand(
+                "select owner from orders WHERE type='BUYING';", db);
+            SQLiteDataReader reader = getBuyingOrders.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Order order = new Order(reader.GetString(0), Order.OrderType.BUYING);
+                list.Enqueue(order);
+            }
+
+            return list;
+        }
+
         public List<Diginote> getAllDiginotes()
         {
             List<Diginote> list = new List<Diginote>();
@@ -160,6 +200,26 @@ namespace Database
             return update.ExecuteNonQuery();
         }
 
+        public void AddOrder(Order order)
+        {
+            SQLiteCommand registerOrder = new SQLiteCommand(
+                "insert into orders(owner, type) values('" +
+                order.owner + "','" + order.type.ToString() + "');",
+                db);
+            registerOrder.ExecuteNonQuery();
 
+            registerOrder.Dispose();
+        }
+
+        public void RemoveOrder(Order order)
+        {
+            SQLiteCommand removeOrder = new SQLiteCommand(
+                "DELETE FROM orders WHERE owner='" + order.owner +
+                "' AND type='" + order.type.ToString() + "';",
+                db);
+            removeOrder.ExecuteNonQuery();
+
+            removeOrder.Dispose();
+        }
     }
 }

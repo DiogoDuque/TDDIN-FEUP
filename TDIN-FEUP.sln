@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "TDIN-FEUP\Client.csproj", "{E755E198-D989-4ADB-96E4-C0F5CDEA9043}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A656E144-0BD9-489F-AFCA-156775D57F5C} = {A656E144-0BD9-489F-AFCA-156775D57F5C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{338F4269-1124-4794-A2F2-2AF7E6C4831A}"
 EndProject
@@ -14,6 +17,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{A656E144-0BD9-489F-AFCA-156775D57F5C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientGUI", "ClientGUI\ClientGUI.csproj", "{D87E2B2D-EEA8-498B-96A8-E0162E1FA7E5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A656E144-0BD9-489F-AFCA-156775D57F5C} = {A656E144-0BD9-489F-AFCA-156775D57F5C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseTests", "DatabaseTests\DatabaseTests.csproj", "{B20B8B0D-8551-4B0C-A8D3-D1F10CEA7AA7}"
 EndProject

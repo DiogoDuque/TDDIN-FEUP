@@ -134,4 +134,18 @@ namespace Common
             return hex;
         }
     }
+
+    [Serializable]
+    public class Order
+    {
+        public enum OrderType { BUYING, SELLING};
+        public string owner;
+        public OrderType type;
+        
+        public Order(string orderOwner, OrderType orderType)
+        {
+            this.owner = orderOwner;
+            this.type = orderType;
+        }
+    }
 }
