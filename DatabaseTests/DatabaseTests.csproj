@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0617E10E-6159-4010-BA29-97FD91686885}</ProjectGuid>
+    <ProjectGuid>{B20B8B0D-8551-4B0C-A8D3-D1F10CEA7AA7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerTests</RootNamespace>
-    <AssemblyName>ServerTests</AssemblyName>
+    <RootNamespace>DatabaseTests</RootNamespace>
+    <AssemblyName>DatabaseTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -75,7 +75,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="CoordinatorTests.cs" />
+    <Compile Include="DiginoteDBTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,20 +84,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{CD1C933E-E666-49F2-AFC2-7007CDE933E6}</Project>
+      <Project>{cd1c933e-e666-49f2-afc2-7007cde933e6}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Coordinator\Coordinator.csproj">
-      <Project>{8B091253-6B87-4E1D-97DD-A45FE65B4099}</Project>
-      <Name>Coordinator</Name>
     </ProjectReference>
     <ProjectReference Include="..\Database\Database.csproj">
       <Project>{A656E144-0BD9-489F-AFCA-156775D57F5C}</Project>
       <Name>Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{338F4269-1124-4794-A2F2-2AF7E6C4831A}</Project>
-      <Name>Server</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

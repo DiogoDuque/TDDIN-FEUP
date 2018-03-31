@@ -1,5 +1,5 @@
 ﻿using Common;
-using Server;
+using Coord;
 using System;
 using System.Runtime.Remoting;
 using System.Windows.Forms;

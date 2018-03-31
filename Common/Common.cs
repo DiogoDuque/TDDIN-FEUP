@@ -37,6 +37,21 @@ namespace Common
             serialNumber = serial;
             ownerNickname = owner;
         }
+
+        public override bool Equals(object obj)
+        {
+            Diginote item = obj as Diginote;
+
+            if (item == null)
+                return false;
+
+            if (this.serialNumber.Equals(item.serialNumber) &&
+                this.ownerNickname.Equals(item.ownerNickname) &&
+                this.facialValue.Equals(item.facialValue))
+                return true;
+            else
+                return false;
+        }
     }
 
     /**
@@ -82,8 +97,9 @@ namespace Common
             if (item == null)
                 return false;
 
-            if (this.nickname.Equals(item.nickname) || 
-                this.name.ToLower().Equals(item.name.ToLower()))
+            if (this.nickname.Equals(item.nickname) &&
+                this.name.ToLower().Equals(item.name.ToLower()) &&
+                this.password.Equals(item.password)) //TODO Acho que é só o nickname
                 return true;
             else
                 return false;
@@ -99,6 +115,8 @@ namespace Common
             return "[" + name + "|" + nickname + "|" + isLoggedIn.ToString() + "]";
         }
     }
+
+    public delegate void LogDelegate(string oldOwner, string newOwner, int quantity);
 
     public class Utils
     {

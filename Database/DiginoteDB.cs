@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database
 {
@@ -26,6 +23,7 @@ namespace Database
             if(reset || !File.Exists(Directory.GetCurrentDirectory() + "/" + dbFilename))
             {
                 SQLiteConnection.CreateFile(dbFilename);
+                Console.WriteLine("Creating a new DB");
 
                 //Open Database connection
                 db = new SQLiteConnection("Data Source=" + dbFilename + ";Version=3;");
@@ -53,7 +51,7 @@ namespace Database
             }
         }
 
-        public void registerUser(User user)
+        public void insertUser(User user)
         {
             SQLiteCommand register = new SQLiteCommand(
                 "insert into users(name, nickname, password) values(\""
@@ -64,7 +62,7 @@ namespace Database
             register.Dispose();
         }
 
-        public void registerDiginote(long serialNumber, string ownerNickname)
+        public void insertDiginote(long serialNumber, string ownerNickname)
         {
             //Get owner ID in the database
             int ownerId = getUserId(ownerNickname);
@@ -80,6 +78,11 @@ namespace Database
 
         }
 
+        public void insertDiginote(Diginote note)
+        {
+            insertDiginote(note.SerialNumber, note.OwnerNickname);
+        }
+
         public void transferDiginote(long serialNumber, string newOwnerNickname)
         {
             int newOwnerId = getUserId(newOwnerNickname);
@@ -88,6 +91,40 @@ namespace Database
             {
                 throw new ArgumentException("Diginote serial number " + serialNumber.ToString() + " does not exist");
             }
+        }
+
+        public List<User> getAllUsers()
+        {
+            List<User> list = new List<User>();
+
+            SQLiteCommand getUsers = new SQLiteCommand(
+                "select * from users;", db);
+            SQLiteDataReader reader = getUsers.ExecuteReader();
+
+            while(reader.Read())
+            {
+                User user = new User(reader.GetString(1), reader.GetString(2), reader.GetString(3));
+                list.Add(user);
+            }
+
+            return list;
+        }
+
+        public List<Diginote> getAllDiginotes()
+        {
+            List<Diginote> list = new List<Diginote>();
+
+            SQLiteCommand getNotes = new SQLiteCommand(
+                "select serialNumber, nickname from diginotes, users where diginotes.iduser = users.id;", db);
+            SQLiteDataReader reader = getNotes.ExecuteReader();
+
+            while(reader.Read())
+            {
+                Diginote note = new Diginote(reader.GetInt64(0), reader.GetString(1));
+                list.Add(note);
+            }
+
+            return list;
         }
 
         private int getUserId(string nickname)
@@ -123,6 +160,7 @@ namespace Database
 
             return update.ExecuteNonQuery();
         }
+
 
     }
 }
