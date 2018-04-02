@@ -497,6 +497,7 @@
             this.numDiginotesSellNumeric.Name = "numDiginotesSellNumeric";
             this.numDiginotesSellNumeric.Size = new System.Drawing.Size(67, 30);
             this.numDiginotesSellNumeric.TabIndex = 0;
+            this.numDiginotesSellNumeric.ValueChanged += new System.EventHandler(this.numDiginotesSellNumeric_ValueChanged);
             // 
             // tabSellAndPurchaseOrders
             // 
@@ -624,6 +625,7 @@
             this.numDiginotesPurchaseNumeric.Name = "numDiginotesPurchaseNumeric";
             this.numDiginotesPurchaseNumeric.Size = new System.Drawing.Size(67, 30);
             this.numDiginotesPurchaseNumeric.TabIndex = 0;
+            this.numDiginotesPurchaseNumeric.ValueChanged += new System.EventHandler(this.numDiginotesPurchaseNumeric_ValueChanged);
             // 
             // AddDiginotes
             // 

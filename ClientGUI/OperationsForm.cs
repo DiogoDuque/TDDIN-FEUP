@@ -10,6 +10,12 @@ namespace ClientGUI
     {
         private Coordinator coordinator;
         private string username;
+        private int userAvailableDiginotes;
+        private decimal diginoteQuote;
+        private int mySellingOrders;
+        private int myPurchasingOrders;
+        private int totalSellingOrders;
+        private int totalPurchasingOrders;
 
         private const int CP_NOCLOSE_BUTTON = 0x200;
         protected override CreateParams CreateParams
@@ -63,27 +69,32 @@ namespace ClientGUI
         }
         private void update()
         {
-            int userAvailableDiginotes = coordinator.GetUserDiginoteQuantity(username) - coordinator.GetAmountSellingOrders(username);
-            decimal diginoteQuote = (decimal)coordinator.DiginoteQuote;
-            int mySellingOrders = coordinator.GetAmountSellingOrders(username);
-            int myPurchasingOrders = coordinator.GetAmountBuyingOrders(username);
-            int totalSellingOrders = coordinator.GetAmountSellingOrders();
-            int totalPurchasingOrders = coordinator.GetAmountBuyingOrders();
+            userAvailableDiginotes = coordinator.GetUserDiginoteQuantity(username) - coordinator.GetAmountSellingOrders(username);
+            diginoteQuote = (decimal)coordinator.DiginoteQuote;
+            mySellingOrders = coordinator.GetAmountSellingOrders(username);
+            myPurchasingOrders = coordinator.GetAmountBuyingOrders(username);
+            totalSellingOrders = coordinator.GetAmountSellingOrders();
+            totalPurchasingOrders = coordinator.GetAmountBuyingOrders();
 
-            //System Information
+            updateSystemInformation();
+            updateMyInformation();
+            updateEmitSellOrder();
+            updateEmitPurchaseOrder();
 
+        }
+
+        private void updateSystemInformation()
+        {
             currentQuoteTextBox.Text = diginoteQuote.ToString();
             systemSellingOrdersTextBox.Text = totalSellingOrders.ToString();
             systemPurchaseOrdersTextBox.Text = totalPurchasingOrders.ToString();
+        }
 
-            //My Information
-
+        private void updateMyInformation()
+        {
             myDiginotesTextBox.Text = userAvailableDiginotes.ToString();
-            myDiginotesTextBox.Refresh();
             mySellingOrdersTextBox.Text = mySellingOrders.ToString();
-            mySellingOrdersTextBox.Refresh();
             myPurchaseOrdersTextBox.Text = myPurchasingOrders.ToString();
-            myPurchaseOrdersTextBox.Refresh();
             changeQuoteSellNumeric.Maximum = diginoteQuote;
             changeQuotePurchaseNumeric.Minimum = diginoteQuote;
             //changeQuoteSellNumeric.Value = diginoteQuote;
@@ -111,7 +122,7 @@ namespace ClientGUI
                 changeQuotePurchaseNumeric.Enabled = false;
             }
 
-            if(mySellingOrders > 0 || myPurchasingOrders > 0)
+            if (mySellingOrders > 0 || myPurchasingOrders > 0)
             {
                 submitChangeQuoteButton.Visible = true;
             }
@@ -119,9 +130,10 @@ namespace ClientGUI
             {
                 submitChangeQuoteButton.Visible = false;
             }
+        }
 
-            //Emit Sell Order
-
+        private void updateEmitSellOrder()
+        {
             if (userAvailableDiginotes > 0)
             {
                 sendSellingOrderButton.Enabled = true;
@@ -149,13 +161,14 @@ namespace ClientGUI
                 remainingSellQuoteNumeric.Visible = false;
                 label4.Visible = false;
             }
+        }
 
-            //Emit Purchase Order
-
+        private void updateEmitPurchaseOrder()
+        {
             remainingPurchaseQuoteNumeric.Maximum = diginoteQuote;
             //remainingPurchaseQuoteNumeric.Value = diginoteQuote;
 
-            if(numDiginotesPurchaseNumeric.Value > 0 && (decimal)totalPurchasingOrders + numDiginotesPurchaseNumeric.Value > (decimal)totalSellingOrders)
+            if (numDiginotesPurchaseNumeric.Value > 0 && (decimal)totalPurchasingOrders + numDiginotesPurchaseNumeric.Value > (decimal)totalSellingOrders)
             {
                 purchasingOrderWarningTextBox.Visible = true;
                 remainingPurchaseQuoteNumeric.Visible = true;
@@ -167,7 +180,6 @@ namespace ClientGUI
                 remainingPurchaseQuoteNumeric.Visible = false;
                 label3.Visible = false;
             }
-
         }
 
         private void infoUpdateButton_Click(object sender, EventArgs e)
@@ -286,6 +298,16 @@ namespace ClientGUI
             {
                 sellingQueue.Send(new Order(username, Order.OrderType.BUYING));
             }
+        }
+
+        private void numDiginotesSellNumeric_ValueChanged(object sender, EventArgs e)
+        {
+            updateEmitSellOrder();
+        }
+
+        private void numDiginotesPurchaseNumeric_ValueChanged(object sender, EventArgs e)
+        {
+            updateEmitPurchaseOrder();
         }
     }
 }
