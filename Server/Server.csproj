@@ -73,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClientGUI\ClientGUI.csproj">
+      <Project>{d87e2b2d-eea8-498b-96a8-e0162e1fa7e5}</Project>
+      <Name>ClientGUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{CD1C933E-E666-49F2-AFC2-7007CDE933E6}</Project>
       <Name>Common</Name>

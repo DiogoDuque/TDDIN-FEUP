@@ -118,10 +118,6 @@
       <Project>{8B091253-6B87-4E1D-97DD-A45FE65B4099}</Project>
       <Name>Coordinator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{338f4269-1124-4794-a2f2-2af7e6c4831a}</Project>
-      <Name>Server</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />

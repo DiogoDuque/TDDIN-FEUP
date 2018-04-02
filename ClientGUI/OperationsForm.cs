@@ -29,7 +29,7 @@ namespace ClientGUI
             InitializeComponent();
             nicknameLabel.Text = "Hello "+username +" !";
             updateInfo();
-            //coordinator.logger += ShowTransactionMessage;
+            coordinator.logger += ShowTransactionMessage;
         }
 
         private void ShowTransactionMessage(string oldOwner, string newOwner, int quantity)
@@ -42,35 +42,107 @@ namespace ClientGUI
 
         private void updateInfo()
         {
-            int numUserDiginotes = coordinator.GetUserDiginoteQuantity(username);
+            int userAvailableDiginotes = coordinator.GetUserDiginoteQuantity(username) - coordinator.GetAmountSellingOrders(username);
             decimal diginoteQuote = (decimal)coordinator.DiginoteQuote;
+            int mySellingOrders = coordinator.GetAmountSellingOrders(username);
+            int myPurchasingOrders = coordinator.GetAmountBuyingOrders(username);
+            int totalSellingOrders = coordinator.GetAmountSellingOrders();
+            int totalPurchasingOrders = coordinator.GetAmountBuyingOrders();
 
             //System Information
 
             currentQuoteTextBox.Text = diginoteQuote.ToString();
-            systemSellingOrdersTextBox.Text = coordinator.GetAmountSellingOrders().ToString();
-            systemPurchaseOrdersTextBox.Text = coordinator.GetAmountBuyingOrders().ToString();
+            systemSellingOrdersTextBox.Text = totalSellingOrders.ToString();
+            systemPurchaseOrdersTextBox.Text = totalPurchasingOrders.ToString();
 
             //My Information
 
-            myDiginotesTextBox.Text = numUserDiginotes.ToString();
-            mySellingOrdersTextBox.Text = coordinator.GetAmountSellingOrders(username).ToString();
-            myPurchaseOrdersTextBox.Text = coordinator.GetAmountBuyingOrders(username).ToString();
+            myDiginotesTextBox.Text = userAvailableDiginotes.ToString();
+            mySellingOrdersTextBox.Text = mySellingOrders.ToString();
+            myPurchaseOrdersTextBox.Text = myPurchasingOrders.ToString();
+            changeQuoteSellNumeric.Maximum = diginoteQuote;
+            changeQuotePurchaseNumeric.Minimum = diginoteQuote;
             changeQuoteSellNumeric.Value = diginoteQuote;
             changeQuotePurchaseNumeric.Value = diginoteQuote;
 
+            if (mySellingOrders > 0)
+            {
+                changeQuoteSellNumeric.ReadOnly = false;
+                changeQuoteSellNumeric.Enabled = true;
+            }
+            else
+            {
+                changeQuoteSellNumeric.ReadOnly = true;
+                changeQuoteSellNumeric.Enabled = false;
+            }
+
+            if (myPurchasingOrders > 0)
+            {
+                changeQuotePurchaseNumeric.ReadOnly = false;
+                changeQuotePurchaseNumeric.Enabled = true;
+            }
+            else
+            {
+                changeQuotePurchaseNumeric.ReadOnly = true;
+                changeQuotePurchaseNumeric.Enabled = false;
+            }
+
+            if(mySellingOrders > 0 || myPurchasingOrders > 0)
+            {
+                submitChangeQuoteButton.Visible = true;
+            }
+            else
+            {
+                submitChangeQuoteButton.Visible = false;
+            }
+
             //Emit Sell Order
 
-            numDiginotesSellNumeric.Maximum = numUserDiginotes;
-            numDiginotesSellNumeric.Value = numUserDiginotes;
+            if (userAvailableDiginotes > 0)
+            {
+                sendSellingOrderButton.Enabled = true;
+            }
+            else
+            {
+                sendSellingOrderButton.Enabled = false;
+            }
+
+            numDiginotesSellNumeric.Maximum = userAvailableDiginotes;
+            numDiginotesSellNumeric.Value = userAvailableDiginotes;
             remainingSellQuoteNumeric.Minimum = diginoteQuote;
             remainingSellQuoteNumeric.Value = diginoteQuote;
+
+            //Show warnings when limit is passed
+            if (numDiginotesSellNumeric.Value > 0 && (decimal)totalSellingOrders + numDiginotesSellNumeric.Value > (decimal)totalPurchasingOrders)
+            {
+                sellingOrderWarningTextBox.Visible = true;
+                remainingSellQuoteNumeric.Visible = true;
+                label4.Visible = true;
+            }
+            else
+            {
+                sellingOrderWarningTextBox.Visible = false;
+                remainingSellQuoteNumeric.Visible = false;
+                label4.Visible = false;
+            }
 
             //Emit Purchase Order
 
             remainingPurchaseQuoteNumeric.Maximum = diginoteQuote;
             remainingPurchaseQuoteNumeric.Value = diginoteQuote;
 
+            if(numDiginotesPurchaseNumeric.Value > 0 && (decimal)totalPurchasingOrders + numDiginotesPurchaseNumeric.Value > (decimal)totalSellingOrders)
+            {
+                purchasingOrderWarningTextBox.Visible = true;
+                remainingPurchaseQuoteNumeric.Visible = true;
+                label3.Visible = true;
+            }
+            else
+            {
+                purchasingOrderWarningTextBox.Visible = false;
+                remainingPurchaseQuoteNumeric.Visible = false;
+                label3.Visible = false;
+            }
 
         }
 
@@ -179,6 +251,7 @@ namespace ClientGUI
             {
                 sellingQueue.Send(new Order(username, Order.OrderType.SELLING));
             }
+            updateInfo();
         }
 
         private void sendPurchasingOrderButton_Click(object sender, EventArgs e)
@@ -190,6 +263,7 @@ namespace ClientGUI
             {
                 sellingQueue.Send(new Order(username, Order.OrderType.BUYING));
             }
+            updateInfo();
         }
     }
 }

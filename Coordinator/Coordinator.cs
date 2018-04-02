@@ -311,6 +311,11 @@ namespace Coord
             if (msg.Body is Order && ((Order)msg.Body).type.Equals(Order.OrderType.SELLING))
             {
                 sellingOrder = (Order)msg.Body;
+                int userDiginotes = GetUserDiginoteQuantity(sellingOrder.owner);
+                int userSellingOrders = GetAmountSellingOrders(sellingOrder.owner);
+                if (userDiginotes - userSellingOrders < 1)
+                    throw new InvalidOperationException("Cannot create selling orders when there is no more diginotes to sell");
+
                 db.AddOrder(sellingOrder);
 
                 //handle and trigger action if necessary

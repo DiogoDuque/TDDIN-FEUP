@@ -98,9 +98,11 @@
             this.systemInfo.Controls.Add(this.systemSellingOrdersTextBox);
             this.systemInfo.Controls.Add(this.systemSellingOrdersLabel);
             this.systemInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.systemInfo.Location = new System.Drawing.Point(18, 157);
+            this.systemInfo.Location = new System.Drawing.Point(12, 102);
+            this.systemInfo.Margin = new System.Windows.Forms.Padding(2);
             this.systemInfo.Name = "systemInfo";
-            this.systemInfo.Size = new System.Drawing.Size(926, 103);
+            this.systemInfo.Padding = new System.Windows.Forms.Padding(2);
+            this.systemInfo.Size = new System.Drawing.Size(617, 67);
             this.systemInfo.TabIndex = 0;
             this.systemInfo.TabStop = false;
             this.systemInfo.Text = "System Information";
@@ -108,29 +110,32 @@
             // systemPurchaseOrdersTextBox
             // 
             this.systemPurchaseOrdersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.systemPurchaseOrdersTextBox.Location = new System.Drawing.Point(849, 48);
+            this.systemPurchaseOrdersTextBox.Location = new System.Drawing.Point(566, 31);
+            this.systemPurchaseOrdersTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.systemPurchaseOrdersTextBox.Name = "systemPurchaseOrdersTextBox";
             this.systemPurchaseOrdersTextBox.ReadOnly = true;
-            this.systemPurchaseOrdersTextBox.Size = new System.Drawing.Size(44, 32);
+            this.systemPurchaseOrdersTextBox.Size = new System.Drawing.Size(31, 24);
             this.systemPurchaseOrdersTextBox.TabIndex = 5;
             // 
             // currentQuoteLabel
             // 
             this.currentQuoteLabel.AutoSize = true;
             this.currentQuoteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.currentQuoteLabel.Location = new System.Drawing.Point(14, 51);
+            this.currentQuoteLabel.Location = new System.Drawing.Point(9, 33);
+            this.currentQuoteLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.currentQuoteLabel.Name = "currentQuoteLabel";
-            this.currentQuoteLabel.Size = new System.Drawing.Size(168, 26);
+            this.currentQuoteLabel.Size = new System.Drawing.Size(115, 18);
             this.currentQuoteLabel.TabIndex = 0;
             this.currentQuoteLabel.Text = "Diginotes Quote";
             // 
             // currentQuoteTextBox
             // 
             this.currentQuoteTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.currentQuoteTextBox.Location = new System.Drawing.Point(188, 48);
+            this.currentQuoteTextBox.Location = new System.Drawing.Point(125, 31);
+            this.currentQuoteTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.currentQuoteTextBox.Name = "currentQuoteTextBox";
             this.currentQuoteTextBox.ReadOnly = true;
-            this.currentQuoteTextBox.Size = new System.Drawing.Size(74, 32);
+            this.currentQuoteTextBox.Size = new System.Drawing.Size(51, 24);
             this.currentQuoteTextBox.TabIndex = 1;
             this.currentQuoteTextBox.TextChanged += new System.EventHandler(this.currentQuoteTextBox_TextChanged);
             // 
@@ -138,37 +143,41 @@
             // 
             this.systemPurchaseOrdersLabel.AutoSize = true;
             this.systemPurchaseOrdersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.systemPurchaseOrdersLabel.Location = new System.Drawing.Point(668, 51);
+            this.systemPurchaseOrdersLabel.Location = new System.Drawing.Point(445, 33);
+            this.systemPurchaseOrdersLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.systemPurchaseOrdersLabel.Name = "systemPurchaseOrdersLabel";
-            this.systemPurchaseOrdersLabel.Size = new System.Drawing.Size(176, 26);
+            this.systemPurchaseOrdersLabel.Size = new System.Drawing.Size(121, 18);
             this.systemPurchaseOrdersLabel.TabIndex = 4;
             this.systemPurchaseOrdersLabel.Text = "Purchase Orders";
             // 
             // systemSellingOrdersTextBox
             // 
             this.systemSellingOrdersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.systemSellingOrdersTextBox.Location = new System.Drawing.Point(512, 48);
+            this.systemSellingOrdersTextBox.Location = new System.Drawing.Point(341, 31);
+            this.systemSellingOrdersTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.systemSellingOrdersTextBox.Name = "systemSellingOrdersTextBox";
             this.systemSellingOrdersTextBox.ReadOnly = true;
-            this.systemSellingOrdersTextBox.Size = new System.Drawing.Size(44, 32);
+            this.systemSellingOrdersTextBox.Size = new System.Drawing.Size(31, 24);
             this.systemSellingOrdersTextBox.TabIndex = 3;
             // 
             // systemSellingOrdersLabel
             // 
             this.systemSellingOrdersLabel.AutoSize = true;
             this.systemSellingOrdersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.systemSellingOrdersLabel.Location = new System.Drawing.Point(356, 51);
+            this.systemSellingOrdersLabel.Location = new System.Drawing.Point(237, 33);
+            this.systemSellingOrdersLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.systemSellingOrdersLabel.Name = "systemSellingOrdersLabel";
-            this.systemSellingOrdersLabel.Size = new System.Drawing.Size(150, 26);
+            this.systemSellingOrdersLabel.Size = new System.Drawing.Size(101, 18);
             this.systemSellingOrdersLabel.TabIndex = 2;
             this.systemSellingOrdersLabel.Text = "Selling Orders";
             // 
             // infoUpdateButton
             // 
             this.infoUpdateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.infoUpdateButton.Location = new System.Drawing.Point(18, 74);
+            this.infoUpdateButton.Location = new System.Drawing.Point(12, 48);
+            this.infoUpdateButton.Margin = new System.Windows.Forms.Padding(2);
             this.infoUpdateButton.Name = "infoUpdateButton";
-            this.infoUpdateButton.Size = new System.Drawing.Size(168, 45);
+            this.infoUpdateButton.Size = new System.Drawing.Size(112, 29);
             this.infoUpdateButton.TabIndex = 6;
             this.infoUpdateButton.Text = "Update Info";
             this.infoUpdateButton.UseVisualStyleBackColor = true;
@@ -178,9 +187,10 @@
             // 
             this.title.AutoSize = true;
             this.title.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.title.Location = new System.Drawing.Point(12, 9);
+            this.title.Location = new System.Drawing.Point(8, 6);
+            this.title.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(455, 36);
+            this.title.Size = new System.Drawing.Size(302, 25);
             this.title.TabIndex = 8;
             this.title.Text = "Diginote Exchange System Client";
             // 
@@ -188,9 +198,10 @@
             // 
             this.nicknameLabel.AutoSize = true;
             this.nicknameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.nicknameLabel.Location = new System.Drawing.Point(794, 20);
+            this.nicknameLabel.Location = new System.Drawing.Point(529, 13);
+            this.nicknameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nicknameLabel.Name = "nicknameLabel";
-            this.nicknameLabel.Size = new System.Drawing.Size(140, 25);
+            this.nicknameLabel.Size = new System.Drawing.Size(100, 17);
             this.nicknameLabel.TabIndex = 9;
             this.nicknameLabel.Text = "UserNickname";
             this.nicknameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -208,9 +219,11 @@
             this.myInfo.Controls.Add(this.myPurchaseOrdersLabel);
             this.myInfo.Controls.Add(this.mySellingOrdersLabel);
             this.myInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.myInfo.Location = new System.Drawing.Point(18, 305);
+            this.myInfo.Location = new System.Drawing.Point(12, 198);
+            this.myInfo.Margin = new System.Windows.Forms.Padding(2);
             this.myInfo.Name = "myInfo";
-            this.myInfo.Size = new System.Drawing.Size(447, 395);
+            this.myInfo.Padding = new System.Windows.Forms.Padding(2);
+            this.myInfo.Size = new System.Drawing.Size(298, 257);
             this.myInfo.TabIndex = 10;
             this.myInfo.TabStop = false;
             this.myInfo.Text = "My Information";
@@ -222,20 +235,18 @@
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.changeQuotePurchaseNumeric);
             this.panel1.Controls.Add(this.changeQuoteSellNumeric);
-            this.panel1.Location = new System.Drawing.Point(282, 135);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panel1.Location = new System.Drawing.Point(205, 88);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(158, 193);
+            this.panel1.Size = new System.Drawing.Size(89, 126);
             this.panel1.TabIndex = 13;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label6.Location = new System.Drawing.Point(4, 17);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.label6.Location = new System.Drawing.Point(1, 10);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(141, 25);
+            this.label6.Size = new System.Drawing.Size(86, 15);
             this.label6.TabIndex = 2;
             this.label6.Text = "Change Quote";
             this.label6.Click += new System.EventHandler(this.label6_Click);
@@ -243,44 +254,70 @@
             // changeQuotePurchaseNumeric
             // 
             this.changeQuotePurchaseNumeric.DecimalPlaces = 2;
-            this.changeQuotePurchaseNumeric.Enabled = false;
             this.changeQuotePurchaseNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.changeQuotePurchaseNumeric.Location = new System.Drawing.Point(27, 140);
-            this.changeQuotePurchaseNumeric.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.changeQuotePurchaseNumeric.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.changeQuotePurchaseNumeric.Location = new System.Drawing.Point(14, 91);
+            this.changeQuotePurchaseNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.changeQuotePurchaseNumeric.Name = "changeQuotePurchaseNumeric";
             this.changeQuotePurchaseNumeric.ReadOnly = true;
-            this.changeQuotePurchaseNumeric.Size = new System.Drawing.Size(92, 32);
+            this.changeQuotePurchaseNumeric.Size = new System.Drawing.Size(61, 24);
             this.changeQuotePurchaseNumeric.TabIndex = 1;
+            this.changeQuotePurchaseNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.changeQuotePurchaseNumeric.ValueChanged += new System.EventHandler(this.numericUpDown6_ValueChanged);
             // 
             // changeQuoteSellNumeric
             // 
             this.changeQuoteSellNumeric.DecimalPlaces = 2;
-            this.changeQuoteSellNumeric.Enabled = false;
             this.changeQuoteSellNumeric.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.changeQuoteSellNumeric.Location = new System.Drawing.Point(27, 71);
-            this.changeQuoteSellNumeric.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.changeQuoteSellNumeric.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.changeQuoteSellNumeric.Location = new System.Drawing.Point(14, 46);
+            this.changeQuoteSellNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.changeQuoteSellNumeric.Name = "changeQuoteSellNumeric";
             this.changeQuoteSellNumeric.ReadOnly = true;
-            this.changeQuoteSellNumeric.Size = new System.Drawing.Size(92, 32);
+            this.changeQuoteSellNumeric.Size = new System.Drawing.Size(61, 24);
             this.changeQuoteSellNumeric.TabIndex = 0;
+            this.changeQuoteSellNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 65);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(7, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(296, 36);
+            this.label2.Size = new System.Drawing.Size(199, 25);
             this.label2.TabIndex = 12;
             this.label2.Text = "Complete User Name";
             // 
             // submitChangeQuoteButton
             // 
             this.submitChangeQuoteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.submitChangeQuoteButton.Location = new System.Drawing.Point(18, 337);
+            this.submitChangeQuoteButton.Location = new System.Drawing.Point(12, 219);
+            this.submitChangeQuoteButton.Margin = new System.Windows.Forms.Padding(2);
             this.submitChangeQuoteButton.Name = "submitChangeQuoteButton";
-            this.submitChangeQuoteButton.Size = new System.Drawing.Size(423, 45);
+            this.submitChangeQuoteButton.Size = new System.Drawing.Size(282, 29);
             this.submitChangeQuoteButton.TabIndex = 11;
             this.submitChangeQuoteButton.Text = "Submit Changes";
             this.submitChangeQuoteButton.UseVisualStyleBackColor = true;
@@ -290,69 +327,76 @@
             // myDiginotesTextBox
             // 
             this.myDiginotesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.myDiginotesTextBox.Location = new System.Drawing.Point(228, 145);
+            this.myDiginotesTextBox.Location = new System.Drawing.Point(168, 94);
+            this.myDiginotesTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.myDiginotesTextBox.Name = "myDiginotesTextBox";
             this.myDiginotesTextBox.ReadOnly = true;
-            this.myDiginotesTextBox.Size = new System.Drawing.Size(44, 32);
+            this.myDiginotesTextBox.Size = new System.Drawing.Size(31, 24);
             this.myDiginotesTextBox.TabIndex = 10;
             // 
             // myDiginotesLabel
             // 
             this.myDiginotesLabel.AutoSize = true;
-            this.myDiginotesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.myDiginotesLabel.Location = new System.Drawing.Point(81, 145);
+            this.myDiginotesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.myDiginotesLabel.Location = new System.Drawing.Point(14, 96);
+            this.myDiginotesLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.myDiginotesLabel.Name = "myDiginotesLabel";
-            this.myDiginotesLabel.Size = new System.Drawing.Size(138, 26);
+            this.myDiginotesLabel.Size = new System.Drawing.Size(150, 17);
             this.myDiginotesLabel.TabIndex = 9;
-            this.myDiginotesLabel.Text = "My Diginotes";
+            this.myDiginotesLabel.Text = "My Available Diginotes";
             this.myDiginotesLabel.Click += new System.EventHandler(this.myDiginotesLabel_Click);
             // 
             // myPurchaseOrdersTextBox
             // 
             this.myPurchaseOrdersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.myPurchaseOrdersTextBox.Location = new System.Drawing.Point(228, 277);
+            this.myPurchaseOrdersTextBox.Location = new System.Drawing.Point(168, 180);
+            this.myPurchaseOrdersTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.myPurchaseOrdersTextBox.Name = "myPurchaseOrdersTextBox";
             this.myPurchaseOrdersTextBox.ReadOnly = true;
-            this.myPurchaseOrdersTextBox.Size = new System.Drawing.Size(44, 32);
+            this.myPurchaseOrdersTextBox.Size = new System.Drawing.Size(31, 24);
             this.myPurchaseOrdersTextBox.TabIndex = 8;
             this.myPurchaseOrdersTextBox.TextChanged += new System.EventHandler(this.myPurchaseOrdersTextBox_TextChanged);
             // 
             // mySellingOrdersTextBox
             // 
             this.mySellingOrdersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.mySellingOrdersTextBox.Location = new System.Drawing.Point(228, 208);
+            this.mySellingOrdersTextBox.Location = new System.Drawing.Point(168, 135);
+            this.mySellingOrdersTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.mySellingOrdersTextBox.Name = "mySellingOrdersTextBox";
             this.mySellingOrdersTextBox.ReadOnly = true;
-            this.mySellingOrdersTextBox.Size = new System.Drawing.Size(44, 32);
+            this.mySellingOrdersTextBox.Size = new System.Drawing.Size(31, 24);
             this.mySellingOrdersTextBox.TabIndex = 7;
             this.mySellingOrdersTextBox.TextChanged += new System.EventHandler(this.mySellingOrdersTextBox_TextChanged);
             // 
             // myPurchaseOrdersLabel
             // 
             this.myPurchaseOrdersLabel.AutoSize = true;
-            this.myPurchaseOrdersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.myPurchaseOrdersLabel.Location = new System.Drawing.Point(4, 282);
+            this.myPurchaseOrdersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.myPurchaseOrdersLabel.Location = new System.Drawing.Point(1, 185);
+            this.myPurchaseOrdersLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.myPurchaseOrdersLabel.Name = "myPurchaseOrdersLabel";
-            this.myPurchaseOrdersLabel.Size = new System.Drawing.Size(211, 26);
+            this.myPurchaseOrdersLabel.Size = new System.Drawing.Size(163, 15);
             this.myPurchaseOrdersLabel.TabIndex = 1;
-            this.myPurchaseOrdersLabel.Text = "My Purchase Orders";
+            this.myPurchaseOrdersLabel.Text = "Diginotes Awaiting Purchase";
             // 
             // mySellingOrdersLabel
             // 
             this.mySellingOrdersLabel.AutoSize = true;
-            this.mySellingOrdersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.mySellingOrdersLabel.Location = new System.Drawing.Point(34, 212);
+            this.mySellingOrdersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.mySellingOrdersLabel.Location = new System.Drawing.Point(41, 140);
+            this.mySellingOrdersLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.mySellingOrdersLabel.Name = "mySellingOrdersLabel";
-            this.mySellingOrdersLabel.Size = new System.Drawing.Size(185, 26);
+            this.mySellingOrdersLabel.Size = new System.Drawing.Size(123, 15);
             this.mySellingOrdersLabel.TabIndex = 0;
-            this.mySellingOrdersLabel.Text = "My Selling Orders";
+            this.mySellingOrdersLabel.Text = "My Diginotes for Sale";
             // 
             // logoutButton
             // 
             this.logoutButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.logoutButton.Location = new System.Drawing.Point(798, 74);
+            this.logoutButton.Location = new System.Drawing.Point(532, 48);
+            this.logoutButton.Margin = new System.Windows.Forms.Padding(2);
             this.logoutButton.Name = "logoutButton";
-            this.logoutButton.Size = new System.Drawing.Size(146, 45);
+            this.logoutButton.Size = new System.Drawing.Size(97, 29);
             this.logoutButton.TabIndex = 7;
             this.logoutButton.Text = "Logout";
             this.logoutButton.UseVisualStyleBackColor = true;
@@ -367,11 +411,9 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.numDiginotesSellNumeric);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.groupBox1.Location = new System.Drawing.Point(9, 9);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(438, 337);
+            this.groupBox1.Size = new System.Drawing.Size(292, 219);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Emit Sell Order";
@@ -381,10 +423,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.Location = new System.Drawing.Point(27, 235);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(18, 153);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(249, 25);
+            this.label4.Size = new System.Drawing.Size(181, 17);
             this.label4.TabIndex = 5;
             this.label4.Text = "Remaining Diginotes Quote";
             this.label4.Visible = false;
@@ -392,11 +433,25 @@
             // remainingSellQuoteNumeric
             // 
             this.remainingSellQuoteNumeric.DecimalPlaces = 2;
-            this.remainingSellQuoteNumeric.Location = new System.Drawing.Point(308, 226);
-            this.remainingSellQuoteNumeric.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.remainingSellQuoteNumeric.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.remainingSellQuoteNumeric.Location = new System.Drawing.Point(205, 147);
+            this.remainingSellQuoteNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.remainingSellQuoteNumeric.Name = "remainingSellQuoteNumeric";
-            this.remainingSellQuoteNumeric.Size = new System.Drawing.Size(100, 41);
+            this.remainingSellQuoteNumeric.Size = new System.Drawing.Size(67, 30);
             this.remainingSellQuoteNumeric.TabIndex = 4;
+            this.remainingSellQuoteNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.remainingSellQuoteNumeric.Visible = false;
             this.remainingSellQuoteNumeric.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
@@ -406,11 +461,10 @@
             this.sellingOrderWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.sellingOrderWarningTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.sellingOrderWarningTextBox.ForeColor = System.Drawing.Color.Red;
-            this.sellingOrderWarningTextBox.Location = new System.Drawing.Point(32, 105);
-            this.sellingOrderWarningTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.sellingOrderWarningTextBox.Location = new System.Drawing.Point(21, 68);
             this.sellingOrderWarningTextBox.Name = "sellingOrderWarningTextBox";
             this.sellingOrderWarningTextBox.ReadOnly = true;
-            this.sellingOrderWarningTextBox.Size = new System.Drawing.Size(384, 120);
+            this.sellingOrderWarningTextBox.Size = new System.Drawing.Size(256, 78);
             this.sellingOrderWarningTextBox.TabIndex = 3;
             this.sellingOrderWarningTextBox.Text = "The number of diginotes you want to sell is higher than the quantity the other us" +
     "ers want to buy. You may choose a lower quote for the remaining diginotes.";
@@ -418,10 +472,9 @@
             // 
             // sendSellingOrderButton
             // 
-            this.sendSellingOrderButton.Location = new System.Drawing.Point(39, 285);
-            this.sendSellingOrderButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.sendSellingOrderButton.Location = new System.Drawing.Point(26, 185);
             this.sendSellingOrderButton.Name = "sendSellingOrderButton";
-            this.sendSellingOrderButton.Size = new System.Drawing.Size(384, 43);
+            this.sendSellingOrderButton.Size = new System.Drawing.Size(256, 28);
             this.sendSellingOrderButton.TabIndex = 2;
             this.sendSellingOrderButton.Text = "Send";
             this.sendSellingOrderButton.UseVisualStyleBackColor = true;
@@ -431,20 +484,18 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label1.Location = new System.Drawing.Point(38, 62);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(25, 40);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(167, 26);
+            this.label1.Size = new System.Drawing.Size(115, 18);
             this.label1.TabIndex = 1;
             this.label1.Text = "No. of Diginotes";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // numDiginotesSellNumeric
             // 
-            this.numDiginotesSellNumeric.Location = new System.Drawing.Point(232, 51);
-            this.numDiginotesSellNumeric.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.numDiginotesSellNumeric.Location = new System.Drawing.Point(155, 33);
             this.numDiginotesSellNumeric.Name = "numDiginotesSellNumeric";
-            this.numDiginotesSellNumeric.Size = new System.Drawing.Size(100, 41);
+            this.numDiginotesSellNumeric.Size = new System.Drawing.Size(67, 30);
             this.numDiginotesSellNumeric.TabIndex = 0;
             // 
             // tabSellAndPurchaseOrders
@@ -452,11 +503,10 @@
             this.tabSellAndPurchaseOrders.Controls.Add(this.tabPageSelling);
             this.tabSellAndPurchaseOrders.Controls.Add(this.tabPagePurchasing);
             this.tabSellAndPurchaseOrders.ItemSize = new System.Drawing.Size(43, 18);
-            this.tabSellAndPurchaseOrders.Location = new System.Drawing.Point(472, 305);
-            this.tabSellAndPurchaseOrders.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabSellAndPurchaseOrders.Location = new System.Drawing.Point(315, 198);
             this.tabSellAndPurchaseOrders.Name = "tabSellAndPurchaseOrders";
             this.tabSellAndPurchaseOrders.SelectedIndex = 0;
-            this.tabSellAndPurchaseOrders.Size = new System.Drawing.Size(471, 395);
+            this.tabSellAndPurchaseOrders.Size = new System.Drawing.Size(314, 257);
             this.tabSellAndPurchaseOrders.TabIndex = 12;
             // 
             // tabPageSelling
@@ -464,10 +514,9 @@
             this.tabPageSelling.BackColor = System.Drawing.Color.DarkKhaki;
             this.tabPageSelling.Controls.Add(this.groupBox1);
             this.tabPageSelling.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSelling.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPageSelling.Name = "tabPageSelling";
-            this.tabPageSelling.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPageSelling.Size = new System.Drawing.Size(463, 369);
+            this.tabPageSelling.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSelling.Size = new System.Drawing.Size(306, 231);
             this.tabPageSelling.TabIndex = 0;
             this.tabPageSelling.Text = "Selling";
             // 
@@ -476,10 +525,9 @@
             this.tabPagePurchasing.BackColor = System.Drawing.Color.LightCoral;
             this.tabPagePurchasing.Controls.Add(this.groupBox2);
             this.tabPagePurchasing.Location = new System.Drawing.Point(4, 22);
-            this.tabPagePurchasing.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPagePurchasing.Name = "tabPagePurchasing";
-            this.tabPagePurchasing.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPagePurchasing.Size = new System.Drawing.Size(463, 369);
+            this.tabPagePurchasing.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePurchasing.Size = new System.Drawing.Size(306, 231);
             this.tabPagePurchasing.TabIndex = 1;
             this.tabPagePurchasing.Text = "Purchasing";
             // 
@@ -492,11 +540,9 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.numDiginotesPurchaseNumeric);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.groupBox2.Location = new System.Drawing.Point(9, 9);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox2.Size = new System.Drawing.Size(438, 337);
+            this.groupBox2.Size = new System.Drawing.Size(292, 219);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Emit Purchase Order";
@@ -505,10 +551,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label3.Location = new System.Drawing.Point(27, 235);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(18, 153);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(249, 25);
+            this.label3.Size = new System.Drawing.Size(181, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "Remaining Diginotes Quote";
             this.label3.Visible = false;
@@ -516,11 +561,25 @@
             // remainingPurchaseQuoteNumeric
             // 
             this.remainingPurchaseQuoteNumeric.DecimalPlaces = 2;
-            this.remainingPurchaseQuoteNumeric.Location = new System.Drawing.Point(308, 226);
-            this.remainingPurchaseQuoteNumeric.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.remainingPurchaseQuoteNumeric.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.remainingPurchaseQuoteNumeric.Location = new System.Drawing.Point(205, 147);
+            this.remainingPurchaseQuoteNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.remainingPurchaseQuoteNumeric.Name = "remainingPurchaseQuoteNumeric";
-            this.remainingPurchaseQuoteNumeric.Size = new System.Drawing.Size(100, 41);
+            this.remainingPurchaseQuoteNumeric.Size = new System.Drawing.Size(67, 30);
             this.remainingPurchaseQuoteNumeric.TabIndex = 4;
+            this.remainingPurchaseQuoteNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.remainingPurchaseQuoteNumeric.Visible = false;
             // 
             // purchasingOrderWarningTextBox
@@ -529,11 +588,10 @@
             this.purchasingOrderWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.purchasingOrderWarningTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.purchasingOrderWarningTextBox.ForeColor = System.Drawing.Color.Red;
-            this.purchasingOrderWarningTextBox.Location = new System.Drawing.Point(32, 105);
-            this.purchasingOrderWarningTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.purchasingOrderWarningTextBox.Location = new System.Drawing.Point(21, 68);
             this.purchasingOrderWarningTextBox.Name = "purchasingOrderWarningTextBox";
             this.purchasingOrderWarningTextBox.ReadOnly = true;
-            this.purchasingOrderWarningTextBox.Size = new System.Drawing.Size(384, 118);
+            this.purchasingOrderWarningTextBox.Size = new System.Drawing.Size(256, 77);
             this.purchasingOrderWarningTextBox.TabIndex = 3;
             this.purchasingOrderWarningTextBox.Text = "The number of diginotes you want to purchase is higher than the quantity the othe" +
     "r users want to sell. You may choose a higher quote for the remaining diginotes." +
@@ -542,10 +600,9 @@
             // 
             // sendPurchasingOrderButton
             // 
-            this.sendPurchasingOrderButton.Location = new System.Drawing.Point(39, 285);
-            this.sendPurchasingOrderButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.sendPurchasingOrderButton.Location = new System.Drawing.Point(26, 185);
             this.sendPurchasingOrderButton.Name = "sendPurchasingOrderButton";
-            this.sendPurchasingOrderButton.Size = new System.Drawing.Size(384, 43);
+            this.sendPurchasingOrderButton.Size = new System.Drawing.Size(256, 28);
             this.sendPurchasingOrderButton.TabIndex = 2;
             this.sendPurchasingOrderButton.Text = "Send";
             this.sendPurchasingOrderButton.UseVisualStyleBackColor = true;
@@ -555,19 +612,17 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label5.Location = new System.Drawing.Point(38, 62);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(25, 40);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(167, 26);
+            this.label5.Size = new System.Drawing.Size(115, 18);
             this.label5.TabIndex = 1;
             this.label5.Text = "No. of Diginotes";
             // 
             // numDiginotesPurchaseNumeric
             // 
-            this.numDiginotesPurchaseNumeric.Location = new System.Drawing.Point(232, 51);
-            this.numDiginotesPurchaseNumeric.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.numDiginotesPurchaseNumeric.Location = new System.Drawing.Point(155, 33);
             this.numDiginotesPurchaseNumeric.Name = "numDiginotesPurchaseNumeric";
-            this.numDiginotesPurchaseNumeric.Size = new System.Drawing.Size(100, 41);
+            this.numDiginotesPurchaseNumeric.Size = new System.Drawing.Size(67, 30);
             this.numDiginotesPurchaseNumeric.TabIndex = 0;
             // 
             // AddDiginotes
@@ -575,21 +630,18 @@
             this.AddDiginotes.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.AddDiginotes.Controls.Add(this.addDiginotesButton);
             this.AddDiginotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.AddDiginotes.Location = new System.Drawing.Point(20, 742);
-            this.AddDiginotes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.AddDiginotes.Location = new System.Drawing.Point(13, 482);
             this.AddDiginotes.Name = "AddDiginotes";
-            this.AddDiginotes.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.AddDiginotes.Size = new System.Drawing.Size(446, 134);
+            this.AddDiginotes.Size = new System.Drawing.Size(297, 87);
             this.AddDiginotes.TabIndex = 13;
             this.AddDiginotes.TabStop = false;
             this.AddDiginotes.Text = "Add Diginotes";
             // 
             // addDiginotesButton
             // 
-            this.addDiginotesButton.Location = new System.Drawing.Point(34, 63);
-            this.addDiginotesButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.addDiginotesButton.Location = new System.Drawing.Point(23, 41);
             this.addDiginotesButton.Name = "addDiginotesButton";
-            this.addDiginotesButton.Size = new System.Drawing.Size(342, 62);
+            this.addDiginotesButton.Size = new System.Drawing.Size(228, 40);
             this.addDiginotesButton.TabIndex = 0;
             this.addDiginotesButton.Text = "Add 1 Diginote";
             this.addDiginotesButton.UseVisualStyleBackColor = true;
@@ -598,20 +650,19 @@
             // messagesTextBox
             // 
             this.messagesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.messagesTextBox.Location = new System.Drawing.Point(484, 742);
-            this.messagesTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.messagesTextBox.Location = new System.Drawing.Point(323, 482);
             this.messagesTextBox.Name = "messagesTextBox";
             this.messagesTextBox.ReadOnly = true;
-            this.messagesTextBox.Size = new System.Drawing.Size(456, 132);
+            this.messagesTextBox.Size = new System.Drawing.Size(305, 87);
             this.messagesTextBox.TabIndex = 14;
             this.messagesTextBox.Text = "This is the message screen";
             // 
             // OperationsForm
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(972, 894);
+            this.ClientSize = new System.Drawing.Size(648, 594);
             this.Controls.Add(this.messagesTextBox);
             this.Controls.Add(this.AddDiginotes);
             this.Controls.Add(this.tabSellAndPurchaseOrders);
@@ -621,6 +672,7 @@
             this.Controls.Add(this.nicknameLabel);
             this.Controls.Add(this.title);
             this.Controls.Add(this.systemInfo);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "OperationsForm";
             this.Text = "Diginote Exchange System Client";
