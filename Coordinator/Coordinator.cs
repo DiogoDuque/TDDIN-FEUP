@@ -23,6 +23,7 @@ namespace Coord
         DiginoteDB db;
         public event LogDelegate logger;
         public event UpdateDelegate update;
+        public event QuoteChange onQuoteChange;
         private MessageQueue sellingMessageQueue;
         private MessageQueue buyingMessageQueue;
         private Queue<Order> sellingOrders;
@@ -105,6 +106,7 @@ namespace Coord
         public float DiginoteQuote
         {
             get => diginoteQuote;
+            /*
             set
             {
                 if (value > 0)
@@ -115,7 +117,7 @@ namespace Coord
                 {
                     throw new ArgumentException("Quote cannot be null or negative");
                 }
-            }
+            }*/
         }
 
         public DiginoteDB Db
@@ -309,7 +311,7 @@ namespace Coord
         {
             Message msg = sellingMessageQueue.EndReceive(rcea.AsyncResult);
             Order sellingOrder;
-            if (msg.Body is Order && ((Order)msg.Body).type.Equals(Order.OrderType.SELLING))
+            if (msg.Body is Order && ((Order)msg.Body).type.Equals(OrderType.SELLING))
             {
                 sellingOrder = (Order)msg.Body;
                 int userDiginotes = GetUserDiginoteQuantity(sellingOrder.owner);
@@ -341,7 +343,7 @@ namespace Coord
             Message msg = buyingMessageQueue.EndReceive(rcea.AsyncResult);
 
             Order buyingOrder;
-            if (msg.Body is Order && ((Order)msg.Body).type.Equals(Order.OrderType.BUYING))
+            if (msg.Body is Order && ((Order)msg.Body).type.Equals(OrderType.BUYING))
             {
                 buyingOrder = (Order)msg.Body;
                 db.AddOrder(buyingOrder);
@@ -405,6 +407,48 @@ namespace Coord
                     count++;
             }
             return count;
+        }
+
+        public void CancelSellingOrders(int numberOfOrders)
+        {
+            for (int i = 0; i < numberOfOrders; i++)
+            {
+                Order sellingOrder = sellingOrders.Dequeue();
+                db.RemoveOrder(sellingOrder);
+            }
+        }
+
+        public void CancelPurchasingOrders(int numberOfOrders)
+        {
+            for (int i = 0; i < numberOfOrders; i++)
+            {
+                Order purchasingOrder = buyingOrders.Dequeue();
+                db.RemoveOrder(purchasingOrder);
+            }
+        }
+
+        public void ChangeQuote(string username, float newquote, OrderType orderType)
+        {
+            if (newquote > 0)
+            {
+                if ((newquote >= diginoteQuote && orderType == OrderType.BUYING) ||
+                    (newquote <= diginoteQuote && orderType == OrderType.SELLING))
+                {
+                    diginoteQuote = newquote;
+                    if (onQuoteChange != null)
+                    {
+                        onQuoteChange(username, (decimal)diginoteQuote, orderType);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Quote surpassed the limits");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Quote cannot be null or negative");
+            }
         }
     }
 }

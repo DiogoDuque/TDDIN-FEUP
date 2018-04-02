@@ -120,6 +120,8 @@ namespace Common
 
     public delegate void UpdateDelegate();
 
+    public delegate void QuoteChange(string username, decimal quote, OrderType orderType);
+
     public class Utils
     {
         public static string GetSha256FromString(string strData)
@@ -137,10 +139,11 @@ namespace Common
         }
     }
 
+    public enum OrderType { BUYING, SELLING };
+
     [Serializable]
     public class Order
     {
-        public enum OrderType { BUYING, SELLING};
         public string owner;
         public OrderType type;
         

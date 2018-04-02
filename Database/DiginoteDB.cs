@@ -125,7 +125,7 @@ namespace Database
 
             while (reader.Read())
             {
-                Order order = new Order(reader.GetString(0), Order.OrderType.SELLING);
+                Order order = new Order(reader.GetString(0), OrderType.SELLING);
                 list.Enqueue(order);
             }
 
@@ -142,7 +142,7 @@ namespace Database
 
             while (reader.Read())
             {
-                Order order = new Order(reader.GetString(0), Order.OrderType.BUYING);
+                Order order = new Order(reader.GetString(0), OrderType.BUYING);
                 list.Enqueue(order);
             }
 

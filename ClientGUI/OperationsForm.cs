@@ -37,6 +37,7 @@ namespace ClientGUI
             update();
             coordinator.logger += ShowTransactionMessage;
             coordinator.update += updateInfo;
+            coordinator.onQuoteChange += ShowWarningQuoteChanged;
         }
 
         public void ShowTransactionMessage(string oldOwner, string newOwner, int quantity)
@@ -52,6 +53,29 @@ namespace ClientGUI
                     messagesTextBox.Text += "\n" + newOwner + " purchased " + quantity.ToString() + " diginotes from you";
                 else if (newOwner == username)
                     messagesTextBox.Text += "\n You purchased " + quantity.ToString() + " diginotes from " + oldOwner;
+            }
+        }
+
+        public void ShowWarningQuoteChanged(string username, decimal quote, OrderType orderType)
+        {
+            if (username != this.username)
+            {
+                string message = username + " changed the diginote quote to\n" + quote.ToString() + "\nDo you want to keep your pending orders?";
+                DialogResult result = MessageBox.Show(message, "Quote Change", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.No)
+                {
+                    int numOrders = 0;
+                    if (orderType == OrderType.BUYING)
+                    {
+                        numOrders = coordinator.GetAmountBuyingOrders(this.username);
+                        coordinator.CancelPurchasingOrders(numOrders);
+                    }
+                    else
+                    {
+                        numOrders = coordinator.GetAmountSellingOrders(this.username);
+                        coordinator.CancelSellingOrders(numOrders);
+                    }
+                }
             }
         }
 
@@ -145,7 +169,7 @@ namespace ClientGUI
 
             numDiginotesSellNumeric.Maximum = userAvailableDiginotes;
             //numDiginotesSellNumeric.Value = userAvailableDiginotes;
-            remainingSellQuoteNumeric.Minimum = diginoteQuote;
+            remainingSellQuoteNumeric.Maximum = diginoteQuote;
             //remainingSellQuoteNumeric.Value = diginoteQuote;
 
             //Show warnings when limit is passed
@@ -165,7 +189,7 @@ namespace ClientGUI
 
         private void updateEmitPurchaseOrder()
         {
-            remainingPurchaseQuoteNumeric.Maximum = diginoteQuote;
+            remainingPurchaseQuoteNumeric.Minimum = diginoteQuote;
             //remainingPurchaseQuoteNumeric.Value = diginoteQuote;
 
             if (numDiginotesPurchaseNumeric.Value > 0 && (decimal)totalPurchasingOrders + numDiginotesPurchaseNumeric.Value > (decimal)totalSellingOrders)
@@ -184,14 +208,28 @@ namespace ClientGUI
 
         private void infoUpdateButton_Click(object sender, EventArgs e)
         {
-            update();
+            try
+            {
+                update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
         {
-            if (coordinator.LogOut(username))
-                this.DialogResult = DialogResult.OK;
-            else this.DialogResult = DialogResult.No;
+            try
+            {
+                if (coordinator.LogOut(username))
+                    this.DialogResult = DialogResult.OK;
+                else this.DialogResult = DialogResult.No;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void OperationsForm_Load(object sender, EventArgs e)
@@ -280,34 +318,72 @@ namespace ClientGUI
 
         private void sendSellingOrderButton_Click(object sender, EventArgs e)
         {
-            int nDiginotes = Convert.ToInt32(numDiginotesSellNumeric.Value);
-            MessageQueue sellingQueue = new MessageQueue(@".\private$\sellingOrders");
-            sellingQueue.Formatter = new BinaryMessageFormatter();
-            for(int i=0; i < nDiginotes; i++)
+            try
             {
-                sellingQueue.Send(new Order(username, Order.OrderType.SELLING));
+                int nDiginotes = Convert.ToInt32(numDiginotesSellNumeric.Value);
+                MessageQueue sellingQueue = new MessageQueue(@".\private$\sellingOrders");
+                sellingQueue.Formatter = new BinaryMessageFormatter();
+                if (totalSellingOrders + numDiginotesSellNumeric.Value > totalPurchasingOrders &&
+                    coordinator.DiginoteQuote != (float)remainingSellQuoteNumeric.Value)
+                {
+                    coordinator.ChangeQuote(username, (float)remainingSellQuoteNumeric.Value, OrderType.SELLING);
+                }
+                for (int i = 0; i < nDiginotes; i++)
+                {
+                    sellingQueue.Send(new Order(username, OrderType.SELLING));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void sendPurchasingOrderButton_Click(object sender, EventArgs e)
         {
-            int nDiginotes = Convert.ToInt32(numDiginotesPurchaseNumeric.Value);
-            MessageQueue sellingQueue = new MessageQueue(@".\private$\purchaseOrders");
-            sellingQueue.Formatter = new BinaryMessageFormatter();
-            for (int i = 0; i < nDiginotes; i++)
+            try
             {
-                sellingQueue.Send(new Order(username, Order.OrderType.BUYING));
+                int nDiginotes = Convert.ToInt32(numDiginotesPurchaseNumeric.Value);
+                MessageQueue sellingQueue = new MessageQueue(@".\private$\purchaseOrders");
+                sellingQueue.Formatter = new BinaryMessageFormatter();
+                if(totalPurchasingOrders + numDiginotesPurchaseNumeric.Value > totalSellingOrders &&
+                    coordinator.DiginoteQuote != (float) remainingPurchaseQuoteNumeric.Value)
+                {
+                    coordinator.ChangeQuote(username, (float)remainingPurchaseQuoteNumeric.Value, OrderType.BUYING);
+                }
+                for (int i = 0; i < nDiginotes; i++)
+                {
+                    sellingQueue.Send(new Order(username, OrderType.BUYING));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void numDiginotesSellNumeric_ValueChanged(object sender, EventArgs e)
         {
-            updateEmitSellOrder();
+            try
+            {
+                updateEmitSellOrder();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void numDiginotesPurchaseNumeric_ValueChanged(object sender, EventArgs e)
         {
-            updateEmitPurchaseOrder();
+            try
+            {
+                updateEmitPurchaseOrder();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
