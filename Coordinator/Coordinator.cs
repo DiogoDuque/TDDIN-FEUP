@@ -22,6 +22,7 @@ namespace Coord
         float diginoteQuote;
         DiginoteDB db;
         public event LogDelegate logger;
+        public event UpdateDelegate update;
         private MessageQueue sellingMessageQueue;
         private MessageQueue buyingMessageQueue;
         private Queue<Order> sellingOrders;
@@ -325,6 +326,11 @@ namespace Coord
                     MatchOrders();
                 }
 
+                if (update != null)
+                {
+                    this.update();
+                }
+
                 sellingMessageQueue.BeginReceive();
             }
             else Console.WriteLine("Invalid selling order received!");
@@ -345,6 +351,11 @@ namespace Coord
                 if (sellingOrders.Count > 0)
                 {
                     MatchOrders();
+                }
+
+                if(update != null)
+                {
+                    this.update();
                 }
 
                 buyingMessageQueue.BeginReceive();

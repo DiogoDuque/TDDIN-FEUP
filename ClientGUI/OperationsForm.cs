@@ -28,19 +28,40 @@ namespace ClientGUI
             this.username = username;
             InitializeComponent();
             nicknameLabel.Text = "Hello "+username +" !";
-            updateInfo();
+            update();
             coordinator.logger += ShowTransactionMessage;
+            coordinator.update += updateInfo;
         }
 
-        private void ShowTransactionMessage(string oldOwner, string newOwner, int quantity)
+        public void ShowTransactionMessage(string oldOwner, string newOwner, int quantity)
         {
-            if (oldOwner == username)
-                messagesTextBox.Text += "\n" + newOwner + " purchased " + quantity.ToString() + " diginotes from you";
-            else if (newOwner == username)
-                messagesTextBox.Text += "\n You purchased " + quantity.ToString() + " diginotes from " + oldOwner;
+            if(this.messagesTextBox.InvokeRequired)
+            {
+                LogDelegate del = new LogDelegate(ShowTransactionMessage);
+                this.Invoke(del, new object[] { oldOwner, newOwner, quantity });
+            }
+            else
+            {
+                if (oldOwner == username)
+                    messagesTextBox.Text += "\n" + newOwner + " purchased " + quantity.ToString() + " diginotes from you";
+                else if (newOwner == username)
+                    messagesTextBox.Text += "\n You purchased " + quantity.ToString() + " diginotes from " + oldOwner;
+            }
         }
 
-        private void updateInfo()
+        public void updateInfo()
+        {
+            if(this.InvokeRequired)
+            {
+                UpdateDelegate del = new UpdateDelegate(update);
+                this.Invoke(del, new object[] { });
+            }
+            else
+            {
+                update();
+            }
+        }
+        private void update()
         {
             int userAvailableDiginotes = coordinator.GetUserDiginoteQuantity(username) - coordinator.GetAmountSellingOrders(username);
             decimal diginoteQuote = (decimal)coordinator.DiginoteQuote;
@@ -58,12 +79,15 @@ namespace ClientGUI
             //My Information
 
             myDiginotesTextBox.Text = userAvailableDiginotes.ToString();
+            myDiginotesTextBox.Refresh();
             mySellingOrdersTextBox.Text = mySellingOrders.ToString();
+            mySellingOrdersTextBox.Refresh();
             myPurchaseOrdersTextBox.Text = myPurchasingOrders.ToString();
+            myPurchaseOrdersTextBox.Refresh();
             changeQuoteSellNumeric.Maximum = diginoteQuote;
             changeQuotePurchaseNumeric.Minimum = diginoteQuote;
-            changeQuoteSellNumeric.Value = diginoteQuote;
-            changeQuotePurchaseNumeric.Value = diginoteQuote;
+            //changeQuoteSellNumeric.Value = diginoteQuote;
+            //changeQuotePurchaseNumeric.Value = diginoteQuote;
 
             if (mySellingOrders > 0)
             {
@@ -108,9 +132,9 @@ namespace ClientGUI
             }
 
             numDiginotesSellNumeric.Maximum = userAvailableDiginotes;
-            numDiginotesSellNumeric.Value = userAvailableDiginotes;
+            //numDiginotesSellNumeric.Value = userAvailableDiginotes;
             remainingSellQuoteNumeric.Minimum = diginoteQuote;
-            remainingSellQuoteNumeric.Value = diginoteQuote;
+            //remainingSellQuoteNumeric.Value = diginoteQuote;
 
             //Show warnings when limit is passed
             if (numDiginotesSellNumeric.Value > 0 && (decimal)totalSellingOrders + numDiginotesSellNumeric.Value > (decimal)totalPurchasingOrders)
@@ -129,7 +153,7 @@ namespace ClientGUI
             //Emit Purchase Order
 
             remainingPurchaseQuoteNumeric.Maximum = diginoteQuote;
-            remainingPurchaseQuoteNumeric.Value = diginoteQuote;
+            //remainingPurchaseQuoteNumeric.Value = diginoteQuote;
 
             if(numDiginotesPurchaseNumeric.Value > 0 && (decimal)totalPurchasingOrders + numDiginotesPurchaseNumeric.Value > (decimal)totalSellingOrders)
             {
@@ -148,7 +172,7 @@ namespace ClientGUI
 
         private void infoUpdateButton_Click(object sender, EventArgs e)
         {
-            updateInfo();
+            update();
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
@@ -166,7 +190,7 @@ namespace ClientGUI
         private void submitMyOrders_Click(object sender, EventArgs e)
         {
             //TODO submit new orders
-            updateInfo();
+            update();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -234,7 +258,7 @@ namespace ClientGUI
             try
             {
                 coordinator.CreateDiginote(username);
-                updateInfo();
+                update();
             }
             catch (Exception ex)
             {
@@ -251,7 +275,6 @@ namespace ClientGUI
             {
                 sellingQueue.Send(new Order(username, Order.OrderType.SELLING));
             }
-            updateInfo();
         }
 
         private void sendPurchasingOrderButton_Click(object sender, EventArgs e)
@@ -263,7 +286,6 @@ namespace ClientGUI
             {
                 sellingQueue.Send(new Order(username, Order.OrderType.BUYING));
             }
-            updateInfo();
         }
     }
 }

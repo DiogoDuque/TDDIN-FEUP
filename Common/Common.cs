@@ -118,6 +118,8 @@ namespace Common
 
     public delegate void LogDelegate(string oldOwner, string newOwner, int quantity);
 
+    public delegate void UpdateDelegate();
+
     public class Utils
     {
         public static string GetSha256FromString(string strData)
