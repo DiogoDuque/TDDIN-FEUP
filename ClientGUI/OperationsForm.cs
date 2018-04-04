@@ -1,7 +1,11 @@
 ﻿using Common;
 using Coord;
 using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.Messaging;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClientGUI
@@ -58,10 +62,17 @@ namespace ClientGUI
 
         public void ShowWarningQuoteChanged(string username, decimal quote, OrderType orderType)
         {
+            if (messagesTextBox.InvokeRequired) //randomly chosen component from ui thread
+            {
+                QuoteChange del = new QuoteChange(ShowWarningQuoteChanged);
+                messagesTextBox.BeginInvoke(del, new object[] { username, quote, orderType });
+                return;
+            }
             if (username != this.username)
             {
-                string message = username + " changed the diginote quote to\n" + quote.ToString() + "\nDo you want to keep your pending orders?";
-                DialogResult result = MessageBox.Show(message, "Quote Change", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                string message = username + " changed the diginote quote to\n" + quote.ToString() + "\nDo you want to keep your pending orders? If you don't answer in 30s, your orders will be kept.";
+                DialogResult result = MessageBoxEx.Show(message, "Quote Change", MessageBoxButtons.YesNo, MessageBoxIcon.Information, 30000);
+
                 if (result == DialogResult.No)
                 {
                     int numOrders = 0;
