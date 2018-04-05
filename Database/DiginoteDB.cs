@@ -42,11 +42,15 @@ namespace Database
                 "idUser INTEGER REFERENCES users(id) NOT NULL); " +
 
                 "CREATE TABLE orders(" +
-                "owner VARCHAR(30) NOT NULL,"+
-                "type VARCHAR(15) NOT NULL);",
+                "owner VARCHAR(30) NOT NULL," +
+                "type VARCHAR(15) NOT NULL);" +
+
+                "CREATE TABLE quote(" +
+                "quote REAL NOT NULL);",
                 db
                 );
                 createDatabase.ExecuteNonQuery();
+                InitQuote(1);
             }
             else
             {
@@ -54,6 +58,16 @@ namespace Database
                 db = new SQLiteConnection("Data Source=" + dbFilename + ";Version=3;");
                 db.Open();
             }
+        }
+
+        private void InitQuote(float initialQuote)
+        {
+            SQLiteCommand quote = new SQLiteCommand(
+                "INSERT INTO quote(quote) VALUES('"+ initialQuote + "');",
+                db);
+            quote.ExecuteNonQuery();
+
+            quote.Dispose();
         }
 
         public void insertUser(User user)
@@ -220,6 +234,41 @@ namespace Database
             removeOrder.ExecuteNonQuery();
 
             removeOrder.Dispose();
+        }
+
+        public float GetCurrentQuote()
+        {
+            SQLiteCommand getQuote = new SQLiteCommand(
+                "SELECT quote FROM quote;",
+                db);
+            SQLiteDataReader reader = getQuote.ExecuteReader();
+            float quote;
+            if (reader.Read())
+            {
+                quote = (float)Convert.ToDouble(reader.GetString(0));
+
+                getQuote.Dispose();
+                reader.Dispose();
+            }
+            else
+            {
+                getQuote.Dispose();
+                reader.Dispose();
+                throw new Exception("Could not get quote from database");
+            }
+
+            return quote;
+        }
+
+        public void UpdateCurrentQuote(double quote)
+        {
+            SQLiteCommand updateQuote = new SQLiteCommand(
+                "UPDATE quote SET quote='" + quote +
+                "';",
+                db);
+            updateQuote.ExecuteNonQuery();
+
+            updateQuote.Dispose();
         }
     }
 }

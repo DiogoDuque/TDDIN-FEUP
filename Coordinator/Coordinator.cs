@@ -40,8 +40,8 @@ namespace Coord
             this.notesList = new Dictionary<long, Diginote>();
             this.sellingOrders = new Queue<Order>();
             this.buyingOrders = new Queue<Order>();
-            this.diginoteQuote = 1;
             this.db = new DiginoteDB(false);
+            this.diginoteQuote = db.GetCurrentQuote();
             LoadDataFromDatabase();
             InitMessageQueues();
         }
@@ -435,6 +435,7 @@ namespace Coord
                     (newquote <= diginoteQuote && orderType == OrderType.SELLING))
                 {
                     diginoteQuote = newquote;
+                    db.UpdateCurrentQuote(newquote);
                     if (onQuoteChange != null)
                     {
                         onQuoteChange(username, (decimal)diginoteQuote, orderType);
