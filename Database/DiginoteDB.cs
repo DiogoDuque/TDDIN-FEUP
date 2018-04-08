@@ -129,9 +129,9 @@ namespace Database
             return list;
         }
 
-        public Queue<Order> getAllSellingOrders()
+        public LinkedList<Order> getAllSellingOrders()
         {
-            Queue<Order> list = new Queue<Order>();
+            LinkedList<Order> list = new LinkedList<Order>();
 
             SQLiteCommand GetSellingOrders = new SQLiteCommand(
                 "select owner from orders WHERE type='SELLING';", db);
@@ -140,15 +140,15 @@ namespace Database
             while (reader.Read())
             {
                 Order order = new Order(reader.GetString(0), OrderType.SELLING);
-                list.Enqueue(order);
+                list.AddLast(order);
             }
 
             return list;
         }
 
-        public Queue<Order> GetBuyingOrders()
+        public LinkedList<Order> GetBuyingOrders()
         {
-            Queue<Order> list = new Queue<Order>();
+            LinkedList<Order> list = new LinkedList<Order>();
 
             SQLiteCommand getBuyingOrders = new SQLiteCommand(
                 "select owner from orders WHERE type='BUYING';", db);
@@ -157,7 +157,7 @@ namespace Database
             while (reader.Read())
             {
                 Order order = new Order(reader.GetString(0), OrderType.BUYING);
-                list.Enqueue(order);
+                list.AddLast(order);
             }
 
             return list;

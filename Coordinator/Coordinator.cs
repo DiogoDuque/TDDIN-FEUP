@@ -26,8 +26,8 @@ namespace Coord
         public event QuoteChange onQuoteChange;
         private MessageQueue sellingMessageQueue;
         private MessageQueue buyingMessageQueue;
-        private Queue<Order> sellingOrders;
-        private Queue<Order> buyingOrders;
+        private LinkedList<Order> sellingOrders;
+        private LinkedList<Order> buyingOrders;
 
 
         //CONSTRUCTORS
@@ -38,8 +38,8 @@ namespace Coord
             this.ownershipTable = new Dictionary<long, string>();
             this.usersList = new Dictionary<string, User>();
             this.notesList = new Dictionary<long, Diginote>();
-            this.sellingOrders = new Queue<Order>();
-            this.buyingOrders = new Queue<Order>();
+            this.sellingOrders = new LinkedList<Order>();
+            this.buyingOrders = new LinkedList<Order>();
             this.db = new DiginoteDB(false);
             this.diginoteQuote = db.GetCurrentQuote();
             LoadDataFromDatabase();
@@ -322,7 +322,7 @@ namespace Coord
                 db.AddOrder(sellingOrder);
 
                 //handle and trigger action if necessary
-                sellingOrders.Enqueue(sellingOrder);
+                sellingOrders.AddLast(sellingOrder);
                 if (buyingOrders.Count > 0)
                 {
                     MatchOrders();
@@ -349,7 +349,7 @@ namespace Coord
                 db.AddOrder(buyingOrder);
 
                 //handle and trigger action if necessary
-                buyingOrders.Enqueue(buyingOrder);
+                buyingOrders.AddLast(buyingOrder);
                 if (sellingOrders.Count > 0)
                 {
                     MatchOrders();
@@ -369,8 +369,11 @@ namespace Coord
         {
             while(sellingOrders.Count>0 && buyingOrders.Count>0)
             {
-                Order sellingOrder = sellingOrders.Dequeue();
-                Order buyingOrder = buyingOrders.Dequeue();
+                Order sellingOrder = sellingOrders.First.Value;
+                Order buyingOrder = buyingOrders.First.Value;
+                sellingOrders.RemoveFirst();
+                buyingOrders.RemoveFirst();
+
                 bool result = TransferDiginotes(sellingOrder.owner, buyingOrder.owner, 1);
                 if (result)
                 {
@@ -413,8 +416,39 @@ namespace Coord
         {
             for (int i = 0; i < numberOfOrders; i++)
             {
-                Order sellingOrder = sellingOrders.Dequeue();
+                Order sellingOrder = sellingOrders.First.Value;
+                sellingOrders.RemoveFirst();
                 db.RemoveOrder(sellingOrder);
+            }
+        }
+
+        //WARNING: not thread safe!!!
+        public void CancelSellingOrders(int numberOfOrders, string owner)
+        {
+            int number = 0;
+            LinkedList<Order>.Enumerator iterator = sellingOrders.GetEnumerator();
+            List<Order> ordersToRemove = new List<Order>();
+
+            while (iterator.MoveNext())
+            {
+                if (iterator.Current.owner == owner)
+                {
+                    ordersToRemove.Add(iterator.Current);
+                    number++;
+                }
+
+                if (numberOfOrders == number)
+                    break;
+            }
+
+            iterator.Dispose();
+            foreach (Order order in ordersToRemove)
+            {
+                sellingOrders.Remove(order);
+            }
+            if(this.update != null)
+            {
+                this.update();
             }
         }
 
@@ -422,8 +456,39 @@ namespace Coord
         {
             for (int i = 0; i < numberOfOrders; i++)
             {
-                Order purchasingOrder = buyingOrders.Dequeue();
+                Order purchasingOrder = buyingOrders.First.Value;
+                buyingOrders.RemoveFirst();
                 db.RemoveOrder(purchasingOrder);
+            }
+        }
+
+        //WARNING: Its not thread safe!!!
+        public void CancelPurchasingOrders(int numberOfOrders, string owner)
+        {
+            int number = 0;
+            LinkedList<Order>.Enumerator iterator = buyingOrders.GetEnumerator();
+            List<Order> ordersToRemove = new List<Order>();
+
+            while(iterator.MoveNext())
+            {
+                if(iterator.Current.owner == owner)
+                {
+                    ordersToRemove.Add(iterator.Current);
+                    number++;
+                }
+
+                if (numberOfOrders == number)
+                    break;
+            }
+
+            iterator.Dispose();
+            foreach(Order order in ordersToRemove)
+            {
+                buyingOrders.Remove(order);
+            }
+            if (this.update != null)
+            {
+                this.update();
             }
         }
 

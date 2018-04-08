@@ -49,7 +49,7 @@ namespace ClientGUI
             if(this.messagesTextBox.InvokeRequired)
             {
                 LogDelegate del = new LogDelegate(ShowTransactionMessage);
-                this.Invoke(del, new object[] { oldOwner, newOwner, quantity });
+                this.BeginInvoke(del, new object[] { oldOwner, newOwner, quantity });
             }
             else
             {
@@ -90,11 +90,11 @@ namespace ClientGUI
                         {
                             if (orderType == OrderType.BUYING)
                             {
-                                coordinator.CancelPurchasingOrders(numOrders); //HERE
+                                coordinator.CancelPurchasingOrders(numOrders, this.username);
                             }
                             else
                             {
-                                coordinator.CancelSellingOrders(numOrders);
+                                coordinator.CancelSellingOrders(numOrders, this.username);
                             }
                         }
                     }
@@ -108,7 +108,7 @@ namespace ClientGUI
             if(this.InvokeRequired)
             {
                 UpdateDelegate del = new UpdateDelegate(update);
-                this.Invoke(del, new object[] { });
+                this.BeginInvoke(del, new object[] { });
             }
             else
             {
