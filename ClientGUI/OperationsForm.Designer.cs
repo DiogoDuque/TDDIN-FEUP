@@ -43,7 +43,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.changeQuotePurchaseNumeric = new System.Windows.Forms.NumericUpDown();
             this.changeQuoteSellNumeric = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
+            this.completeNameLabel = new System.Windows.Forms.Label();
             this.submitChangeQuoteButton = new System.Windows.Forms.Button();
             this.myDiginotesTextBox = new System.Windows.Forms.TextBox();
             this.myDiginotesLabel = new System.Windows.Forms.Label();
@@ -210,7 +210,7 @@
             // myInfo
             // 
             this.myInfo.Controls.Add(this.panel1);
-            this.myInfo.Controls.Add(this.label2);
+            this.myInfo.Controls.Add(this.completeNameLabel);
             this.myInfo.Controls.Add(this.submitChangeQuoteButton);
             this.myInfo.Controls.Add(this.myDiginotesTextBox);
             this.myInfo.Controls.Add(this.myDiginotesLabel);
@@ -302,14 +302,14 @@
             0,
             131072});
             // 
-            // label2
+            // completeNameLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(199, 25);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Complete User Name";
+            this.completeNameLabel.AutoSize = true;
+            this.completeNameLabel.Location = new System.Drawing.Point(7, 42);
+            this.completeNameLabel.Name = "completeNameLabel";
+            this.completeNameLabel.Size = new System.Drawing.Size(199, 25);
+            this.completeNameLabel.TabIndex = 12;
+            this.completeNameLabel.Text = "Complete User Name";
             // 
             // submitChangeQuoteButton
             // 
@@ -731,7 +731,7 @@
         private System.Windows.Forms.TabControl tabSellAndPurchaseOrders;
         private System.Windows.Forms.TabPage tabPageSelling;
         private System.Windows.Forms.TabPage tabPagePurchasing;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label completeNameLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown remainingSellQuoteNumeric;
         private System.Windows.Forms.RichTextBox sellingOrderWarningTextBox;

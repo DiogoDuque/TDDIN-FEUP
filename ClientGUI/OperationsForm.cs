@@ -38,6 +38,7 @@ namespace ClientGUI
             this.username = username;
             InitializeComponent();
             nicknameLabel.Text = "Hello "+username +" !";
+            completeNameLabel.Text = coordinator.UsersList[username].Name;
             update();
             coordinator.logger += ShowTransactionMessage;
             coordinator.update += updateInfo;
