@@ -50,7 +50,7 @@ namespace Database
                 db
                 );
                 createDatabase.ExecuteNonQuery();
-                InitQuote(1);
+                InitQuote();
             }
             else
             {
@@ -60,11 +60,11 @@ namespace Database
             }
         }
 
-        private void InitQuote(float initialQuote)
+        private void InitQuote()
         {
             SQLiteCommand quote = new SQLiteCommand(
-                "INSERT INTO quote(quote) VALUES('"+ initialQuote + "');",
-                db);
+               "INSERT INTO quote(quote) VALUES('1,00');",
+               db);
             quote.ExecuteNonQuery();
 
             quote.Dispose();
@@ -245,7 +245,8 @@ namespace Database
             float quote;
             if (reader.Read())
             {
-                quote = (float)Convert.ToDouble(reader.GetString(0));
+                string a = reader.GetString(0);
+                quote = (float)Convert.ToDouble(a);
 
                 getQuote.Dispose();
                 reader.Dispose();
