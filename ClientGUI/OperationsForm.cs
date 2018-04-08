@@ -77,6 +77,7 @@ namespace ClientGUI
                     }
                 }
             }
+
         }
 
         public void updateInfo()
@@ -239,7 +240,11 @@ namespace ClientGUI
 
         private void submitMyOrders_Click(object sender, EventArgs e)
         {
-            //TODO submit new orders
+            if(changeQuoteSellNumeric.Enabled && diginoteQuote > changeQuoteSellNumeric.Value)
+                coordinator.ChangeQuote(username, (float)changeQuoteSellNumeric.Value, OrderType.SELLING);
+            else if(changeQuotePurchaseNumeric.Enabled && diginoteQuote < changeQuotePurchaseNumeric.Value)
+                coordinator.ChangeQuote(username, (float)changeQuotePurchaseNumeric.Value, OrderType.BUYING);
+
             update();
         }
 
