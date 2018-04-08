@@ -66,29 +66,41 @@ namespace ClientGUI
             {
                 QuoteChange del = new QuoteChange(ShowWarningQuoteChanged);
                 messagesTextBox.BeginInvoke(del, new object[] { username, quote, orderType });
-                return;
             }
-            if (username != this.username)
+            else
             {
-                string message = username + " changed the diginote quote to\n" + quote.ToString() + "\nDo you want to keep your pending orders? If you don't answer in 30s, your orders will be kept.";
-                DialogResult result = MessageBoxEx.Show(message, "Quote Change", MessageBoxButtons.YesNo, MessageBoxIcon.Information, 30000);
-
-                if (result == DialogResult.No)
+                if (username != this.username)
                 {
                     int numOrders = 0;
                     if (orderType == OrderType.BUYING)
                     {
                         numOrders = coordinator.GetAmountBuyingOrders(this.username);
-                        coordinator.CancelPurchasingOrders(numOrders);
                     }
                     else
                     {
                         numOrders = coordinator.GetAmountSellingOrders(this.username);
-                        coordinator.CancelSellingOrders(numOrders);
+                    }
+
+                    if (numOrders > 0)
+                    {
+                        string message = username + " changed the diginote quote to\n" + quote.ToString() + "\nDo you want to keep your pending orders? If you don't answer in 30s, your orders will be kept.";
+                        DialogResult result = MessageBoxEx.Show(message, "Quote Change", MessageBoxButtons.YesNo, MessageBoxIcon.Information, 30000);
+
+                        if (result == DialogResult.No)
+                        {
+                            if (orderType == OrderType.BUYING)
+                            {
+                                coordinator.CancelPurchasingOrders(numOrders); //HERE
+                            }
+                            else
+                            {
+                                coordinator.CancelSellingOrders(numOrders);
+                            }
+                        }
                     }
                 }
+                updateInfo();
             }
-
         }
 
         public void updateInfo()
