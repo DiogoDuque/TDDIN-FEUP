@@ -45,7 +45,7 @@ namespace Database
                 "owner VARCHAR(30) NOT NULL," +
                 "type VARCHAR(15) NOT NULL);" +
 
-                "CREATE TABLE quote(" +
+                "CREATE TABLE quote(id INTEGER PRIMARY KEY," +
                 "quote REAL NOT NULL);",
                 db
                 );
@@ -239,7 +239,7 @@ namespace Database
         public float GetCurrentQuote()
         {
             SQLiteCommand getQuote = new SQLiteCommand(
-                "SELECT quote FROM quote;",
+                "SELECT quote FROM quote WHERE id=max(id);",
                 db);
             SQLiteDataReader reader = getQuote.ExecuteReader();
             float quote;
@@ -261,15 +261,32 @@ namespace Database
             return quote;
         }
 
+        public List<float> getQuoteHistory()
+        {
+            List<float> list = new List<float>();
+
+            SQLiteCommand getQuotes = new SQLiteCommand("SELECT quote FROM quote", db);
+            SQLiteDataReader reader = getQuotes.ExecuteReader();
+
+            while (reader.Read())
+            {
+                string tmp = reader.GetString(0);
+                list.Add((float)Convert.ToDouble(tmp));
+            }
+            getQuotes.Dispose();
+            reader.Dispose();
+
+            return list;
+        }
+
         public void UpdateCurrentQuote(double quote)
         {
-            SQLiteCommand updateQuote = new SQLiteCommand(
-                "UPDATE quote SET quote='" + quote +
-                "';",
-                db);
-            updateQuote.ExecuteNonQuery();
+            SQLiteCommand quoteCmd = new SQLiteCommand(
+               "INSERT INTO quote(quote) VALUES('"+quote+"');",
+               db);
+            quoteCmd.ExecuteNonQuery();
 
-            updateQuote.Dispose();
+            quoteCmd.Dispose();
         }
     }
 }

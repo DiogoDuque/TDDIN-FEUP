@@ -33,6 +33,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.quoteMeasure1 = new System.Windows.Forms.Label();
+            this.quoteMeasure2 = new System.Windows.Forms.Label();
+            this.quoteMeasure3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // title
@@ -48,7 +51,7 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(338, 12);
+            this.panel1.Location = new System.Drawing.Point(318, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(27, 22);
             this.panel1.TabIndex = 10;
@@ -57,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 60);
+            this.label1.Location = new System.Drawing.Point(13, 50);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 11;
@@ -81,11 +84,41 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "O";
             // 
+            // quoteMeasure1
+            // 
+            this.quoteMeasure1.AutoSize = true;
+            this.quoteMeasure1.Location = new System.Drawing.Point(15, 185);
+            this.quoteMeasure1.Name = "quoteMeasure1";
+            this.quoteMeasure1.Size = new System.Drawing.Size(28, 13);
+            this.quoteMeasure1.TabIndex = 14;
+            this.quoteMeasure1.Text = "2,22";
+            // 
+            // quoteMeasure2
+            // 
+            this.quoteMeasure2.AutoSize = true;
+            this.quoteMeasure2.Location = new System.Drawing.Point(15, 140);
+            this.quoteMeasure2.Name = "quoteMeasure2";
+            this.quoteMeasure2.Size = new System.Drawing.Size(28, 13);
+            this.quoteMeasure2.TabIndex = 15;
+            this.quoteMeasure2.Text = "2,22";
+            // 
+            // quoteMeasure3
+            // 
+            this.quoteMeasure3.AutoSize = true;
+            this.quoteMeasure3.Location = new System.Drawing.Point(15, 95);
+            this.quoteMeasure3.Name = "quoteMeasure3";
+            this.quoteMeasure3.Size = new System.Drawing.Size(28, 13);
+            this.quoteMeasure3.TabIndex = 16;
+            this.quoteMeasure3.Text = "2,22";
+            // 
             // StatsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 261);
+            this.Controls.Add(this.quoteMeasure3);
+            this.Controls.Add(this.quoteMeasure2);
+            this.Controls.Add(this.quoteMeasure1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -106,5 +139,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label quoteMeasure1;
+        private System.Windows.Forms.Label quoteMeasure2;
+        private System.Windows.Forms.Label quoteMeasure3;
     }
 }

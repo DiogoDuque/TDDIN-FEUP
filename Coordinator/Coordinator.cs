@@ -452,6 +452,11 @@ namespace Coord
             }
         }
 
+        public List<float> GetQuoteHistory()
+        {
+            return db.getQuoteHistory();
+        }
+
         public void CancelPurchasingOrders(int numberOfOrders)
         {
             for (int i = 0; i < numberOfOrders; i++)

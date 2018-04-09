@@ -35,7 +35,6 @@
             this.systemPurchaseOrdersLabel = new System.Windows.Forms.Label();
             this.systemSellingOrdersTextBox = new System.Windows.Forms.TextBox();
             this.systemSellingOrdersLabel = new System.Windows.Forms.Label();
-            this.infoUpdateButton = new System.Windows.Forms.Button();
             this.title = new System.Windows.Forms.Label();
             this.nicknameLabel = new System.Windows.Forms.Label();
             this.myInfo = new System.Windows.Forms.GroupBox();
@@ -72,6 +71,7 @@
             this.AddDiginotes = new System.Windows.Forms.GroupBox();
             this.addDiginotesButton = new System.Windows.Forms.Button();
             this.messagesTextBox = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.systemInfo.SuspendLayout();
             this.myInfo.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -170,18 +170,6 @@
             this.systemSellingOrdersLabel.Size = new System.Drawing.Size(101, 18);
             this.systemSellingOrdersLabel.TabIndex = 2;
             this.systemSellingOrdersLabel.Text = "Selling Orders";
-            // 
-            // infoUpdateButton
-            // 
-            this.infoUpdateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.infoUpdateButton.Location = new System.Drawing.Point(12, 48);
-            this.infoUpdateButton.Margin = new System.Windows.Forms.Padding(2);
-            this.infoUpdateButton.Name = "infoUpdateButton";
-            this.infoUpdateButton.Size = new System.Drawing.Size(112, 29);
-            this.infoUpdateButton.TabIndex = 6;
-            this.infoUpdateButton.Text = "Update Info";
-            this.infoUpdateButton.UseVisualStyleBackColor = true;
-            this.infoUpdateButton.Click += new System.EventHandler(this.infoUpdateButton_Click);
             // 
             // title
             // 
@@ -659,16 +647,27 @@
             this.messagesTextBox.TabIndex = 14;
             this.messagesTextBox.Text = "This is the message screen";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.button1.Location = new System.Drawing.Point(24, 48);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(152, 29);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "See Statistics";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // OperationsForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(648, 594);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.messagesTextBox);
             this.Controls.Add(this.AddDiginotes);
             this.Controls.Add(this.tabSellAndPurchaseOrders);
-            this.Controls.Add(this.infoUpdateButton);
             this.Controls.Add(this.logoutButton);
             this.Controls.Add(this.myInfo);
             this.Controls.Add(this.nicknameLabel);
@@ -714,7 +713,6 @@
         private System.Windows.Forms.Label nicknameLabel;
         private System.Windows.Forms.TextBox systemPurchaseOrdersTextBox;
         private System.Windows.Forms.Label systemPurchaseOrdersLabel;
-        private System.Windows.Forms.Button infoUpdateButton;
         private System.Windows.Forms.GroupBox myInfo;
         private System.Windows.Forms.Button logoutButton;
         private System.Windows.Forms.Label mySellingOrdersLabel;
@@ -750,5 +748,6 @@
         private System.Windows.Forms.GroupBox AddDiginotes;
         private System.Windows.Forms.Button addDiginotesButton;
         private System.Windows.Forms.RichTextBox messagesTextBox;
+        private System.Windows.Forms.Button button1;
     }
 }
