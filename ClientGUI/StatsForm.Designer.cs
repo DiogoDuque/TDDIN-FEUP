@@ -87,7 +87,7 @@
             // quoteMeasure1
             // 
             this.quoteMeasure1.AutoSize = true;
-            this.quoteMeasure1.Location = new System.Drawing.Point(15, 185);
+            this.quoteMeasure1.Location = new System.Drawing.Point(14, 185);
             this.quoteMeasure1.Name = "quoteMeasure1";
             this.quoteMeasure1.Size = new System.Drawing.Size(28, 13);
             this.quoteMeasure1.TabIndex = 14;
@@ -96,7 +96,7 @@
             // quoteMeasure2
             // 
             this.quoteMeasure2.AutoSize = true;
-            this.quoteMeasure2.Location = new System.Drawing.Point(15, 140);
+            this.quoteMeasure2.Location = new System.Drawing.Point(14, 140);
             this.quoteMeasure2.Name = "quoteMeasure2";
             this.quoteMeasure2.Size = new System.Drawing.Size(28, 13);
             this.quoteMeasure2.TabIndex = 15;
@@ -105,7 +105,7 @@
             // quoteMeasure3
             // 
             this.quoteMeasure3.AutoSize = true;
-            this.quoteMeasure3.Location = new System.Drawing.Point(15, 95);
+            this.quoteMeasure3.Location = new System.Drawing.Point(14, 95);
             this.quoteMeasure3.Name = "quoteMeasure3";
             this.quoteMeasure3.Size = new System.Drawing.Size(28, 13);
             this.quoteMeasure3.TabIndex = 16;

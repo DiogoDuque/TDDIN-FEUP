@@ -43,11 +43,19 @@ namespace ClientGUI
             g.DrawLines(pen, new Point[] { new Point(Y_AXIS_END.X-ARROW_OFFSET, Y_AXIS_END.Y+ARROW_OFFSET), Y_AXIS_END, new Point(Y_AXIS_END.X + ARROW_OFFSET, Y_AXIS_END.Y + ARROW_OFFSET) }); // draw Y arrow
             g.DrawLines(pen, new Point[] { new Point(X_AXIS_END.X-ARROW_OFFSET, X_AXIS_END.Y-ARROW_OFFSET), X_AXIS_END, new Point(X_AXIS_END.X - ARROW_OFFSET, X_AXIS_END.Y + ARROW_OFFSET) }); // draw X arrow
 
-            DrawLineGraph(g, pen);
+            //draw aux lines
+            g.DrawLine(pen, quoteMeasure1.Location, new Point(MAX_X, quoteMeasure1.Location.Y));
+            g.DrawLine(pen, quoteMeasure2.Location, new Point(MAX_X, quoteMeasure2.Location.Y));
+            g.DrawLine(pen, quoteMeasure3.Location, new Point(MAX_X, quoteMeasure3.Location.Y));
+
+            DrawLineGraph(g);
         }
 
-        private void DrawLineGraph(Graphics g, Pen pen)
+        private void DrawLineGraph(Graphics g)
         {
+            Brush interiorBrush = new SolidBrush(Color.FromArgb(200, 42, 55, 255));
+            Pen pen = new Pen(new SolidBrush(Color.FromArgb(255, 23, 28, 255)),3);
+
             //find max quote for resizing
             float maxQuote = quoteHistory.Max();
 
@@ -70,7 +78,10 @@ namespace ClientGUI
                 quotes.Add(new Point((int)Math.Round(x), (int)Math.Round(y)));
                 index++;
             }
-            g.DrawLines(pen, quotes.ToArray());
+            quotes.Add(new Point(MAX_X_QUOTE, MAX_Y));
+            quotes.Add(ORIGIN);
+            g.FillPolygon(interiorBrush, quotes.ToArray());
+            g.DrawPolygon(pen, quotes.ToArray());
 
         }
     }
