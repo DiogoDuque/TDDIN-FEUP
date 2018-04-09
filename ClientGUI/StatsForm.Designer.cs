@@ -124,6 +124,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.title);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "StatsForm";
             this.Text = "StatsForm";
             this.Load += new System.EventHandler(this.StatsForm_Load);

@@ -52,9 +52,10 @@
             // 
             this.title.AutoSize = true;
             this.title.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.title.Location = new System.Drawing.Point(12, 9);
+            this.title.Location = new System.Drawing.Point(8, 6);
+            this.title.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(455, 36);
+            this.title.Size = new System.Drawing.Size(302, 25);
             this.title.TabIndex = 7;
             this.title.Text = "Diginote Exchange System Client";
             // 
@@ -66,9 +67,11 @@
             this.loginGroupBox.Controls.Add(this.loginUsernameLabel);
             this.loginGroupBox.Controls.Add(this.loginUsernameTextBox);
             this.loginGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.loginGroupBox.Location = new System.Drawing.Point(13, 92);
+            this.loginGroupBox.Location = new System.Drawing.Point(9, 60);
+            this.loginGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.loginGroupBox.Name = "loginGroupBox";
-            this.loginGroupBox.Size = new System.Drawing.Size(220, 343);
+            this.loginGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loginGroupBox.Size = new System.Drawing.Size(147, 223);
             this.loginGroupBox.TabIndex = 2;
             this.loginGroupBox.TabStop = false;
             this.loginGroupBox.Text = "Login";
@@ -76,9 +79,10 @@
             // loginButton
             // 
             this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.loginButton.Location = new System.Drawing.Point(86, 281);
+            this.loginButton.Location = new System.Drawing.Point(57, 183);
+            this.loginButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(115, 44);
+            this.loginButton.Size = new System.Drawing.Size(77, 29);
             this.loginButton.TabIndex = 4;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
@@ -88,37 +92,41 @@
             // 
             this.loginPasswordLabel.AutoSize = true;
             this.loginPasswordLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.loginPasswordLabel.Location = new System.Drawing.Point(13, 167);
+            this.loginPasswordLabel.Location = new System.Drawing.Point(9, 109);
+            this.loginPasswordLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.loginPasswordLabel.Name = "loginPasswordLabel";
-            this.loginPasswordLabel.Size = new System.Drawing.Size(114, 26);
+            this.loginPasswordLabel.Size = new System.Drawing.Size(79, 18);
             this.loginPasswordLabel.TabIndex = 3;
             this.loginPasswordLabel.Text = "Password:";
             // 
             // loginPasswordTextBox
             // 
             this.loginPasswordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.loginPasswordTextBox.Location = new System.Drawing.Point(18, 196);
+            this.loginPasswordTextBox.Location = new System.Drawing.Point(12, 127);
+            this.loginPasswordTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.loginPasswordTextBox.Name = "loginPasswordTextBox";
             this.loginPasswordTextBox.PasswordChar = '*';
-            this.loginPasswordTextBox.Size = new System.Drawing.Size(183, 30);
+            this.loginPasswordTextBox.Size = new System.Drawing.Size(123, 23);
             this.loginPasswordTextBox.TabIndex = 2;
             // 
             // loginUsernameLabel
             // 
             this.loginUsernameLabel.AutoSize = true;
             this.loginUsernameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.loginUsernameLabel.Location = new System.Drawing.Point(13, 74);
+            this.loginUsernameLabel.Location = new System.Drawing.Point(9, 48);
+            this.loginUsernameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.loginUsernameLabel.Name = "loginUsernameLabel";
-            this.loginUsernameLabel.Size = new System.Drawing.Size(119, 26);
+            this.loginUsernameLabel.Size = new System.Drawing.Size(81, 18);
             this.loginUsernameLabel.TabIndex = 1;
             this.loginUsernameLabel.Text = "Username:";
             // 
             // loginUsernameTextBox
             // 
             this.loginUsernameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.loginUsernameTextBox.Location = new System.Drawing.Point(18, 103);
+            this.loginUsernameTextBox.Location = new System.Drawing.Point(12, 67);
+            this.loginUsernameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.loginUsernameTextBox.Name = "loginUsernameTextBox";
-            this.loginUsernameTextBox.Size = new System.Drawing.Size(183, 30);
+            this.loginUsernameTextBox.Size = new System.Drawing.Size(123, 23);
             this.loginUsernameTextBox.TabIndex = 0;
             // 
             // registerGroupBox
@@ -131,9 +139,11 @@
             this.registerGroupBox.Controls.Add(this.registerPasswordTextBox);
             this.registerGroupBox.Controls.Add(this.registerButton);
             this.registerGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.registerGroupBox.Location = new System.Drawing.Point(259, 92);
+            this.registerGroupBox.Location = new System.Drawing.Point(173, 60);
+            this.registerGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.registerGroupBox.Name = "registerGroupBox";
-            this.registerGroupBox.Size = new System.Drawing.Size(220, 441);
+            this.registerGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.registerGroupBox.Size = new System.Drawing.Size(147, 287);
             this.registerGroupBox.TabIndex = 5;
             this.registerGroupBox.TabStop = false;
             this.registerGroupBox.Text = "Register";
@@ -142,63 +152,70 @@
             // 
             this.registerUsernameLabel.AutoSize = true;
             this.registerUsernameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.registerUsernameLabel.Location = new System.Drawing.Point(13, 74);
+            this.registerUsernameLabel.Location = new System.Drawing.Point(9, 48);
+            this.registerUsernameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.registerUsernameLabel.Name = "registerUsernameLabel";
-            this.registerUsernameLabel.Size = new System.Drawing.Size(119, 26);
+            this.registerUsernameLabel.Size = new System.Drawing.Size(81, 18);
             this.registerUsernameLabel.TabIndex = 1;
             this.registerUsernameLabel.Text = "Username:";
             // 
             // registerUsernameTextBox
             // 
             this.registerUsernameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.registerUsernameTextBox.Location = new System.Drawing.Point(18, 103);
+            this.registerUsernameTextBox.Location = new System.Drawing.Point(12, 67);
+            this.registerUsernameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.registerUsernameTextBox.Name = "registerUsernameTextBox";
-            this.registerUsernameTextBox.Size = new System.Drawing.Size(183, 30);
+            this.registerUsernameTextBox.Size = new System.Drawing.Size(123, 23);
             this.registerUsernameTextBox.TabIndex = 0;
             // 
             // registerNameLabel
             // 
             this.registerNameLabel.AutoSize = true;
             this.registerNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.registerNameLabel.Location = new System.Drawing.Point(13, 167);
+            this.registerNameLabel.Location = new System.Drawing.Point(9, 109);
+            this.registerNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.registerNameLabel.Name = "registerNameLabel";
-            this.registerNameLabel.Size = new System.Drawing.Size(77, 26);
+            this.registerNameLabel.Size = new System.Drawing.Size(52, 18);
             this.registerNameLabel.TabIndex = 6;
             this.registerNameLabel.Text = "Name:";
             // 
             // registerNameTextBox
             // 
             this.registerNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.registerNameTextBox.Location = new System.Drawing.Point(18, 196);
+            this.registerNameTextBox.Location = new System.Drawing.Point(12, 127);
+            this.registerNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.registerNameTextBox.Name = "registerNameTextBox";
-            this.registerNameTextBox.Size = new System.Drawing.Size(183, 30);
+            this.registerNameTextBox.Size = new System.Drawing.Size(123, 23);
             this.registerNameTextBox.TabIndex = 1;
             // 
             // registerPasswordLabel
             // 
             this.registerPasswordLabel.AutoSize = true;
             this.registerPasswordLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.registerPasswordLabel.Location = new System.Drawing.Point(13, 260);
+            this.registerPasswordLabel.Location = new System.Drawing.Point(9, 169);
+            this.registerPasswordLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.registerPasswordLabel.Name = "registerPasswordLabel";
-            this.registerPasswordLabel.Size = new System.Drawing.Size(114, 26);
+            this.registerPasswordLabel.Size = new System.Drawing.Size(79, 18);
             this.registerPasswordLabel.TabIndex = 3;
             this.registerPasswordLabel.Text = "Password:";
             // 
             // registerPasswordTextBox
             // 
             this.registerPasswordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.registerPasswordTextBox.Location = new System.Drawing.Point(18, 289);
+            this.registerPasswordTextBox.Location = new System.Drawing.Point(12, 188);
+            this.registerPasswordTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.registerPasswordTextBox.Name = "registerPasswordTextBox";
             this.registerPasswordTextBox.PasswordChar = '*';
-            this.registerPasswordTextBox.Size = new System.Drawing.Size(183, 30);
+            this.registerPasswordTextBox.Size = new System.Drawing.Size(123, 23);
             this.registerPasswordTextBox.TabIndex = 2;
             // 
             // registerButton
             // 
             this.registerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.registerButton.Location = new System.Drawing.Point(86, 379);
+            this.registerButton.Location = new System.Drawing.Point(57, 246);
+            this.registerButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.registerButton.Name = "registerButton";
-            this.registerButton.Size = new System.Drawing.Size(115, 44);
+            this.registerButton.Size = new System.Drawing.Size(77, 29);
             this.registerButton.TabIndex = 4;
             this.registerButton.Text = "Register";
             this.registerButton.UseVisualStyleBackColor = true;
@@ -206,22 +223,25 @@
             // 
             // logBox
             // 
-            this.logBox.Location = new System.Drawing.Point(13, 458);
+            this.logBox.Location = new System.Drawing.Point(9, 298);
+            this.logBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.logBox.Multiline = true;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
-            this.logBox.Size = new System.Drawing.Size(219, 75);
+            this.logBox.Size = new System.Drawing.Size(147, 50);
             this.logBox.TabIndex = 6;
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 545);
+            this.ClientSize = new System.Drawing.Size(330, 354);
             this.Controls.Add(this.title);
             this.Controls.Add(this.logBox);
             this.Controls.Add(this.registerGroupBox);
             this.Controls.Add(this.loginGroupBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "LoginForm";
             this.Text = "Diginote Exchange System Client";

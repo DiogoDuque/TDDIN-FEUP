@@ -239,7 +239,7 @@ namespace Database
         public float GetCurrentQuote()
         {
             SQLiteCommand getQuote = new SQLiteCommand(
-                "SELECT quote FROM quote WHERE id=max(id);",
+                "SELECT quote, max(id) FROM quote;",
                 db);
             SQLiteDataReader reader = getQuote.ExecuteReader();
             float quote;

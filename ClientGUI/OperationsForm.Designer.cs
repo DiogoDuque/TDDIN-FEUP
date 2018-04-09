@@ -673,6 +673,7 @@
             this.Controls.Add(this.nicknameLabel);
             this.Controls.Add(this.title);
             this.Controls.Add(this.systemInfo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "OperationsForm";
