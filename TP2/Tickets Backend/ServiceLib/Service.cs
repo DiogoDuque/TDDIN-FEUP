@@ -7,17 +7,31 @@ using System.Text;
 
 namespace ServiceLib
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public class Service : IService
     {
-        public string GetData(int value)
+        void IService.AddTicket(string author, string description)
         {
-            return string.Format("You entered: {0}", value);
+            throw new NotImplementedException();
         }
 
-        public bool GetBool()
+        void IService.AssignSolverToTicket(string author, string description, string solver)
         {
-            return true;
+            throw new NotImplementedException();
+        }
+
+        Ticket[] IService.GetAllTicketsFromAuthor(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        Ticket[] IService.GetAllTicketsFromSolver(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        Ticket[] IService.GetUnassignedTickets()
+        {
+            throw new NotImplementedException();
         }
     }
 }
