@@ -1,23 +1,33 @@
 import React from 'react';
-import axios from 'axios';
-import xmljs from 'xml-js';
+import { ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
+import AssignedTickets from './AssignedTickets';
 
 class App extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClick();
-  }
-
-  handleClick() {
-    axios.get('http://localhost:8000/GetBool')
-      .then(response => window.alert(`status:${response.status}, data:${response.data}`))
   }
 
   render() {
-    return(
-      <div className="header">
-        <h1>Trouble Tickets</h1>
+    return (
+      <div className="container">
+        <div className="header">
+          <h1>Trouble Tickets</h1>
+        </div>
+        <Grid>
+          <Row className="show-grid">
+            <Col md={6}>
+              <h2>My Current Tickets</h2>
+              <AssignedTickets username="lel"/>
+            </Col>
+            <Col md={6}>
+              <h2>Unassigned Tickets</h2>
+              <ListGroup>
+                <ListGroupItem>Item 1</ListGroupItem>
+                <ListGroupItem>Item 2</ListGroupItem>
+              </ListGroup>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }

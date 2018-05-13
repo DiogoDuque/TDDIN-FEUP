@@ -7,6 +7,7 @@ let mainWindow; // global reference to prevent garbage collecting on the window
 
 function createWindow () {
   mainWindow = new BrowserWindow({width: 800, height: 600}); // Create the browser window.
+  mainWindow.maximize();
 
   mainWindow.loadURL(Url.format({ // load the index.html of the app.
     pathname: Path.join(__dirname, './app/index.html'),
