@@ -1,22 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Common
 {
     [Serializable]
-    public enum TicketStatus
+    public class TicketStatus
     {
-        UNASSIGNED, // default status
-        ASSIGNED,   // assigned to solver
-        WAITING,    // waiting for specialized response
-        SOLVED      // solved
+        public static string UNASSIGNED = "Unassigned"; // default status
+        public static string ASSIGNED = "Assigned";     // assigned to solver
+        public static string WAITING = "Waiting";       // waiting for specialized response
+        public static string SOLVED = "Solved";         // solved
     }
 
+    [Serializable]
     public class Ticket
     {
         public string author;
         public string description;
-        public DateTime creationDate;
-        public TicketStatus status;
+        public string creationDate;
+        public string status;
 
         public string solver;
         public string answer;
@@ -28,7 +30,8 @@ namespace Common
         {
             this.author = author;
             this.description = description;
-            this.creationDate = new DateTime();
+            DateTime creationDate = DateTime.Now;
+            this.creationDate = creationDate.ToShortTimeString() + " " + creationDate.ToShortDateString();
             this.status = TicketStatus.UNASSIGNED;
         }
 

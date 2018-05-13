@@ -15,15 +15,15 @@ namespace ServiceLib
         void AddTicket(string author, string description);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
         Ticket[] GetUnassignedTickets();
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
         Ticket[] GetAllTicketsFromAuthor(string username);
 
         [OperationContract]
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
         Ticket[] GetAllTicketsFromSolver(string username);
 
         [OperationContract]

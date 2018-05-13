@@ -12,8 +12,8 @@ export default class Ticket extends React.Component {
         <ListGroupItem>
           <Row className="show-grid">
             <Col md={5}>{this.props.data.author}</Col>
-            <Col md={5}>{this.props.data.status}</Col>
-            <Col md={2}>{this.props.data.creationDate}</Col>
+            <Col md={3}>{this.props.data.status}</Col>
+            <Col md={4}>{this.props.data.creationDate}</Col>
           </Row>
         </ListGroupItem>
         <ListGroupItem>

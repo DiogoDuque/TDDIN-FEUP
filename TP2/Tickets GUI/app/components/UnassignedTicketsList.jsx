@@ -33,7 +33,7 @@ export default class AssignedTickets extends React.Component {
     return (
       <div>
         {this.state.tickets.map(ticket => (
-          <Ticket key={ticket.key} data={ticket} />
+          <Ticket key={ticket.description+ticket.creationDate} data={ticket} />
         ))}
       </div>
     );

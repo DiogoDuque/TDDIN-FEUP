@@ -1,6 +1,7 @@
 import React from 'react';
 import { ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
-import AssignedTickets from './AssignedTickets';
+import AssignedTickets from './AssignedTicketsList';
+import UnassignedTickets from './UnassignedTicketsList';
 
 class App extends React.Component {
   constructor() {
@@ -21,10 +22,7 @@ class App extends React.Component {
             </Col>
             <Col md={6}>
               <h2>Unassigned Tickets</h2>
-              <ListGroup>
-                <ListGroupItem>Item 1</ListGroupItem>
-                <ListGroupItem>Item 2</ListGroupItem>
-              </ListGroup>
+              <UnassignedTickets/>
             </Col>
           </Row>
         </Grid>
