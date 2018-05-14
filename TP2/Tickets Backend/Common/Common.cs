@@ -35,6 +35,19 @@ namespace Common
             this.status = TicketStatus.UNASSIGNED;
         }
 
+        public Ticket(string author, string description, string creationDate, string status,
+            string solver, string answer, string specializedSolver, string specializedAnswer)
+        {
+            this.author = author;
+            this.description = description;
+            this.creationDate = creationDate;
+            this.status = status;
+            this.solver = solver;
+            this.answer = answer;
+            this.specializedSolver = specializedSolver;
+            this.specializedAnswer = specializedAnswer;
+        }
+
         public bool AssignSolver(string solver)
         {
             if (this.status.Equals(TicketStatus.UNASSIGNED))
