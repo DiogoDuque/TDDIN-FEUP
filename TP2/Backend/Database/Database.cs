@@ -11,13 +11,13 @@ namespace Database
         public static string TICKET = "CREATE TABLE tickets(" + 
             "id INTEGER PRIMARY KEY, " +
             "author VARCHAR(30) NOT NULL, " +
-            "description VARCHAR(250) NOT NULL, " +
+            "description VARCHAR(1500) NOT NULL, " +
             "creationDate VARCHAR(30) NOT NULL, " +
             "status VARCHAR(15) NOT NULL, " +
             "solver VARCHAR(30), " +
-            "answer VARCHAR(250), " +
+            "answer VARCHAR(1500), " +
             "specializedSolver VARCHAR(30), " +
-            "specializedAnswer VARCHAR(250)" +
+            "specializedAnswer VARCHAR(1500)" +
             ");";
     }
     public class Database
