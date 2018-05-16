@@ -78,6 +78,10 @@
       <Project>{A2E09F68-0283-411B-83FF-94360554C5AE}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Project>{5AC94143-5C2F-4B8F-BA87-AC176F382B6D}</Project>
+      <Name>Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

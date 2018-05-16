@@ -11,6 +11,7 @@ namespace Database
         public static string TICKET = "CREATE TABLE tickets(" + 
             "id INTEGER PRIMARY KEY, " +
             "author VARCHAR(30) NOT NULL, " +
+            "title VARCHAR(80) UNIQUE NOT NULL, " +
             "description VARCHAR(1500) NOT NULL, " +
             "creationDate VARCHAR(30) NOT NULL, " +
             "status VARCHAR(15) NOT NULL, " +
@@ -20,12 +21,20 @@ namespace Database
             "specializedAnswer VARCHAR(1500)" +
             ");";
     }
-    public class Database
+    public class Db
     {
         public static string dbFilename = "Tickets.sqlite";
         SQLiteConnection db;
+        private static Db instance;
 
-        public Database()
+        public static Db GetInstance()
+        {
+            if (instance == null)
+                instance = new Db();
+            return instance;
+        }
+
+        private Db()
         {
             if (!File.Exists(Directory.GetCurrentDirectory() + "/" + dbFilename))
             {
@@ -40,6 +49,7 @@ namespace Database
             }
             else
             {
+                Console.WriteLine("Opening DB");
                 db = new SQLiteConnection("Data Source=" + dbFilename + ";Version=3;");
                 db.Open();
             }
@@ -48,8 +58,9 @@ namespace Database
         public void AddTicket(Ticket ticket)
         {
             SQLiteCommand cmd = new SQLiteCommand(
-                "INSERT INTO tickets(author, description, creationDate, status) VALUES(\"" +
+                "INSERT INTO tickets(author, title, description, creationDate, status) VALUES(\"" +
                  ticket.author + "\",\"" +
+                 ticket.title + "\",\"" +
                  ticket.description + "\",\"" +
                  ticket.creationDate + "\",\"" +
                  ticket.status + "\");",
@@ -70,7 +81,7 @@ namespace Database
             {
                 Ticket ticket = new Ticket(reader.GetString(1), reader.GetString(2), reader.GetString(3),
                     reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7),
-                    reader.GetString(8));
+                    reader.GetString(8), reader.GetString(9));
                 tickets.Add(ticket);
             }
 

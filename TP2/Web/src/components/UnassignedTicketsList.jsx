@@ -30,6 +30,11 @@ export default class AssignedTickets extends React.Component {
       );
     }
 
+    if(this.state.tickets.length === 0)
+      return(
+        <p>No unassigned tickets available!</p>
+      );
+
     return (
       <div>
         {this.state.tickets.map(ticket => (

@@ -16,6 +16,7 @@ namespace Common
     public class Ticket
     {
         public string author;
+        public string title;
         public string description;
         public string creationDate;
         public string status;
@@ -26,19 +27,21 @@ namespace Common
         public string specializedSolver;
         public string specializedAnswer;
 
-        public Ticket(string author, string description)
+        public Ticket(string author, string title, string description)
         {
             this.author = author;
+            this.title = title;
             this.description = description;
             DateTime creationDate = DateTime.Now;
             this.creationDate = creationDate.ToShortTimeString() + " " + creationDate.ToShortDateString();
             this.status = TicketStatus.UNASSIGNED;
         }
 
-        public Ticket(string author, string description, string creationDate, string status,
+        public Ticket(string author, string title, string description, string creationDate, string status,
             string solver, string answer, string specializedSolver, string specializedAnswer)
         {
             this.author = author;
+            this.title = title;
             this.description = description;
             this.creationDate = creationDate;
             this.status = status;

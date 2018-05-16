@@ -1,11 +1,17 @@
 ﻿using System;
 using System.ServiceModel.Web;
 using Common;
+using Database;
 
 namespace ServiceLib
 {
     public class Service : IService
     {
+        private bool IsValid(string arg)
+        {
+            return (arg != null && !arg.Equals(""));
+        }
+
         private bool AllowCORS()
         {
             WebOperationContext.Current.OutgoingResponse.Headers
@@ -22,28 +28,35 @@ namespace ServiceLib
             }
             return true;
         }
+
         public Ticket[] GetAllTicketsFromAuthor(string username)
         {
+            if (!IsValid(username))
+                return null;
+
             if (!AllowCORS())
                 return null;
 
             Ticket[] tickets = new Ticket[4];
             for(int i=0; i<4; i++)
             {
-                tickets[i] = new Ticket("user0" + i, "GetAllTicketsFromAuthor hard coded description " + i);
+                tickets[i] = new Ticket("user0" + i, "title"+i, "GetAllTicketsFromAuthor hard coded description " + i);
             }
             return tickets;
         }
 
         public Ticket[] GetAllTicketsFromSolver(string username)
         {
+            if (!IsValid(username))
+                return null;
+
             if (!AllowCORS())
                 return null;
 
             Ticket[] tickets = new Ticket[4];
             for (int i = 0; i < 4; i++)
             {
-                tickets[i] = new Ticket("user0" + i, "GetAllTicketsFromSolver(" + username + ") hard coded description " + i);
+                tickets[i] = new Ticket("user0" + i, "title"+i, "GetAllTicketsFromSolver(" + username + ") hard coded description " + i);
             }
             return tickets;
         }
@@ -53,26 +66,27 @@ namespace ServiceLib
             if (!AllowCORS())
                 return null;
 
-            Ticket[] tickets = new Ticket[4];
-            for (int i = 0; i < 4; i++)
-            {
-                tickets[i] = new Ticket("user0" + i, "GetUnassignedTickets hard coded description " + i);
-            }
-            return tickets;
+            return Db.GetInstance().GetUnassignedTickets();
         }
 
-        public void AddTicket(string author, string description)
+        public void AddTicket(string author, string title, string description)
         {
-            /*if (!AllowCORS())
-                return null;*/
+            if (!IsValid(author) || !IsValid(title) || !IsValid(description))
+                return;
 
-            throw new NotImplementedException();
+            if (!AllowCORS())
+                return;
+
+            Db.GetInstance().AddTicket(new Ticket(author, title, description));
         }
 
-        public void AssignSolverToTicket(string author, string description, string solver)
+        public void AssignSolverToTicket(string author, string title, string solver)
         {
-            /*if (!AllowCORS())
-                return null;*/
+            if (!IsValid(author) || !IsValid(title) || !IsValid(solver))
+                return;
+
+            if (!AllowCORS())
+                return;
 
             throw new NotImplementedException();
         }
