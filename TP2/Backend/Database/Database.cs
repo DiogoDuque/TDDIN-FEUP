@@ -109,14 +109,37 @@ namespace Database
             List<Ticket> tickets = new List<Ticket>();
             while (reader.Read())
             {
-                Ticket ticket = new Ticket(reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                    reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7),
-                    reader.GetString(8), reader.GetString(9));
+                string author = reader.GetString(1);
+                string title = reader.GetString(2);
+                string description = reader.GetString(3);
+                string creationDate = reader.GetString(4);
+                string status = reader.GetString(5);
+                string solver = reader.IsDBNull(6) ? null : reader.GetString(6);
+                string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
+                string specializedSolver = reader.IsDBNull(8) ? null : reader.GetString(8);
+                string specializedAnswer = reader.IsDBNull(9) ? null : reader.GetString(9);
+
+                Ticket ticket = new Ticket(author, title, description,
+                    creationDate, status, solver, answer,
+                    specializedSolver, specializedAnswer);
                 tickets.Add(ticket);
             }
 
             cmd.Dispose();
             return tickets.ToArray();
+        }
+
+        public bool AssignSolverToTicket(string author, string title, string solver)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "UPDATE tickets SET " +
+                 "solver=\"" + solver + "\"," +
+                 "status=\"Assigned\"" +
+                 "WHERE author=\""+author+"\" AND title=\""+title+"\" AND solver IS NULL);",
+                 db);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+            return true;
         }
     }
 }

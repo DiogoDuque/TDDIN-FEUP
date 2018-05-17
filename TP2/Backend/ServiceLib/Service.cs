@@ -52,7 +52,7 @@ namespace ServiceLib
             if (!IsValid(author) || !IsValid(title) || !IsValid(solver))
                 return false;
 
-            throw new NotImplementedException();
+            return Db.GetInstance().AssignSolverToTicket(author, title, solver);
         }
     }
 }

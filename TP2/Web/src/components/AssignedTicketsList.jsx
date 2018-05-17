@@ -11,17 +11,26 @@ export default class AssignedTickets extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.username != prevProps.username)
+      this.updateTickets(this.props.username);
+  }
+
   componentDidMount() {
-    axios.get(`http://localhost:8000/GetAllTicketsFromSolver?username=${this.props.username}`)
+    this.updateTickets(this.props.username);
+  }
+
+  updateTickets(username) {
+    axios.get(`http://localhost:8000/GetAllTicketsFromSolver?username=${username}`)
       .then(response => {
-        console.log(response);
+        console.log({title:"Assigned",response});
         let tickets = response.data;
         this.setState({
           isLoading: false,
           tickets,
         });
       });
-  }
+  }  
 
   render() {
     if (this.state.isLoading) {

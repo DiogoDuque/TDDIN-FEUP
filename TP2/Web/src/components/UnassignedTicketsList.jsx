@@ -14,7 +14,7 @@ export default class AssignedTickets extends React.Component {
   componentDidMount() {
     axios.get('http://localhost:8000/GetUnassignedTickets')
       .then(response => {
-        console.log(response);
+        console.log({title:"Unassigned",response});
         let tickets = response.data;
         this.setState({
           isLoading: false,
@@ -38,7 +38,7 @@ export default class AssignedTickets extends React.Component {
     return (
       <div>
         {this.state.tickets.map(ticket => (
-          <Ticket key={ticket.description+ticket.creationDate} data={ticket} />
+          <Ticket key={ticket.description+ticket.creationDate} data={ticket} solver={this.props.username} />
         ))}
       </div>
     );

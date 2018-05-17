@@ -17,7 +17,14 @@ export default class AskQuestion extends Component {
       data: obj,
       crossDomain: true,
     })
-      .then(response => console.log(response));
+      .then(response => {
+        if(response.data.AddTicketResult) {
+          alert('Your question was successfully submitted!');
+        } else {
+          alert('Your question was NOT successfully submitted!');
+        }
+        window.location.reload();
+      });
   }
 
   render() {
