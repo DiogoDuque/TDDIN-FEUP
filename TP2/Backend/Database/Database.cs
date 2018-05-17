@@ -77,7 +77,27 @@ namespace Database
             SQLiteDataReader reader = cmd.ExecuteReader();
 
             List<Ticket> tickets = new List<Ticket>();
-            while(reader.Read())
+            while (reader.Read())
+            {
+                Ticket ticket = new Ticket(reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                    reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7),
+                    reader.GetString(8), reader.GetString(9));
+                tickets.Add(ticket);
+            }
+
+            cmd.Dispose();
+            return tickets.ToArray();
+        }
+
+        public Ticket[] GetAllTicketsFromSolver(string username)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * FROM tickets WHERE solver=\""+username+"\"",
+                db);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            List<Ticket> tickets = new List<Ticket>();
+            while (reader.Read())
             {
                 Ticket ticket = new Ticket(reader.GetString(1), reader.GetString(2), reader.GetString(3),
                     reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetString(7),

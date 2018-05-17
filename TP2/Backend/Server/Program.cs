@@ -24,6 +24,8 @@ namespace Server
             {
                 // Step 3 Add a service endpoint.  
                 webHost.AddServiceEndpoint(typeof(IService), new WebHttpBinding(), "");
+                foreach (ServiceEndpoint EP in webHost.Description.Endpoints)
+                    EP.Behaviors.Add(new OpenBetRetail.NFCReaderService.BehaviorAttribute());
 
                 /*/ Step 4 Enable metadata exchange.  
                 ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
