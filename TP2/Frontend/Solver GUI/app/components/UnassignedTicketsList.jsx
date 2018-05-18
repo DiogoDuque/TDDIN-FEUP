@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Ticket from './Ticket';
+import Ticket from '../globalComponents/Ticket';
 
 export default class AssignedTickets extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class AssignedTickets extends React.Component {
   componentDidMount() {
     axios.get('http://localhost:8000/GetUnassignedTickets')
       .then(response => {
-        console.log(response);
+        console.log({title:"Unassigned",response});
         let tickets = response.data;
         this.setState({
           isLoading: false,
@@ -30,10 +30,15 @@ export default class AssignedTickets extends React.Component {
       );
     }
 
+    if(this.state.tickets.length === 0)
+      return(
+        <p>No unassigned tickets available!</p>
+      );
+
     return (
       <div>
         {this.state.tickets.map(ticket => (
-          <Ticket key={ticket.description+ticket.creationDate} data={ticket} />
+          <Ticket key={ticket.description+ticket.creationDate} data={ticket} solver={this.props.username} />
         ))}
       </div>
     );

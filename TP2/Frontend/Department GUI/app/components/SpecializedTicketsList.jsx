@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Ticket from './Ticket';
+import Ticket from '../globalComponents/Ticket';
 
-export default class AssignedTickets extends React.Component {
+export default class SpecializedTicketsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,8 @@ export default class AssignedTickets extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8000/GetUnassignedTickets')
+      //uncomment code block when API call is finished, and substitute by the correct URL
+    /*axios.get('http://localhost:8000/GetUnassignedTickets')
       .then(response => {
         console.log({title:"Unassigned",response});
         let tickets = response.data;
@@ -20,7 +21,7 @@ export default class AssignedTickets extends React.Component {
           isLoading: false,
           tickets,
         });
-      });
+      });*/
   }
 
   render() {
