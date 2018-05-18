@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 export default class Register extends Component {
     submitForm() {
-        //TODO Register User
+        let elems = document.forms[0].elements;
+        let obj = {
+            username: elems[0].value,
+            email: elems[1].value,
+            type: elems[2].value,
+        };
+
+        axios({
+            url:"http://localhost:8000/RegisterUser",
+            method: 'post',
+            data: obj,
+            crossDomain: true,
+        })
+        .then(response => {
+            if(response.data.RegisterUserResult) {
+                alert('User registered successfully');
+            } else {
+                alert('Error authenticating user' + JSON.stringify(obj));
+            }
+            window.location.reload();
+        });
     }
 
     render() {
@@ -26,8 +47,8 @@ export default class Register extends Component {
                             <ControlLabel>Job Function</ControlLabel>
                             <FormControl componentClass="select">
                                 <option value="">Select your job function...</option>
-                                <option value="worker">Worker</option>
-                                <option value="solver">Solver</option>
+                                <option value="Worker">Worker</option>
+                                <option value="Solver">Solver</option>
                             </FormControl>
                         </FormGroup>
                     </form>
