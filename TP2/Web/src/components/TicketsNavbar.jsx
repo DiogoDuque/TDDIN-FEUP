@@ -13,6 +13,7 @@ export default class AskQuestion extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav onSelect={(eventKey) => this.props.changePage(eventKey)}>
+            <NavItem eventKey={'Register'} href="#">Register User</NavItem>
             <NavItem eventKey={'AskQuestion'} href="#">Ask Question(CLIENT)</NavItem>
             <NavItem eventKey={'SolverView'} href="#">Solver View(SOLVER)</NavItem>
           </Nav>

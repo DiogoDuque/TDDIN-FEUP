@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TicketsNavbar from './components/TicketsNavbar';
 import AskQuestion from './components/AskQuestion';
 import SolverView from './components/SolverView';
+import Register from './components/Register';
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +30,8 @@ class App extends Component {
           <AskQuestion />}
         {this.state.page === 'SolverView' &&
           <SolverView/>}
+        {this.state.page === 'Register' &&
+          <Register/>}
       </div>
     );
   }
