@@ -289,8 +289,3 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-
-# So para nao me chatearem mais
-*.png
-*.vs
-*.gitattributes
