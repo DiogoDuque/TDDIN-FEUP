@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 
 export default class AskQuestion extends Component {
   render() {
@@ -11,12 +11,11 @@ export default class AskQuestion extends Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav onSelect={(eventKey) => this.props.changePage(eventKey)}>
-            <NavItem eventKey={'AskQuestion'} href="#">Ask Question(CLIENT)</NavItem>
-            <NavItem eventKey={'SolverView'} href="#">Solver View(SOLVER)</NavItem>
-          </Nav>
-        </Navbar.Collapse>
+        {this.props.screenName && (
+          <Navbar.Collapse>
+              <Navbar.Text href="#">{this.props.screenName}</Navbar.Text>
+          </Navbar.Collapse>
+        )}
       </Navbar>
     );
   }
