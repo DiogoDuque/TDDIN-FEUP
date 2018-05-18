@@ -12,24 +12,29 @@ namespace Common
         public static string SOLVED = "Solved";         // solved
     }
 
+    //TODO isto nao devia ser um enum?
+    [Serializable]
+    public class UserType
+    {
+        public static string WORKER = "Worker";
+        public static string SOLVER = "Solver";
+    }
+
     [Serializable]
     public class Ticket
     {
-        public string author;
+        public string authoremail;
         public string title;
         public string description;
         public string creationDate;
         public string status;
 
-        public string solver;
+        public string solveremail;
         public string answer;
-
-        public string specializedSolver;
-        public string specializedAnswer;
 
         public Ticket(string author, string title, string description)
         {
-            this.author = author;
+            this.authoremail = author;
             this.title = title;
             this.description = description;
             DateTime creationDate = DateTime.Now;
@@ -38,24 +43,22 @@ namespace Common
         }
 
         public Ticket(string author, string title, string description, string creationDate, string status,
-            string solver, string answer, string specializedSolver, string specializedAnswer)
+            string solver, string answer)
         {
-            this.author = author;
+            this.authoremail = author;
             this.title = title;
             this.description = description;
             this.creationDate = creationDate;
             this.status = status;
-            this.solver = solver;
+            this.solveremail = solver;
             this.answer = answer;
-            this.specializedSolver = specializedSolver;
-            this.specializedAnswer = specializedAnswer;
         }
 
         public bool AssignSolver(string solver)
         {
             if (this.status.Equals(TicketStatus.UNASSIGNED))
             {
-                this.solver = solver;
+                this.solveremail = solver;
                 this.status = TicketStatus.ASSIGNED;
                 return true;
             }
@@ -77,7 +80,8 @@ namespace Common
         {
             if (this.status.Equals(TicketStatus.ASSIGNED))
             {
-                this.specializedSolver = specializedSolver;
+                //TODO REFACTOR WHEN QUESTION OBJECTS ARE IMPLEMENTED
+                //this.specializedSolver = specializedSolver;
                 this.status = TicketStatus.WAITING;
                 return true;
             }
@@ -88,10 +92,33 @@ namespace Common
         {
             if (this.status.Equals(TicketStatus.WAITING))
             {
-                this.specializedAnswer = specializedAnswer;
+                //TODO REFACTOR WHEN QUESTION OBJECTS ARE IMPLEMENTED
+                //this.specializedAnswer = specializedAnswer;
                 return true;
             }
             return false;
+        }
+    }
+
+    [Serializable]
+    public class User
+    {
+        public string name;
+        public string email;
+        public string type;
+
+        public User(string name, string email, string type)
+        {
+            this.name = name;
+            this.email = email;
+            if(type == UserType.WORKER || type == UserType.SOLVER)
+            {
+                this.type = type;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid user type");
+            }
         }
     }
 }
