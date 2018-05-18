@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Ticket from './Ticket';
+import Ticket from '../globalComponents/Ticket';
 
 export default class AssignedTickets extends React.Component {
   constructor(props) {
