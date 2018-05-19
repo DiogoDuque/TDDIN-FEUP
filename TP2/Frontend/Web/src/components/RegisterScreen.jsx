@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-export default class Register extends Component {
+export default class RegisterScreen extends Component {
     submitForm() {
         let elems = document.forms[0].elements;
         let obj = {
