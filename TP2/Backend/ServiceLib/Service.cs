@@ -12,6 +12,11 @@ namespace ServiceLib
             return (arg != null && !arg.Equals(""));
         }
 
+        private bool IsUserType(string arg)
+        {
+            return (arg == UserType.SOLVER || arg == UserType.WORKER);
+        }
+
         public Ticket[] GetAllTicketsFromAuthor(string username)
         {
             if (!IsValid(username))
@@ -53,6 +58,15 @@ namespace ServiceLib
                 return false;
 
             return Db.GetInstance().AssignSolverToTicket(author, title, solver);
+        }
+
+        public bool RegisterUser(string username, string email, string type)
+        {
+            if (!IsValid(username) || !IsValid(email) || !IsUserType(type))
+                return false;
+
+            Db.GetInstance().AddUser(new User(username, email, type));
+            return true;
         }
     }
 }
