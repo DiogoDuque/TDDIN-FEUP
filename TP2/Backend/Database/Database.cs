@@ -15,7 +15,7 @@ namespace Database
             "description VARCHAR(1500) NOT NULL, " +
             "creationDate VARCHAR(30) NOT NULL, " +
             "status VARCHAR(15) NOT NULL, " +
-            "solver INTEGER REFERENCES users(id) NOT NULL, " +
+            "solver INTEGER REFERENCES users(id), " +
             "answer VARCHAR(1500)" +
             ");";
 
@@ -163,10 +163,17 @@ namespace Database
                 "SELECT id FROM users WHERE email=\"" + useremail + "\"",
                 db);
             SQLiteDataReader reader = cmd.ExecuteReader();
-            reader.Read();
-            int id = reader.GetInt32(1);
-            cmd.Dispose();
-            return id;
+            if (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                cmd.Dispose();
+                return id;
+            }
+            else
+            {
+                cmd.Dispose();
+                return 0;
+            }
         }
 
         public User GetUser(int id)
