@@ -68,5 +68,18 @@ namespace ServiceLib
             Db.GetInstance().AddUser(new User(username, email, type));
             return true;
         }
+
+        public User[] GetUsers(string type)
+        {
+            Console.WriteLine(type);
+            if (!IsUserType(type))
+            {
+                Console.WriteLine("Fail");
+                return null;
+            }
+            User[] result = Db.GetInstance().GetUsers(type);
+            Console.WriteLine(result.Length);
+            return result;
+        }
     }
 }

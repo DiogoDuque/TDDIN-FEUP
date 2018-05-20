@@ -184,5 +184,28 @@ namespace Database
 
             return new User(name, email, type);
         }
+
+        public User[] GetUsers(string type)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * FROM users WHERE type=\"" + type + "\"",
+                db);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            List<User> users = new List<User>();
+            while (reader.Read())
+            {
+                string name = reader.GetString(1);
+                string email = reader.GetString(2);
+                string usertype = reader.GetString(3);
+
+
+                User user = new User(name, email, usertype);
+                users.Add(user);
+            }
+
+            cmd.Dispose();
+            return users.ToArray();
+        }
     }
 }

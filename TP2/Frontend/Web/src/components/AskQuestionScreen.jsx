@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
+import ListUserOptions from '../globalComponents/ListUserOptions';
 
 export default class AskQuestion extends Component {
   submitForm() {
@@ -34,7 +35,9 @@ export default class AskQuestion extends Component {
         <form>
           <FormGroup>
             <ControlLabel>Author</ControlLabel>
-            <FormControl type="text" placeholder="Enter username" name="author" />
+            <FormControl componentClass="select" placeholder="Enter username" name="author">
+              <ListUserOptions userType="Worker"/>
+            </FormControl>
           </FormGroup>
           <FormGroup>
             <ControlLabel>Title</ControlLabel>
