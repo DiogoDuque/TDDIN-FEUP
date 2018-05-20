@@ -17,17 +17,13 @@ namespace ServiceLib
             return (arg == UserType.SOLVER || arg == UserType.WORKER);
         }
 
-        public Ticket[] GetAllTicketsFromAuthor(string username)
+        public Ticket[] GetAllTicketsFromAuthor(string useremail)
         {
-            if (!IsValid(username))
+            Console.WriteLine("GetAllTicketsFromAuthor: " + useremail);
+            if (!IsValid(useremail))
                 return null;
 
-            Ticket[] tickets = new Ticket[4];
-            for(int i=0; i<4; i++)
-            {
-                tickets[i] = new Ticket("user0" + i, "title"+i, "GetAllTicketsFromAuthor hard coded description " + i);
-            }
-            return tickets;
+            return Db.GetInstance().GetAllTicketsFromUser(useremail);
         }
 
         public Ticket[] GetAllTicketsFromSolver(string username)

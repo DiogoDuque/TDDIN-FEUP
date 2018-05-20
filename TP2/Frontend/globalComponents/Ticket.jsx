@@ -17,10 +17,10 @@ export default class Ticket extends React.Component {
           <h4>{ticket.title}</h4>
           <p>{ticket.description}</p>
         </ListGroupItem>
-        {ticket.status === 'Unassigned' && (
+        { (ticket.status === 'Unassigned' && this.props.viewer !== "Worker") && (
           <Button onClick={() => alert(this.props.solver)}>Assign me!</Button>
         )}
-        {ticket.status !== 'Unassigned' && (
+        {(ticket.status !== 'Unassigned' && this.props.viewer !== "Worker") && (
           <ListGroupItem>
             <Row className="show-grid">
               <Col md={5}>Solver: {ticket.solver}</Col>

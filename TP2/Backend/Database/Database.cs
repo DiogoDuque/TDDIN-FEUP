@@ -117,10 +117,39 @@ namespace Database
             return tickets.ToArray();
         }
 
+        //TODO Talvez mudar o nome da variavel para "email"
         public Ticket[] GetAllTicketsFromSolver(string username)
         {
             SQLiteCommand cmd = new SQLiteCommand(
                 "SELECT * FROM tickets WHERE solver=\""+username+"\"",
+                db);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            List<Ticket> tickets = new List<Ticket>();
+            while (reader.Read())
+            {
+                string author = this.GetUser(reader.GetInt32(1)).email;
+                string title = reader.GetString(2);
+                string description = reader.GetString(3);
+                string creationDate = reader.GetString(4);
+                string status = reader.GetString(5);
+                string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
+                string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
+
+                Ticket ticket = new Ticket(author, title, description,
+                    creationDate, status, solver, answer);
+                tickets.Add(ticket);
+            }
+
+            cmd.Dispose();
+            return tickets.ToArray();
+        }
+
+        public Ticket[] GetAllTicketsFromUser(string useremail)
+        {
+            int userid = GetUserId(useremail);
+            SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * FROM tickets WHERE author=" + userid.ToString() ,
                 db);
             SQLiteDataReader reader = cmd.ExecuteReader();
 

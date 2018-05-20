@@ -20,7 +20,7 @@ namespace ServiceLib
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
-        Ticket[] GetAllTicketsFromAuthor(string username);
+        Ticket[] GetAllTicketsFromAuthor(string useremail);
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]

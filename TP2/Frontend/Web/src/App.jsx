@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TicketsNavbar from './globalComponents/TicketsNavbar';
 import AskQuestionScreen from './components/AskQuestionScreen';
 import RegisterScreen from './components/RegisterScreen';
+import VisualizeTicketsScreen from './components/VisualizeTicketsScreen';
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +30,8 @@ class App extends Component {
           <RegisterScreen/>}
         {this.state.page === 'AskQuestion' &&
           <AskQuestionScreen />}
+        {this.state.page === 'VisualizeTickets' &&
+          <VisualizeTicketsScreen />}
       </div>
     );
   }
