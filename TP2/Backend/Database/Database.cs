@@ -118,10 +118,11 @@ namespace Database
         }
 
         //TODO Talvez mudar o nome da variavel para "email"
-        public Ticket[] GetAllTicketsFromSolver(string username)
+        public Ticket[] GetAllTicketsFromSolver(string useremail)
         {
+            int userid = GetUserId(useremail);
             SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT * FROM tickets WHERE solver=\""+username+"\"",
+                "SELECT * FROM tickets WHERE solver="+ userid.ToString(),
                 db);
             SQLiteDataReader reader = cmd.ExecuteReader();
 

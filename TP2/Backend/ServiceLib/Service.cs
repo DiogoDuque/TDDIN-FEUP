@@ -26,13 +26,13 @@ namespace ServiceLib
             return Db.GetInstance().GetAllTicketsFromUser(useremail);
         }
 
-        public Ticket[] GetAllTicketsFromSolver(string username)
+        public Ticket[] GetAllTicketsFromSolver(string useremail)
         {
-            Console.WriteLine("GetAllTicketsFromSolver: " + username);
-            if (!IsValid(username))
+            Console.WriteLine("GetAllTicketsFromSolver: " + useremail);
+            if (!IsValid(useremail))
                 return null;
 
-            return Db.GetInstance().GetAllTicketsFromSolver(username);
+            return Db.GetInstance().GetAllTicketsFromSolver(useremail);
         }
 
         public Ticket[] GetUnassignedTickets()
