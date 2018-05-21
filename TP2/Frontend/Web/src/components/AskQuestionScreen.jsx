@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ListUserOptions from '../globalComponents/ListUserOptions';
+import UserSelector from '../globalComponents/UserSelector';
 
 export default class AskQuestion extends Component {
   submitForm() {
@@ -33,12 +34,7 @@ export default class AskQuestion extends Component {
       <div className="container">
         <h1>Ask a question!</h1>
         <form>
-          <FormGroup>
-            <ControlLabel>Author</ControlLabel>
-            <FormControl componentClass="select" placeholder="Enter username" name="author">
-              <ListUserOptions userType="Worker"/>
-            </FormControl>
-          </FormGroup>
+          <UserSelector userType="Worker"/>
           <FormGroup>
             <ControlLabel>Title</ControlLabel>
             <FormControl type="text" placeholder="Enter title" name="title" />

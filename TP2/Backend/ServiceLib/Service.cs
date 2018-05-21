@@ -28,6 +28,7 @@ namespace ServiceLib
 
         public Ticket[] GetAllTicketsFromSolver(string username)
         {
+            Console.WriteLine("GetAllTicketsFromSolver: " + username);
             if (!IsValid(username))
                 return null;
 

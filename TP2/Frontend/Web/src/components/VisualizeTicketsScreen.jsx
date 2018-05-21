@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormControl, FormGroup, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
 import ListUserOptions from '../globalComponents/ListUserOptions';
+import UserSelector from '../globalComponents/UserSelector';
 import OwnedTickets from './OwnedTickets';
 
 export default class VisualizeTicketsScreen extends Component {
@@ -35,12 +36,7 @@ export default class VisualizeTicketsScreen extends Component {
           <div className="container">
             <h1>Tickets Emmited</h1>
             <form>
-              <FormGroup>
-                <ControlLabel>Author</ControlLabel>
-                <FormControl value={this.state.user} onChange={this.handleChange} componentClass="select" placeholder="Enter username" name="author">
-                  <ListUserOptions userType="Worker"/>
-                </FormControl>
-              </FormGroup>
+              <UserSelector value={this.state.user} onChange={this.handleChange} userType="Worker"/>
             </form>
 
             <Grid>
