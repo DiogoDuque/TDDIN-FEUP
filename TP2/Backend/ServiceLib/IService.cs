@@ -37,5 +37,13 @@ namespace ServiceLib
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
         User[] GetUsers(string type);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
+        Ticket[] GetSpecializedQuestions();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        bool AskSpecializedQuestion(string ticketTitle, string question);
     }
 }

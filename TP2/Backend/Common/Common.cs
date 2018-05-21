@@ -21,6 +21,19 @@ namespace Common
     }
 
     [Serializable]
+    public class Question
+    {
+        public string question;
+        public string answer;
+        
+        public Question(string question, string answer)
+        {
+            this.question = question;
+            this.answer = answer;
+        }
+    }
+
+    [Serializable]
     public class Ticket
     {
         public string authoremail;
@@ -31,6 +44,8 @@ namespace Common
 
         public string solveremail;
         public string answer;
+
+        public Question[] questions;
 
         public Ticket(string author, string title, string description)
         {

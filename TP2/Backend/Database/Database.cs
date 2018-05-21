@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
@@ -25,6 +26,15 @@ namespace Database
             "email VARCHAR(50) UNIQUE NOT NULL, " +
             "type VARCHAR(10) NOT NULL" +
             ");";
+
+        public static string QUESTIONS = "CREATE TABLE questions(" +
+            "id INTEGER PRIMARY KEY, " +
+            "solver_id INTEGER REFERENCES users(id) NOT NULL, " +
+            "ticket_id INTEGER REFERENCES tickets(id) NOT NULL, " +
+            "question VARCHAR(1500) NOT NULL, " +
+            "answer VARCHAR(1500)" +
+            ");";
+
     }
     public class Db
     {
@@ -52,8 +62,10 @@ namespace Database
                 db.Open();
                 SQLiteCommand createUsersTable = new SQLiteCommand(DB_Tables.USERS, db);
                 createUsersTable.ExecuteNonQuery();
-                SQLiteCommand createTicketsTable = new SQLiteCommand(DB_Tables.TICKET,db);
+                SQLiteCommand createTicketsTable = new SQLiteCommand(DB_Tables.TICKET, db);
                 createTicketsTable.ExecuteNonQuery();
+                SQLiteCommand createQuestionsTable = new SQLiteCommand(DB_Tables.QUESTIONS, db);
+                createQuestionsTable.ExecuteNonQuery();
             }
             else
             {
@@ -243,5 +255,62 @@ namespace Database
             cmd.Dispose();
             return users.ToArray();
         }
+
+        public void AskSpecializedQuestion(string ticketTitle, string question)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "INSERT INTO questions(solver_id, ticket_id, question) " +
+                "(SELECT tickets.solver as solver_id, "+
+                "tickets.id as ticket_id "+
+                "FROM tickets WHERE title=\""+ticketTitle+"\"), "+
+                "\""+question+"\" AS question" +
+                ");",
+                 db);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
+        }
+
+        public Ticket GetTicketAndAssociatedQuestions(string ticketTitle)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT tickets.description, tickets.creationDate, tickets.status, users.email, "+
+                "questions.question, question.answer "+
+                "FROM tickets WHERE tickets.title=\"" + ticketTitle + "\" " +
+                "INNER JOIN questions ON tickets.id=questions.ticket_id "+
+                "INNER JOIN users on tickets.author=user.id",
+                db);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            Dictionary<string, Question> questions = new Dictionary<string, Question>();
+            Ticket ticket = null;
+
+            while(reader.Read())
+            {
+                if(ticket==null)
+                {
+                    string description = reader.GetString(0);
+                    string creationDate = reader.GetString(1);
+                    string status = reader.GetString(2);
+                    string author = reader.GetString(3);
+                    ticket = new Ticket(author, ticketTitle, description);
+                    ticket.creationDate = creationDate;
+                    ticket.status = status;
+                }
+                string question = reader.GetString(4);
+                string answer = reader.IsDBNull(5) ? null : reader.GetString(5);
+                if(!questions.ContainsKey(question))
+                {
+                    questions.Add(question, new Question(question, answer));
+                }
+            }
+            Dictionary<string, Question>.ValueCollection qVals = questions.Values;
+            ticket.questions = new Question[qVals.Count];
+            qVals.CopyTo(ticket.questions,0);
+
+            cmd.Dispose();
+
+            return ticket;
+        }
+        
     }
 }
