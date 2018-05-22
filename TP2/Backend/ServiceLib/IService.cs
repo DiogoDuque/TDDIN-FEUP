@@ -40,10 +40,10 @@ namespace ServiceLib
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
-        Ticket[] GetSpecializedQuestions();
+        Ticket[] GetTicketsForUnansweredSpecializedQuestions();
 
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        bool AskSpecializedQuestion(string ticketTitle, string question);
+        bool AskSpecializedQuestion(int id, string question, string creationDate);
     }
 }

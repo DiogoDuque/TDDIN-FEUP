@@ -80,12 +80,12 @@ namespace ServiceLib
             return result;
         }
 
-        public bool AskSpecializedQuestion(string ticketTitle, string question)
+        public bool AskSpecializedQuestion(int id, string question, string creationDate)
         {
-            Db.GetInstance().AskSpecializedQuestion(ticketTitle, question);
+            Db.GetInstance().AskSpecializedQuestion(id, question, creationDate);
 
             // send by MQ to department
-            Ticket ticket = Db.GetInstance().GetTicketAndAssociatedQuestions(ticketTitle);
+            Ticket ticket = Db.GetInstance().GetTicketAndAssociatedQuestions(id);
 
             ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
@@ -108,7 +108,7 @@ namespace ServiceLib
             return true;
         }
 
-        public Ticket[] GetSpecializedQuestions()
+        public Ticket[] GetTicketsForUnansweredSpecializedQuestions()
         {
             return new Ticket[0]; //TODO
         }

@@ -25,11 +25,13 @@ namespace Common
     {
         public string question;
         public string answer;
+        public string creationDate;
         
-        public Question(string question, string answer)
+        public Question(string question, string answer, string creationDate)
         {
             this.question = question;
             this.answer = answer;
+            this.creationDate = creationDate;
         }
     }
 
