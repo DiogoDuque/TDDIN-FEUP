@@ -286,10 +286,10 @@ namespace Database
         {
             SQLiteCommand cmd = new SQLiteCommand(
                 "SELECT tickets.description, tickets.creationDate, tickets.status, users.email, "+
-                "tickets.title, questions.question, question.answer, question.creationDate " +
+                "tickets.title, questions.question, questions.answer, questions.creationDate " +
                 "FROM tickets " +
                 "INNER JOIN questions ON tickets.id=questions.ticket_id "+
-                "INNER JOIN users ON tickets.author=user.id WHERE tickets.id=\"" + ticketId + "\"",
+                "INNER JOIN users ON tickets.author=users.id WHERE tickets.id=" + ticketId + "",
                 db);
             SQLiteDataReader reader = cmd.ExecuteReader();
 
