@@ -5,29 +5,33 @@ import Ticket from '../globalComponents/Ticket';
 export default class AssignedTickets extends React.Component {
   constructor(props) {
     super(props);
+    console.log("Contructor Assigned Tickets: " + this.props.useremail);
     this.state = {
       tickets: null,
       isLoading: true,
+      useremail: this.props.useremail,
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.username != prevProps.username)
-      this.updateTickets(this.props.username);
+    if(this.props.useremail != prevProps.useremail)
+      this.updateTickets(this.props.useremail);
   }
 
   componentDidMount() {
-    this.updateTickets(this.props.username);
+    this.updateTickets(this.state.useremail);
   }
 
-  updateTickets(username) {
-    axios.get(`http://localhost:8000/GetAllTicketsFromSolver?username=${username}`)
+  updateTickets(useremail) {
+    console.log("Update Tickets (Assigned): " + useremail);
+    axios.get(`http://localhost:8000/GetAllTicketsFromSolver?useremail=${useremail}`)
       .then(response => {
         console.log({title:"Assigned",response});
         let tickets = response.data;
         this.setState({
           isLoading: false,
           tickets,
+          useremail,
         });
       });
   }  
@@ -41,16 +45,19 @@ export default class AssignedTickets extends React.Component {
       );
     }
 
-    if(this.state.tickets !== null) {
+    if(this.state.tickets == null || this.state.tickets == "") {
       return (
         <p>No assigned tickets available!</p>
       );
     }
 
+    console.log("Before");
+    console.log(typeof(this.state.tickets));
+    console.log(this.state.tickets == null);
     return (
       <div>
         {this.state.tickets.map(function(ticket) {
-          return <Ticket key={ticket.description+ticket.creationDate} data={ticket} />;
+          return <Ticket key={ticket.id} data={ticket} />;
         })}
 
       </div>

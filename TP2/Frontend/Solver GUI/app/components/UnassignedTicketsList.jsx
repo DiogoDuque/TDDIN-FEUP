@@ -55,7 +55,7 @@ export default class UnassignedTickets extends React.Component {
       } else {
         alert('Error. Ticket could not be assigned.');
       }
-      window.location.reload();
+      this.updateTickets(this.state.useremail);
     })
   }
 
@@ -78,7 +78,7 @@ export default class UnassignedTickets extends React.Component {
           <ListGroup>
             <ListGroupItem>
               <Ticket key={ticket.id} data={ticket} />
-              <Button onClick={(e) => this.assignTicket(ticket.id, e)}>Assign me!</Button>
+              <Button value={ticket.id} onClick={(e) => this.assignTicket(ticket.id, e)}>Assign me!</Button>
             </ListGroupItem>
           </ListGroup>
         ))}

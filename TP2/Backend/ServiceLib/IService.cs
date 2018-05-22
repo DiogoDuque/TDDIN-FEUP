@@ -24,7 +24,7 @@ namespace ServiceLib
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
-        Ticket[] GetAllTicketsFromSolver(string username);
+        Ticket[] GetAllTicketsFromSolver(string useremail);
 
         [OperationContract]
         [WebInvoke(Method = "PUT", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]

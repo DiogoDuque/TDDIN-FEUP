@@ -22,6 +22,11 @@ export default class App extends Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log("OH YEAH");
+    //this.setState(this.state);
+  }
+
   render() {
     console.log("Render App : " + this.state.solver);
     return (
@@ -39,7 +44,7 @@ export default class App extends Component {
             <Row className="show-grid">
               <Col md={6}>
                 <h2>My Current Tickets</h2>
-                <AssignedTickets username={this.state.solver} />
+                <AssignedTickets useremail={this.state.solver} />
               </Col>
               <Col md={6}>
                 <h2>Unassigned Tickets</h2>

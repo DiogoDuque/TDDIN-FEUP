@@ -115,35 +115,39 @@ namespace Database
             }
 
             cmd.Dispose();
+            reader.Dispose();
             return tickets.ToArray();
         }
 
         public Ticket[] GetAllTicketsFromSolver(string useremail)
         {
-            int userid = GetUserId(useremail);
-            SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT * FROM tickets WHERE solver="+ userid.ToString(),
-                db);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
             List<Ticket> tickets = new List<Ticket>();
-            while (reader.Read())
+
+            int userid = GetUserId(useremail);
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * FROM tickets WHERE solver=" + userid.ToString(),
+                db))
             {
-                int id = reader.GetInt32(0);
-                string author = this.GetUser(reader.GetInt32(1)).email;
-                string title = reader.GetString(2);
-                string description = reader.GetString(3);
-                string creationDate = reader.GetString(4);
-                string status = reader.GetString(5);
-                string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
-                string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
 
-                Ticket ticket = new Ticket(id, author, title, description,
-                    creationDate, status, solver, answer);
-                tickets.Add(ticket);
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string author = this.GetUser(reader.GetInt32(1)).email;
+                        string title = reader.GetString(2);
+                        string description = reader.GetString(3);
+                        string creationDate = reader.GetString(4);
+                        string status = reader.GetString(5);
+                        string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
+                        string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
+
+                        Ticket ticket = new Ticket(id, author, title, description,
+                            creationDate, status, solver, answer);
+                        tickets.Add(ticket);
+                    }
+                }
             }
-
-            cmd.Dispose();
             return tickets.ToArray();
         }
 
@@ -173,6 +177,7 @@ namespace Database
             }
 
             cmd.Dispose();
+            reader.Dispose();
             return tickets.ToArray();
         }
 
@@ -200,11 +205,13 @@ namespace Database
             {
                 int id = reader.GetInt32(0);
                 cmd.Dispose();
+                reader.Dispose();
                 return id;
             }
             else
             {
                 cmd.Dispose();
+                reader.Dispose();
                 return 0;
             }
         }
@@ -221,30 +228,33 @@ namespace Database
             string type = reader.GetString(3);
 
             cmd.Dispose();
+            reader.Dispose();
 
             return new User(name, email, type);
         }
 
         public User[] GetUsers(string type)
         {
-            SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT * FROM users WHERE type=\"" + type + "\"",
-                db);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
             List<User> users = new List<User>();
-            while (reader.Read())
+
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT * FROM users WHERE type=\"" + type + "\"",
+                db))
             {
-                string name = reader.GetString(1);
-                string email = reader.GetString(2);
-                string usertype = reader.GetString(3);
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string name = reader.GetString(1);
+                        string email = reader.GetString(2);
+                        string usertype = reader.GetString(3);
 
 
-                User user = new User(name, email, usertype);
-                users.Add(user);
+                        User user = new User(name, email, usertype);
+                        users.Add(user);
+                    }
+                }
             }
-
-            cmd.Dispose();
             return users.ToArray();
         }
     }
