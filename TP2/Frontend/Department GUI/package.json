@@ -6,6 +6,7 @@
     "start": "electron ."
   },
   "dependencies": {
+    "amqplib": "^0.5.2",
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "react": "^15.6.1",

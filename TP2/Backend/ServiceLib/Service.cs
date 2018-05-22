@@ -1,7 +1,8 @@
 ﻿using System;
-using System.ServiceModel.Web;
+using RabbitMQ.Client;
 using Common;
 using Database;
+using System.Text;
 
 namespace ServiceLib
 {
@@ -80,6 +81,39 @@ namespace ServiceLib
             User[] result = Db.GetInstance().GetUsers(type);
             Console.WriteLine("Num Users of type "+ type + " : " + result.Length);
             return result;
+        }
+
+        public bool AskSpecializedQuestion(int id, string question, string creationDate)
+        {
+            Db.GetInstance().AskSpecializedQuestion(id, question, creationDate);
+
+            // send by MQ to department
+            Ticket ticket = Db.GetInstance().GetTicketAndAssociatedQuestions(id);
+
+            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                channel.QueueDeclare(queue: "DepartmentQueue",
+                                     durable: false,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+                
+                var body = Encoding.UTF8.GetBytes(ticket.ToString());
+
+                channel.BasicPublish(exchange: "",
+                                     routingKey: "department",
+                                     basicProperties: null,
+                                     body: body);
+            }
+
+            return true;
+        }
+
+        public Ticket[] GetTicketsForUnansweredSpecializedQuestions()
+        {
+            return new Ticket[0]; //TODO
         }
     }
 }

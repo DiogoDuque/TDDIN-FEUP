@@ -4,8 +4,8 @@ import TicketsNavbar from '../globalComponents/TicketsNavbar';
 import SpecializedTicketsList from './SpecializedTicketsList';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {

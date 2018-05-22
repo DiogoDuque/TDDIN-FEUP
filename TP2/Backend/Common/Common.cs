@@ -21,6 +21,21 @@ namespace Common
     }
 
     [Serializable]
+    public class Question
+    {
+        public string question;
+        public string answer;
+        public string creationDate;
+        
+        public Question(string question, string answer, string creationDate)
+        {
+            this.question = question;
+            this.answer = answer;
+            this.creationDate = creationDate;
+        }
+    }
+
+    [Serializable]
     public class Ticket
     {
         public int id;
@@ -32,6 +47,8 @@ namespace Common
 
         public string solveremail;
         public string answer;
+
+        public Question[] questions;
 
         public Ticket(string author, string title, string description)
         {
