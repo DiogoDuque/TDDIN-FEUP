@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem, Row, Col, Button } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 
 export default class Ticket extends React.Component {
   render() {
@@ -17,9 +17,6 @@ export default class Ticket extends React.Component {
           <h4>{ticket.title}</h4>
           <p>{ticket.description}</p>
         </ListGroupItem>
-        { (ticket.status === 'Unassigned' && this.props.viewer !== "Worker") && (
-          <Button onClick={() => alert(this.props.solver)}>Assign me!</Button>
-        )}
         {(ticket.status !== 'Unassigned' && this.props.viewer !== "Worker") && (
           <ListGroupItem>
             <Row className="show-grid">

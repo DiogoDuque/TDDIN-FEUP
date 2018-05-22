@@ -28,7 +28,7 @@ namespace ServiceLib
 
         [OperationContract]
         [WebInvoke(Method = "PUT", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        bool AssignSolverToTicket(string author, string title, string solver);
+        bool AssignSolverToTicket(string solveremail, int ticketid);
 
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]

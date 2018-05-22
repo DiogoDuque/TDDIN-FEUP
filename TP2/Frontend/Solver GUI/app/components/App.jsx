@@ -10,18 +10,20 @@ export default class App extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      solver: "solver1",
-      user: "solver1",
+      solver: "",
     };
   }
 
   handleChange(event) {
+    console.log("Handle Change (App): " + event.target.value);
+    console.log(event.target.value);
     this.setState({
-      user: event.target.value,
+      solver: event.target.value,
     })
   }
 
   render() {
+    console.log("Render App : " + this.state.solver);
     return (
       <div>
         <TicketsNavbar screenName="Solver Edition" />
@@ -29,7 +31,7 @@ export default class App extends Component {
         <div className="container">
 
           <form>
-            <UserSelector userType="Solver" onChange={this.handleChange} value={this.state.user} />
+            <UserSelector userType="Solver" onChange={this.handleChange} value={this.state.solver} />
           </form>
 
 
@@ -41,7 +43,7 @@ export default class App extends Component {
               </Col>
               <Col md={6}>
                 <h2>Unassigned Tickets</h2>
-                <UnassignedTickets username={this.state.solver} />
+                <UnassignedTickets useremail={this.state.solver} />
               </Col>
             </Row>
           </Grid>

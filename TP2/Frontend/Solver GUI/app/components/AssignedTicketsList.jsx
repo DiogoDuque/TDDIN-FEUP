@@ -33,17 +33,26 @@ export default class AssignedTickets extends React.Component {
   }  
 
   render() {
+    console.log("Render Assigned Tickets");
+    console.log(this.state.tickets);
     if (this.state.isLoading) {
       return (
         <p>Loading</p>
       );
     }
 
+    if(this.state.tickets !== null) {
+      return (
+        <p>No assigned tickets available!</p>
+      );
+    }
+
     return (
       <div>
-        {this.state.tickets.map(ticket => (
-          <Ticket key={ticket.description+ticket.creationDate} data={ticket} />
-        ))}
+        {this.state.tickets.map(function(ticket) {
+          return <Ticket key={ticket.description+ticket.creationDate} data={ticket} />;
+        })}
+
       </div>
     );
   }

@@ -37,7 +37,10 @@ namespace ServiceLib
 
         public Ticket[] GetUnassignedTickets()
         {
-            return Db.GetInstance().GetUnassignedTickets();
+            Console.WriteLine("GetUnassignedTickets: ()");
+            Ticket[] result = Db.GetInstance().GetUnassignedTickets();
+            Console.WriteLine("Num Unassigned Tickets: " + result.Length);
+            return result;
         }
 
         public bool AddTicket(string author, string title, string description)
@@ -49,12 +52,12 @@ namespace ServiceLib
             return true;
         }
 
-        public bool AssignSolverToTicket(string author, string title, string solver)
+        public bool AssignSolverToTicket(string solveremail, int ticketid)
         {
-            if (!IsValid(author) || !IsValid(title) || !IsValid(solver))
+            if (!IsValid(solveremail))
                 return false;
 
-            return Db.GetInstance().AssignSolverToTicket(author, title, solver);
+            return Db.GetInstance().AssignSolverToTicket(solveremail, ticketid);
         }
 
         public bool RegisterUser(string username, string email, string type)
@@ -68,14 +71,14 @@ namespace ServiceLib
 
         public User[] GetUsers(string type)
         {
-            Console.WriteLine(type);
+            Console.WriteLine("GetUsers: " + type);
             if (!IsUserType(type))
             {
                 Console.WriteLine("Fail");
                 return null;
             }
             User[] result = Db.GetInstance().GetUsers(type);
-            Console.WriteLine(result.Length);
+            Console.WriteLine("Num Users of type "+ type + " : " + result.Length);
             return result;
         }
     }

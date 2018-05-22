@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FormControl, FormGroup, ControlLabel, Grid, Row, Col } from 'react-bootstrap';
-import ListUserOptions from '../globalComponents/ListUserOptions';
 import UserSelector from '../globalComponents/UserSelector';
 import OwnedTickets from './OwnedTickets';
 

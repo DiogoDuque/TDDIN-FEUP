@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import ListUserOptions from './ListUserOptions';
 import axios from 'axios';
 
 
@@ -16,7 +15,7 @@ export default class UserSelector extends Component {
     }
 
     getUsers(userType) {
-        console.log(userType);
+        console.log("getUsers (UserSelector): "+ userType);
         axios.get(`http://localhost:8000/GetUsers?type=${userType}`)
         .then(response => {
             this.setState({

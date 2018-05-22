@@ -23,6 +23,7 @@ namespace Common
     [Serializable]
     public class Ticket
     {
+        public int id;
         public string authoremail;
         public string title;
         public string description;
@@ -34,6 +35,7 @@ namespace Common
 
         public Ticket(string author, string title, string description)
         {
+            this.id = 0;
             this.authoremail = author;
             this.title = title;
             this.description = description;
@@ -42,9 +44,10 @@ namespace Common
             this.status = TicketStatus.UNASSIGNED;
         }
 
-        public Ticket(string author, string title, string description, string creationDate, string status,
+        public Ticket(int id, string author, string title, string description, string creationDate, string status,
             string solver, string answer)
         {
+            this.id = id;
             this.authoremail = author;
             this.title = title;
             this.description = description;

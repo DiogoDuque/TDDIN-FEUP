@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import axios from 'axios';
-import ListUserOptions from '../globalComponents/ListUserOptions';
 import UserSelector from '../globalComponents/UserSelector';
 
 export default class AskQuestion extends Component {

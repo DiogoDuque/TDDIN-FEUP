@@ -93,13 +93,14 @@ namespace Database
         public Ticket[] GetUnassignedTickets()
         {
             SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT * FROM tickets WHERE status=\"Unassigned\"",
-                db);
+                                "SELECT * FROM tickets WHERE status=\"Unassigned\"",
+                                db);
             SQLiteDataReader reader = cmd.ExecuteReader();
 
             List<Ticket> tickets = new List<Ticket>();
             while (reader.Read())
             {
+                int id = reader.GetInt32(0);
                 string author = this.GetUser(reader.GetInt32(1)).email;
                 string title = reader.GetString(2);
                 string description = reader.GetString(3);
@@ -108,7 +109,7 @@ namespace Database
                 string solver = reader.IsDBNull(6)? null: this.GetUser(reader.GetInt32(6)).email;
                 string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
-                Ticket ticket = new Ticket(author, title, description,
+                Ticket ticket = new Ticket(id, author, title, description,
                     creationDate, status, solver, answer);
                 tickets.Add(ticket);
             }
@@ -117,7 +118,6 @@ namespace Database
             return tickets.ToArray();
         }
 
-        //TODO Talvez mudar o nome da variavel para "email"
         public Ticket[] GetAllTicketsFromSolver(string useremail)
         {
             int userid = GetUserId(useremail);
@@ -129,6 +129,7 @@ namespace Database
             List<Ticket> tickets = new List<Ticket>();
             while (reader.Read())
             {
+                int id = reader.GetInt32(0);
                 string author = this.GetUser(reader.GetInt32(1)).email;
                 string title = reader.GetString(2);
                 string description = reader.GetString(3);
@@ -137,7 +138,7 @@ namespace Database
                 string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
                 string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
-                Ticket ticket = new Ticket(author, title, description,
+                Ticket ticket = new Ticket(id, author, title, description,
                     creationDate, status, solver, answer);
                 tickets.Add(ticket);
             }
@@ -157,6 +158,7 @@ namespace Database
             List<Ticket> tickets = new List<Ticket>();
             while (reader.Read())
             {
+                int id = reader.GetInt32(0);
                 string author = this.GetUser(reader.GetInt32(1)).email;
                 string title = reader.GetString(2);
                 string description = reader.GetString(3);
@@ -165,7 +167,7 @@ namespace Database
                 string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
                 string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
-                Ticket ticket = new Ticket(author, title, description,
+                Ticket ticket = new Ticket(id, author, title, description,
                     creationDate, status, solver, answer);
                 tickets.Add(ticket);
             }
@@ -174,13 +176,14 @@ namespace Database
             return tickets.ToArray();
         }
 
-        public bool AssignSolverToTicket(string author, string title, string solver)
+        public bool AssignSolverToTicket(string solveremail, int ticketid)
         {
+            int solverid = GetUserId(solveremail);
             SQLiteCommand cmd = new SQLiteCommand(
                 "UPDATE tickets SET " +
-                 "solver=\"" + solver + "\"," +
-                 "status=\"Assigned\"" +
-                 "WHERE author=\""+author+"\" AND title=\""+title+"\" AND solver IS NULL);",
+                 "solver=" + solverid.ToString() + "," +
+                 "status=\"Assigned\" " +
+                 "WHERE id="+ ticketid.ToString() + " AND solver IS NULL;",
                  db);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
