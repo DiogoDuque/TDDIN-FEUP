@@ -113,7 +113,7 @@ namespace ServiceLib
 
         public Ticket[] GetTicketsForUnansweredSpecializedQuestions()
         {
-            return new Ticket[0]; //TODO
+            return Db.GetInstance().GetTicketsForUnansweredSpecializedQuestions();
         }
     }
 }

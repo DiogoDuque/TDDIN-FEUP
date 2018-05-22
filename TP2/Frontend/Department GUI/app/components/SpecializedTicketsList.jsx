@@ -6,14 +6,15 @@ import amqp from 'amqplib/callback_api';
 export default class SpecializedTicketsList extends React.Component {
   constructor(props) {
     super(props);
+    this.getQuestions = this.getQuestions.bind(this);
     this.state = {
       tickets: [],
       isLoading: true,
     };
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:8000/GetSpecializedQuestions')
+  getQuestions() {
+    axios.get('http://localhost:8000/GetTicketsForUnansweredSpecializedQuestions')
       .then(response => {
         console.log(response);
         let tickets = response.data;
@@ -22,7 +23,15 @@ export default class SpecializedTicketsList extends React.Component {
           tickets,
         });
       });
+  }
 
+  componentDidMount() {
+    // request info periodically
+    this.getQuestions();
+    const periodicCallID = setInterval(this.getQuestions, 15*1000);
+    this.setState({periodicCallID});
+
+    // establish MQ for receiving questions
     amqp.connect('amqp://localhost', function (err, conn) {
       conn.createChannel(function (err, ch) {
         var q = 'DepartmentQueue';
