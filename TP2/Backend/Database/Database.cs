@@ -280,6 +280,21 @@ namespace Database
                  db);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
+
+            SQLiteCommand cmd2 = new SQLiteCommand(
+                "UPDATE tickets SET status=\"WAITING\" WHERE id="+ticketId,
+                 db);
+            cmd2.ExecuteNonQuery();
+            cmd2.Dispose();
+        }
+
+        public void AnswerSpecializedQuestion(int ticketId, string answer)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "UPDATE questions SET answer=\""+answer+"\" WHERE answer IS NULL AND ticket_id=" + ticketId,
+                 db);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
         }
 
         public Ticket GetTicketAndAssociatedQuestions(int ticketId)
@@ -384,6 +399,7 @@ namespace Database
                     questions.AddRange(ticket.questions);
                     ticket.questions = questions.ToArray();
                 }
+                tickets.Add(ticketsWithUnansQuest[id]);
             }
 
             return tickets.ToArray();

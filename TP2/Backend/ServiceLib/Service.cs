@@ -111,6 +111,12 @@ namespace ServiceLib
             return true;
         }
 
+        public bool AnswerSpecializedQuestion(int ticketId, string answer)
+        {
+            Db.GetInstance().AnswerSpecializedQuestion(ticketId, answer);
+            return true;
+        }
+
         public Ticket[] GetTicketsForUnansweredSpecializedQuestions()
         {
             return Db.GetInstance().GetTicketsForUnansweredSpecializedQuestions();

@@ -25,11 +25,24 @@ export default class SpecializedTicketsList extends React.Component {
       });
   }
 
+  submitAnswerToQuestion(ticketId, answer) {
+    let obj = {
+      ticketId,
+      answer,
+    }
+    axios({
+      url: 'http://localhost:8000/AnswerSpecializedQuestion',
+      method: 'put',
+      data: obj,
+    })
+    .then(response => {
+        alert('Submitted!');
+        this.getQuestions();
+    })
+  }
+
   componentDidMount() {
-    // request info periodically
     this.getQuestions();
-    const periodicCallID = setInterval(this.getQuestions, 15*1000);
-    this.setState({periodicCallID});
 
     // establish MQ for receiving questions
     amqp.connect('amqp://localhost', function (err, conn) {
@@ -47,6 +60,18 @@ export default class SpecializedTicketsList extends React.Component {
     });
   }
 
+  editAnswer(text, index) {
+    const { tickets } = this.state;
+    const questions = tickets[index].questions;
+    for(let q of questions) {
+      if(!q.answer){
+        q.tmpAnswer=text;
+        break;
+      }
+    }
+    this.setState({tickets});
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -61,8 +86,8 @@ export default class SpecializedTicketsList extends React.Component {
 
     return (
       <div>
-        {this.state.tickets.map(ticket => (
-          <Ticket key={ticket.description + ticket.creationDate} data={ticket} solver={this.props.username} />
+        {this.state.tickets.map((ticket, index) => (
+          <Ticket key={ticket.description + ticket.creationDate} viewer="Department" data={ticket} solver={this.props.username} onChangeAnswer={e => this.editAnswer(e.target.value, index)} submitAnswerToQuestion={(ticketId, answer) => this.submitAnswerToQuestion(ticketId, answer)} />
         ))}
       </div>
     );
