@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using Common;
 using Database;
 using System.Text;
+using System.Net.Mail;
 
 namespace ServiceLib
 {
@@ -131,6 +132,40 @@ namespace ServiceLib
 
             Ticket[] result = Db.GetInstance().GetAllTicketsAndQuestionsFromUser(solveremail);
             return result;
+        }
+
+        public bool CloseTicket(int ticketId, string emailtext)
+        {
+            Ticket ticket = Db.GetInstance().GetTicketAndAssociatedQuestions(ticketId);
+            bool closedTicket = Db.GetInstance().CloseTicket(ticketId);
+
+            if (!closedTicket)
+                return false;
+
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient emailclient = new SmtpClient("smtp.fe.up.pt");
+
+                mail.From = new MailAddress("up201404293@fe.up.pt");
+                mail.To.Add(ticket.authoremail);
+                mail.Subject = "Answer to Ticket \"" + ticket.title + "\"";
+                mail.Body = emailtext;
+
+                emailclient.Port = 587;
+                emailclient.Credentials = new System.Net.NetworkCredential("up201404293", "4setembro2000_2114"); //RIP, agora o prof sabe a minha pass do mail
+                emailclient.EnableSsl = true;
+
+                emailclient.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+            Console.WriteLine(emailtext);
+
+            return true;
         }
     }
 }

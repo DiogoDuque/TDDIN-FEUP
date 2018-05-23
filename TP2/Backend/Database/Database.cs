@@ -463,6 +463,22 @@ namespace Database
             return tickets.ToArray();
         }
 
+        public bool CloseTicket(int ticketId)
+        {
+            int result = 0;
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "UPDATE tickets SET " +
+                 "status=\"" + TicketStatus.SOLVED + "\" " +
+                 "WHERE id=" + ticketId.ToString() + " AND solver NOT NULL;",
+                 db))
+            {
+                result = cmd.ExecuteNonQuery();
+            }
 
+            if (result != 1)
+                return false;
+            else
+                return true;
+        }
     }
 }

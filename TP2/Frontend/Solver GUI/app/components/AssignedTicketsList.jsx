@@ -10,6 +10,7 @@ export default class AssignedTickets extends React.Component {
     
     this.sendQuestion = this.sendQuestion.bind(this);
     this.handleChangeForms = this.handleChangeForms.bind(this);
+    this.closeTicket = this.closeTicket.bind(this);
     this.state = {
       page: this.props.page,
       forms: {},
@@ -26,7 +27,11 @@ export default class AssignedTickets extends React.Component {
   
 
   sendQuestion(ticketid){
-    let obj = this.state.forms[ticketid];
+    let obj = {
+      id: ticketid,
+      question: this.state.forms[ticketid].text,
+      creationDate: ""
+    }
     console.log("Send Question");
     console.log(obj);
     if(obj !== null && obj !== undefined)
@@ -43,12 +48,36 @@ export default class AssignedTickets extends React.Component {
     }
   }
 
+  closeTicket(ticket) {
+    console.log("Closing Ticket");
+    console.log(ticket);
+
+    let obj = {
+      ticketId : ticket.id,
+      emailtext: this.state.forms[ticket.id].text,
+    }
+    axios({
+      url: "http://localhost:8000/CloseTicket",
+      method: 'put',
+      data: obj,
+      crossDomain: true,
+    })
+    .then(response => {
+      if(response) {
+        alert("Close ticket successfully");
+      } else {
+        alert("Error: Could not close ticket");
+      }
+      this.props.updateTickets(this.state.useremail);
+    });
+  }
+
   handleChangeForms(event, ticketid){
     console.log(this.state.forms);
     var newforms = this.state.forms;
     newforms[ticketid] = {
       id: ticketid,
-      question: event.target.value,
+      text: event.target.value,
       creationDate: "",
     }
     this.setState({
@@ -71,10 +100,30 @@ export default class AssignedTickets extends React.Component {
 
     if(this.state.page === 'VisualizeTickets')
     {
+      var other = this;
       return (
         <div>
           {this.props.tickets.map(function(ticket) {
-            return <Ticket key={ticket.id} data={ticket} />;
+            if(ticket.status !== "Solved")
+            {
+              return (
+              <ListGroup>
+                <ListGroupItem>
+                  <Ticket key={ticket.id} data={ticket} />
+                </ListGroupItem>
+                
+                <ListGroupItem>
+                  <FormGroup>
+                    <FormControl componentClass="textarea" rows="4" placeholder="Write the answer here..." onChange={event => other.handleChangeForms(event, ticket.id)}/>
+                  </FormGroup>
+                  <Button onClick={() => other.closeTicket(ticket)}>Send and Close</Button>
+                </ListGroupItem>
+                
+              </ListGroup>
+            );
+          } else {
+            return "";
+          }
           })}
 
         </div>
