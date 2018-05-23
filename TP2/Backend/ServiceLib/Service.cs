@@ -4,6 +4,7 @@ using Common;
 using Database;
 using System.Text;
 using System.Net.Mail;
+using System.Web.Script.Serialization;
 
 namespace ServiceLib
 {
@@ -91,23 +92,7 @@ namespace ServiceLib
             // send by MQ to department
             Ticket ticket = Db.GetInstance().GetTicketAndAssociatedQuestions(id);
 
-            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
-            {
-                channel.QueueDeclare(queue: "DepartmentQueue",
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
-                
-                var body = Encoding.UTF8.GetBytes(ticket.ToString());
-
-                channel.BasicPublish(exchange: "",
-                                     routingKey: "department",
-                                     basicProperties: null,
-                                     body: body);
-            }
+            SendTicketToMQ(ticket);
 
             return true;
         }
@@ -166,6 +151,32 @@ namespace ServiceLib
             Console.WriteLine(emailtext);
 
             return true;
+        }
+
+        private void SendTicketToMQ(Ticket ticket)
+        {
+            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
+            using (var connection = factory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    channel.QueueDeclare(queue: "Department",
+                                         durable: false,
+                                         exclusive: false,
+                                         autoDelete: false,
+                                         arguments: null);
+
+                    string json = new JavaScriptSerializer().Serialize(ticket);
+                    var body = Encoding.UTF8.GetBytes(json);
+
+                    channel.BasicPublish(exchange: "",
+                                         routingKey: "Department",
+                                         basicProperties: null,
+                                         body: body);
+                    Console.WriteLine("Sent msg");
+                }
+
+            }
         }
     }
 }

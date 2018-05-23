@@ -41,20 +41,31 @@ export default class SpecializedTicketsList extends React.Component {
     })
   }
 
+  uintToString(uintArray) {
+    var encodedString = String.fromCharCode.apply(null, uintArray),
+        decodedString = decodeURIComponent(escape(encodedString));
+    return decodedString;
+}
+  receiveTicketFromQueue(ticket) {
+    const { tickets } = this.state;
+    tickets.push(ticket);
+    this.setState({
+      tickets,
+    });
+  }
+
   componentDidMount() {
     this.getQuestions();
+    const thisTmp = this;
 
     // establish MQ for receiving questions
     amqp.connect('amqp://localhost', function (err, conn) {
       conn.createChannel(function (err, ch) {
-        var q = 'DepartmentQueue';
+        var q = 'Department';
         ch.assertQueue(q, { durable: false });
         ch.consume(q, t => {
-          const { tickets } = this.state;
-          tickets.push(t);
-          this.setState({
-            tickets,
-          });
+          let ticket = JSON.parse(thisTmp.uintToString(t.content));
+          thisTmp.receiveTicketFromQueue(ticket);
         }, {noAck: true});
       });
     });
