@@ -119,11 +119,12 @@ namespace Database
                 string description = reader.GetString(3);
                 string creationDate = reader.GetString(4);
                 string status = reader.GetString(5);
-                string solver = reader.IsDBNull(6)? null: this.GetUser(reader.GetInt32(6)).email;
+                string solveremail = reader.IsDBNull(6)? null: this.GetUser(reader.GetInt32(6)).email;
+                string solvername = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).name;
                 string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
                 Ticket ticket = new Ticket(id, authoremail, authorname, title, description,
-                    creationDate, status, solver, answer);
+                    creationDate, status, solveremail, solvername, answer);
                 tickets.Add(ticket);
             }
 
@@ -153,11 +154,12 @@ namespace Database
                         string description = reader.GetString(3);
                         string creationDate = reader.GetString(4);
                         string status = reader.GetString(5);
-                        string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
+                        string solveremail = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
+                        string solvername = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).name;
                         string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
                         Ticket ticket = new Ticket(id, authoremail, authorname, title, description,
-                            creationDate, status, solver, answer);
+                            creationDate, status, solveremail, solvername, answer);
                         tickets.Add(ticket);
                     }
                 }
@@ -183,11 +185,12 @@ namespace Database
                 string description = reader.GetString(3);
                 string creationDate = reader.GetString(4);
                 string status = reader.GetString(5);
-                string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
+                string solveremail = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
+                string solvername = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).name;
                 string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
                 Ticket ticket = new Ticket(id, authoremail, authorname, title, description,
-                    creationDate, status, solver, answer);
+                    creationDate, status, solveremail, solvername, answer);
                 tickets.Add(ticket);
             }
 
@@ -303,7 +306,7 @@ namespace Database
         public Ticket GetTicketAndAssociatedQuestions(int ticketId)
         {
             SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT tickets.description, tickets.creationDate, tickets.status, users.email, users.name, "+
+                "SELECT tickets.description, tickets.creationDate, tickets.status, tickets.title, users.email, users.name, tickets.solver, "+
                 "tickets.title, questions.question, questions.answer, questions.creationDate " +
                 "FROM tickets " +
                 "LEFT OUTER JOIN questions ON tickets.id=questions.ticket_id "+
@@ -321,18 +324,29 @@ namespace Database
                     string description = reader.GetString(0);
                     string ticketCreationDate = reader.GetString(1);
                     string status = reader.GetString(2);
-                    string authoremail = reader.GetString(3);
-                    string authorname = reader.GetString(4);
-                    string ticketTitle = reader.GetString(5);
+                    string title = reader.GetString(3);
+                    string authoremail = reader.GetString(4);
+                    string authorname = reader.GetString(5);
+                    int solverid = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
+                    string solveremail = null;
+                    string solvername = null;
+                    if(solverid > 0)
+                    {
+                        User u = this.GetUser(solverid);
+                        solveremail = u.email;
+                        solvername = u.name;
+                    }
+                    string ticketTitle = reader.GetString(7);
                     ticket = new Ticket(authoremail, ticketTitle, description);
+                    ticket = new Ticket(ticketId, authoremail, authorname, title, description, ticketCreationDate, status, solveremail, solvername, null);
                     ticket.creationDate = ticketCreationDate;
                     ticket.status = status;
                     ticket.id = ticketId;
                     ticket.authorname = authorname;
                 }
-                string question = reader.IsDBNull(5) ? null : reader.GetString(5);
-                string answer = reader.IsDBNull(6) ? null : reader.GetString(6);
-                string questionCreationDate = reader.IsDBNull(7) ? null : reader.GetString(7);
+                string question = reader.IsDBNull(8) ? null : reader.GetString(8);
+                string answer = reader.IsDBNull(9) ? null : reader.GetString(9);
+                string questionCreationDate = reader.IsDBNull(10) ? null : reader.GetString(10);
                 if(question != null)
                 {
                     questions.Add(new Question(question, answer, questionCreationDate));
@@ -379,7 +393,7 @@ namespace Database
 
             SQLiteCommand cmd = new SQLiteCommand(
                 "SELECT tickets.id, tickets.title, tickets.description, tickets.creationDate, " +
-                "tickets.status, users.email, users.name, questions.question, questions.answer, questions.creationDate " +
+                "tickets.status, users.email, users.name, tickets.solver, questions.question, questions.answer, questions.creationDate " +
                 "FROM tickets INNER JOIN users ON tickets.author=users.id "+
                 "INNER JOIN questions ON tickets.id=questions.ticket_id WHERE tickets.status=\"Waiting\"", db);
 
@@ -396,9 +410,18 @@ namespace Database
                 string status = reader.GetString(4);
                 string email = reader.GetString(5);
                 string name = reader.GetString(6);
-                string question = reader.GetString(7);
-                string answer = reader.IsDBNull(8)? null: reader.GetString(8);
-                string questionCreationDate = reader.GetString(9);
+                int solverid = reader.IsDBNull(7) ? 0 : reader.GetInt32(7);
+                string solveremail = null;
+                string solvername = null;
+                if(solverid > 0)
+                {
+                    User u = this.GetUser(solverid);
+                    solveremail = u.email;
+                    solvername = u.name;
+                }
+                string question = reader.GetString(8);
+                string answer = reader.IsDBNull(9)? null: reader.GetString(9);
+                string questionCreationDate = reader.GetString(10);
                 if (ticketsWithUnansQuest.ContainsKey(id)) // if ticket already has unans question
                 {
                     Ticket t = ticketsWithUnansQuest[id];
@@ -408,7 +431,7 @@ namespace Database
                 }
                 else if(answer == null) // new ticket with unans question
                 {
-                    Ticket t = new Ticket(id, email, name, title, description, ticketCreationDate, status, null, null);
+                    Ticket t = new Ticket(id, email, name, title, description, ticketCreationDate, status, solveremail, solvername, null);
                     t.questions = new Question[1] { new Question(question, answer, questionCreationDate) };
                     ticketsWithUnansQuest.Add(id, t);
                 }

@@ -47,6 +47,7 @@ namespace Common
         public string status;
 
         public string solveremail;
+        public string solvername;
         public string answer;
 
         public Question[] questions;
@@ -63,7 +64,7 @@ namespace Common
         }
 
         public Ticket(int id, string authoremail, string authorname, string title, string description, string creationDate, string status,
-            string solver, string answer)
+            string solveremail, string solvername, string answer)
         {
             this.id = id;
             this.authoremail = authoremail;
@@ -72,7 +73,8 @@ namespace Common
             this.description = description;
             this.creationDate = creationDate;
             this.status = status;
-            this.solveremail = solver;
+            this.solveremail = solveremail;
+            this.solvername = solvername;
             this.answer = answer;
         }
 
