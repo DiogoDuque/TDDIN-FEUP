@@ -280,6 +280,21 @@ namespace Database
                  db);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
+
+            SQLiteCommand cmd2 = new SQLiteCommand(
+                "UPDATE tickets SET status=\"WAITING\" WHERE id="+ticketId,
+                 db);
+            cmd2.ExecuteNonQuery();
+            cmd2.Dispose();
+        }
+
+        public void AnswerSpecializedQuestion(int ticketId, string answer)
+        {
+            SQLiteCommand cmd = new SQLiteCommand(
+                "UPDATE questions SET answer=\""+answer+"\" WHERE answer IS NULL AND ticket_id=" + ticketId,
+                 db);
+            cmd.ExecuteNonQuery();
+            cmd.Dispose();
         }
 
         public Ticket GetTicketAndAssociatedQuestions(int ticketId)
@@ -293,7 +308,7 @@ namespace Database
                 db);
             SQLiteDataReader reader = cmd.ExecuteReader();
 
-            Dictionary<string, Question> questions = new Dictionary<string, Question>();
+            List<Question> questions = new List<Question>();
             Ticket ticket = null;
 
             while(reader.Read())
@@ -313,14 +328,13 @@ namespace Database
                 string question = reader.IsDBNull(5) ? null : reader.GetString(5);
                 string answer = reader.IsDBNull(6) ? null : reader.GetString(6);
                 string questionCreationDate = reader.IsDBNull(7) ? null : reader.GetString(7);
-                if(question != null && !questions.ContainsKey(question))
+                if(question != null)
                 {
-                    questions.Add(question, new Question(question, answer, questionCreationDate));
+                    questions.Add(new Question(question, answer, questionCreationDate));
                 }
             }
-            Dictionary<string, Question>.ValueCollection qVals = questions.Values;
-            ticket.questions = new Question[qVals.Count];
-            qVals.CopyTo(ticket.questions,0);
+            
+            ticket.questions = questions.ToArray();
 
             cmd.Dispose();
 
@@ -360,38 +374,62 @@ namespace Database
 
             SQLiteCommand cmd = new SQLiteCommand(
                 "SELECT tickets.id, tickets.title, tickets.description, tickets.creationDate, " +
-                "tickets.status, users.name, questions.question, questions.answer " +
+                "tickets.status, users.name, questions.question, questions.answer, questions.creationDate " +
                 "FROM tickets INNER JOIN users ON tickets.author=users.id "+
-                "INNER JOIN questions ON tickets.id=questions.ticket_id WHERE tickets.state=\"Waiting\"", db);
+                "INNER JOIN questions ON tickets.id=questions.ticket_id WHERE tickets.status=\"Waiting\"", db);
 
             SQLiteDataReader reader = cmd.ExecuteReader();
             Dictionary<int, Ticket> ticketsWithUnansQuest = new Dictionary<int, Ticket>();
-            Dictionary<int, List<Ticket>> otherTickets = new Dictionary<int, List<Ticket>>();
+            Dictionary<int, List<Question>> otherTickets = new Dictionary<int, List<Question>>();
 
             while(reader.Read())
             {
                 int id = reader.GetInt32(0);
                 string title = reader.GetString(1);
                 string description = reader.GetString(2);
-                string creationDate = reader.GetString(3);
+                string ticketCreationDate = reader.GetString(3);
                 string status = reader.GetString(4);
                 string name = reader.GetString(5);
                 string question = reader.GetString(6);
                 string answer = reader.IsDBNull(7)? null: reader.GetString(7);
+                string questionCreationDate = reader.GetString(8);
                 if (ticketsWithUnansQuest.ContainsKey(id)) // if ticket already has unans question
                 {
-                    // TODO
+                    Ticket t = ticketsWithUnansQuest[id];
+                    List<Question> questions = new List<Question>(t.questions);
+                    questions.Add(new Question(question, answer, questionCreationDate));
+                    t.questions = questions.ToArray();
                 }
                 else if(answer == null) // new ticket with unans question
                 {
-                    // TODO
+                    Ticket t = new Ticket(id, name, title, description, ticketCreationDate, status, null, null);
+                    t.questions = new Question[1] { new Question(question, answer, questionCreationDate) };
+                    ticketsWithUnansQuest.Add(id, t);
                 }
                 else // no clue if this is needed
                 {
-                    // TODO
+                    if(otherTickets.ContainsKey(id)) // if questions for this ticket already exist on otherTickets
+                    {
+                        otherTickets[id].Add(new Question(question, answer, questionCreationDate));
+                    }
+                    else // if questions for this ticket didnt exist on otherTickets
+                    {
+                        otherTickets.Add(id, new List<Question>() { new Question(question, answer, questionCreationDate) });
+                    }
                 }
             }
-            // TODO tickets in ticketsWithUnansQuest to tickets(List)
+            
+            foreach(int id in ticketsWithUnansQuest.Keys)
+            {
+                if(otherTickets.ContainsKey(id))
+                {
+                    List <Question> questions = otherTickets[id];
+                    Ticket ticket = ticketsWithUnansQuest[id];
+                    questions.AddRange(ticket.questions);
+                    ticket.questions = questions.ToArray();
+                }
+                tickets.Add(ticketsWithUnansQuest[id]);
+            }
 
             return tickets.ToArray();
         }

@@ -6,14 +6,15 @@ import amqp from 'amqplib/callback_api';
 export default class SpecializedTicketsList extends React.Component {
   constructor(props) {
     super(props);
+    this.getQuestions = this.getQuestions.bind(this);
     this.state = {
       tickets: [],
       isLoading: true,
     };
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:8000/GetSpecializedQuestions')
+  getQuestions() {
+    axios.get('http://localhost:8000/GetTicketsForUnansweredSpecializedQuestions')
       .then(response => {
         console.log(response);
         let tickets = response.data;
@@ -22,7 +23,28 @@ export default class SpecializedTicketsList extends React.Component {
           tickets,
         });
       });
+  }
 
+  submitAnswerToQuestion(ticketId, answer) {
+    let obj = {
+      ticketId,
+      answer,
+    }
+    axios({
+      url: 'http://localhost:8000/AnswerSpecializedQuestion',
+      method: 'put',
+      data: obj,
+    })
+    .then(response => {
+        alert('Submitted!');
+        this.getQuestions();
+    })
+  }
+
+  componentDidMount() {
+    this.getQuestions();
+
+    // establish MQ for receiving questions
     amqp.connect('amqp://localhost', function (err, conn) {
       conn.createChannel(function (err, ch) {
         var q = 'DepartmentQueue';
@@ -36,6 +58,18 @@ export default class SpecializedTicketsList extends React.Component {
         }, {noAck: true});
       });
     });
+  }
+
+  editAnswer(text, index) {
+    const { tickets } = this.state;
+    const questions = tickets[index].questions;
+    for(let q of questions) {
+      if(!q.answer){
+        q.tmpAnswer=text;
+        break;
+      }
+    }
+    this.setState({tickets});
   }
 
   render() {
@@ -52,8 +86,8 @@ export default class SpecializedTicketsList extends React.Component {
 
     return (
       <div>
-        {this.state.tickets.map(ticket => (
-          <Ticket key={ticket.description + ticket.creationDate} data={ticket} solver={this.props.username} />
+        {this.state.tickets.map((ticket, index) => (
+          <Ticket key={ticket.description + ticket.creationDate} viewer="Department" data={ticket} solver={this.props.username} onChangeAnswer={e => this.editAnswer(e.target.value, index)} submitAnswerToQuestion={(ticketId, answer) => this.submitAnswerToQuestion(ticketId, answer)} />
         ))}
       </div>
     );

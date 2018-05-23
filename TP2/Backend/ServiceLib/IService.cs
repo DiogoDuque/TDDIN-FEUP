@@ -49,5 +49,9 @@ namespace ServiceLib
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json)]
         Ticket[] GetTicketsAndQuestions(string solveremail);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        bool AnswerSpecializedQuestion(int ticketId, string answer);
     }
 }
