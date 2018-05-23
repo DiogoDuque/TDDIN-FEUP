@@ -13,6 +13,9 @@ export default class App extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.changePage = this.changePage.bind(this);
+    this.updateTickets = this.updateTickets.bind(this);
+    this.updateAssignedTickets = this.updateAssignedTickets.bind(this);
+    this.updateUnassignedTickets = this.updateUnassignedTickets.bind(this);
     this.state = {
       solver: "",
       page: "VisualizeTickets",
@@ -26,12 +29,10 @@ export default class App extends Component {
   }
 
   handleChange(event) {
-    console.log("Handle Change (App): " + event.target.value);
-    console.log(event.target.value);
     this.setState({
       solver: event.target.value,
       page: this.state.page
-    })
+    }, this.updateTickets(event.target.value))
   }
 
   changePage(key) {
@@ -47,7 +48,6 @@ export default class App extends Component {
   updateUnassignedTickets() { // Unassigned
     axios.get('http://localhost:8000/GetUnassignedTickets')
       .then(response => {
-        console.log({ title: "Unassigned", response });
         let unassignedTickets = response.data;
         this.setState({
           unassignedTickets,
@@ -69,9 +69,9 @@ export default class App extends Component {
       });
   }
 
-  updateTickets() {
+  updateTickets(solver) {
     this.updateUnassignedTickets();
-    this.updateUnassignedTickets(this.state.solver);
+    this.updateAssignedTickets(solver? solver: this.state.solver);
   }
 
   render() {
@@ -90,11 +90,11 @@ export default class App extends Component {
               <Row className="show-grid">
                 <Col md={6}>
                   <h2>My Current Tickets</h2>
-                  <AssignedTickets useremail={this.state.solver} page={this.state.page} tickets={this.state.assignedTickets} updateTickets={ticket => this.updateTickets()} isLoading={this.state.isLoadingAssigned} />
+                  <AssignedTickets useremail={this.state.solver} page={this.state.page} tickets={this.state.assignedTickets} updateTickets={() => this.updateTickets()} isLoading={this.state.isLoadingAssigned} />
                 </Col>
                 <Col md={6}>
                   <h2>Unassigned Tickets</h2>
-                  <UnassignedTickets useremail={this.state.solver} tickets={this.state.unassignedTickets} updateTickets={ticket => this.updateTickets()} isLoading={this.state.isLoadingUnassigned} />
+                  <UnassignedTickets useremail={this.state.solver} tickets={this.state.unassignedTickets} updateTickets={() => this.updateTickets()} isLoading={this.state.isLoadingUnassigned} />
                 </Col>
               </Row>
             </Grid>

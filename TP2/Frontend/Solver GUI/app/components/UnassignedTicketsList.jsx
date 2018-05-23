@@ -14,7 +14,8 @@ export default class UnassignedTickets extends React.Component {
 
   assignTicket(ticket) {
     let obj = {
-      ticketid: ticket.id
+      ticketid: ticket.id,
+      solveremail: this.props.useremail,
     }
     axios({
       url: 'http://localhost:8000/AssignSolverToTicket',
