@@ -297,7 +297,7 @@ namespace Database
         public void AnswerSpecializedQuestion(int ticketId, string answer)
         {
             SQLiteCommand cmd = new SQLiteCommand(
-                "UPDATE questions SET answer=\""+answer+"\" WHERE answer IS NULL AND ticket_id=" + ticketId,
+                "UPDATE questions SET answer=\""+answer+"\" WHERE (answer ISNULL OR answer=\"\" ) AND ticket_id=" + ticketId,
                  db);
             cmd.ExecuteNonQuery();
             cmd.Dispose();
