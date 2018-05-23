@@ -115,5 +115,15 @@ namespace ServiceLib
         {
             return new Ticket[0]; //TODO
         }
+
+        public Ticket[] GetTicketsAndQuestions(string solveremail)
+        {
+            if(!IsValid(solveremail))
+            {
+                return null;
+            }
+
+            return Db.GetInstance().GetAllTicketsAndQuestionsFromUser(solveremail);
+        }
     }
 }

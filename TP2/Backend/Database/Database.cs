@@ -286,10 +286,10 @@ namespace Database
         {
             SQLiteCommand cmd = new SQLiteCommand(
                 "SELECT tickets.description, tickets.creationDate, tickets.status, users.email, "+
-                "tickets.title, questions.question, question.answer, question.creationDate " +
-                "FROM tickets WHERE tickets.id=\"" + ticketId + "\" " +
-                "INNER JOIN questions ON tickets.id=questions.ticket_id "+
-                "INNER JOIN users ON tickets.author=user.id",
+                "tickets.title, questions.question, questions.answer, questions.creationDate " +
+                "FROM tickets " +
+                "LEFT OUTER JOIN questions ON tickets.id=questions.ticket_id "+
+                "LEFT OUTER JOIN users ON tickets.author=users.id WHERE tickets.id=" + ticketId.ToString(),
                 db);
             SQLiteDataReader reader = cmd.ExecuteReader();
 
@@ -310,10 +310,10 @@ namespace Database
                     ticket.status = status;
                     ticket.id = ticketId;
                 }
-                string question = reader.GetString(5);
+                string question = reader.IsDBNull(5) ? null : reader.GetString(5);
                 string answer = reader.IsDBNull(6) ? null : reader.GetString(6);
-                string questionCreationDate = reader.GetString(7);
-                if(!questions.ContainsKey(question))
+                string questionCreationDate = reader.IsDBNull(7) ? null : reader.GetString(7);
+                if(question != null && !questions.ContainsKey(question))
                 {
                     questions.Add(question, new Question(question, answer, questionCreationDate));
                 }
@@ -325,6 +325,33 @@ namespace Database
             cmd.Dispose();
 
             return ticket;
+        }
+
+        public Ticket[] GetAllTicketsAndQuestionsFromUser(string solveremail)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+            int solverid = GetUserId(solveremail);
+            using (SQLiteCommand cmd = new SQLiteCommand(
+                "SELECT id FROM tickets " +
+                "WHERE solver=" + solverid.ToString(), db))
+            {
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    List<int> ids = new List<int>();
+
+                    while (reader.Read())
+                    {
+                        ids.Add(reader.GetInt32(0));
+                    }
+
+                    foreach (var id in ids)
+                    {
+                        tickets.Add(GetTicketAndAssociatedQuestions(id));
+                    }
+                }
+            }
+
+            return tickets.ToArray();
         }
 
         public Ticket[] GetTicketsForUnansweredSpecializedQuestions()

@@ -56,7 +56,7 @@ export default class App extends Component {
             <Row className="show-grid">
               <Col md={6}>
                 <h2>My Current Tickets</h2>
-                <AssignedTickets useremail={this.state.solver} />
+                <AssignedTickets useremail={this.state.solver} page={this.state.page}/>
               </Col>
               <Col md={6}>
                 <h2>Unassigned Tickets</h2>
@@ -67,7 +67,7 @@ export default class App extends Component {
         </div>
         }
         {this.state.page === 'AskDepartment' &&
-        <AskDepartment handleChange={this.handleChange} solver={this.state.solver}/>}
+        <AskDepartment handleChange={this.handleChange} solver={this.state.solver} page={this.state.page}/>}
       </div>
     );
   }
