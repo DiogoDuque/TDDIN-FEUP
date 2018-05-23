@@ -101,7 +101,7 @@ export default class App extends Component {
           </div>
         }
         {this.state.page === 'AskDepartment' &&
-          <AskDepartment handleChange={this.handleChange} solver={this.state.solver} page={this.state.page} />}
+          <AskDepartment tickets={this.state.assignedTickets} handleChange={this.handleChange} solver={this.state.solver} page={this.state.page} updateTickets={this.updateTickets} />}
       </div>
     );
   }

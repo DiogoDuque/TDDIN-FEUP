@@ -36,7 +36,7 @@ export default class AskDepartment extends Component {
                 <Grid>
                 <Row className="show-grid">
                     <Col md={10}>
-                        <AssignedTickets useremail={this.state.solver} page={this.state.page}/>
+                        <AssignedTickets updateTickets={this.props.updateTickets} tickets={this.props.tickets} useremail={this.state.solver} page={this.state.page}/>
                     </Col>
                 </Row>
                 </Grid>
