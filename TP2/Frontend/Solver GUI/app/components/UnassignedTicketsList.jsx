@@ -28,7 +28,7 @@ export default class UnassignedTickets extends React.Component {
       } else {
         alert('Error. Ticket could not be assigned.');
       }
-      this.props.updateTickets(this.state.ticket);
+      this.props.updateTickets();
     })
   }
 
@@ -42,7 +42,7 @@ export default class UnassignedTickets extends React.Component {
     if(!this.props.tickets)
       alert(JSON.stringify(this.props.tickets));
 
-    if(this.props.tickets.length === 0 || this.state.useremail === "")
+    if(this.props.tickets.length === 0 || this.props.useremail === "")
       return(
         <p>No unassigned tickets available!</p>
       );
