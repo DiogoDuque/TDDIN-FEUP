@@ -38,7 +38,7 @@ export default class AssignedTickets extends React.Component {
         crossDomain: true,
       })
       .then(response => {
-        this.updateTickets(this.state.useremail);
+        this.props.updateTickets(this.state.useremail);
       })
     }
   }
