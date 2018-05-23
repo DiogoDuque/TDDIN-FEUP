@@ -288,7 +288,7 @@ namespace Database
             cmd.Dispose();
 
             SQLiteCommand cmd2 = new SQLiteCommand(
-                "UPDATE tickets SET status=\"WAITING\" WHERE id="+ticketId,
+                "UPDATE tickets SET status=\"Waiting\" WHERE id="+ticketId,
                  db);
             cmd2.ExecuteNonQuery();
             cmd2.Dispose();
