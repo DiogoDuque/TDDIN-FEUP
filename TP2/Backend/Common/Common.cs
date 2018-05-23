@@ -40,6 +40,7 @@ namespace Common
     {
         public int id;
         public string authoremail;
+        public string authorname;
         public string title;
         public string description;
         public string creationDate;
@@ -61,11 +62,12 @@ namespace Common
             this.status = TicketStatus.UNASSIGNED;
         }
 
-        public Ticket(int id, string author, string title, string description, string creationDate, string status,
+        public Ticket(int id, string authoremail, string authorname, string title, string description, string creationDate, string status,
             string solver, string answer)
         {
             this.id = id;
-            this.authoremail = author;
+            this.authoremail = authoremail;
+            this.authorname = authorname;
             this.title = title;
             this.description = description;
             this.creationDate = creationDate;

@@ -113,7 +113,8 @@ namespace Database
             while (reader.Read())
             {
                 int id = reader.GetInt32(0);
-                string author = this.GetUser(reader.GetInt32(1)).email;
+                string authoremail = this.GetUser(reader.GetInt32(1)).email;
+                string authorname = this.GetUser(reader.GetInt32(1)).name;
                 string title = reader.GetString(2);
                 string description = reader.GetString(3);
                 string creationDate = reader.GetString(4);
@@ -121,7 +122,7 @@ namespace Database
                 string solver = reader.IsDBNull(6)? null: this.GetUser(reader.GetInt32(6)).email;
                 string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
-                Ticket ticket = new Ticket(id, author, title, description,
+                Ticket ticket = new Ticket(id, authoremail, authorname, title, description,
                     creationDate, status, solver, answer);
                 tickets.Add(ticket);
             }
@@ -146,7 +147,8 @@ namespace Database
                     while (reader.Read())
                     {
                         int id = reader.GetInt32(0);
-                        string author = this.GetUser(reader.GetInt32(1)).email;
+                        string authoremail = this.GetUser(reader.GetInt32(1)).email;
+                        string authorname = this.GetUser(reader.GetInt32(1)).name;
                         string title = reader.GetString(2);
                         string description = reader.GetString(3);
                         string creationDate = reader.GetString(4);
@@ -154,7 +156,7 @@ namespace Database
                         string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
                         string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
-                        Ticket ticket = new Ticket(id, author, title, description,
+                        Ticket ticket = new Ticket(id, authoremail, authorname, title, description,
                             creationDate, status, solver, answer);
                         tickets.Add(ticket);
                     }
@@ -175,7 +177,8 @@ namespace Database
             while (reader.Read())
             {
                 int id = reader.GetInt32(0);
-                string author = this.GetUser(reader.GetInt32(1)).email;
+                string authoremail = this.GetUser(reader.GetInt32(1)).email;
+                string authorname = this.GetUser(reader.GetInt32(1)).name;
                 string title = reader.GetString(2);
                 string description = reader.GetString(3);
                 string creationDate = reader.GetString(4);
@@ -183,7 +186,7 @@ namespace Database
                 string solver = reader.IsDBNull(6) ? null : this.GetUser(reader.GetInt32(6)).email;
                 string answer = reader.IsDBNull(7) ? null : reader.GetString(7);
 
-                Ticket ticket = new Ticket(id, author, title, description,
+                Ticket ticket = new Ticket(id, authoremail, authorname, title, description,
                     creationDate, status, solver, answer);
                 tickets.Add(ticket);
             }
@@ -300,7 +303,7 @@ namespace Database
         public Ticket GetTicketAndAssociatedQuestions(int ticketId)
         {
             SQLiteCommand cmd = new SQLiteCommand(
-                "SELECT tickets.description, tickets.creationDate, tickets.status, users.email, "+
+                "SELECT tickets.description, tickets.creationDate, tickets.status, users.email, users.name, "+
                 "tickets.title, questions.question, questions.answer, questions.creationDate " +
                 "FROM tickets " +
                 "LEFT OUTER JOIN questions ON tickets.id=questions.ticket_id "+
@@ -318,12 +321,14 @@ namespace Database
                     string description = reader.GetString(0);
                     string ticketCreationDate = reader.GetString(1);
                     string status = reader.GetString(2);
-                    string author = reader.GetString(3);
-                    string ticketTitle = reader.GetString(4);
-                    ticket = new Ticket(author, ticketTitle, description);
+                    string authoremail = reader.GetString(3);
+                    string authorname = reader.GetString(4);
+                    string ticketTitle = reader.GetString(5);
+                    ticket = new Ticket(authoremail, ticketTitle, description);
                     ticket.creationDate = ticketCreationDate;
                     ticket.status = status;
                     ticket.id = ticketId;
+                    ticket.authorname = authorname;
                 }
                 string question = reader.IsDBNull(5) ? null : reader.GetString(5);
                 string answer = reader.IsDBNull(6) ? null : reader.GetString(6);
@@ -374,7 +379,7 @@ namespace Database
 
             SQLiteCommand cmd = new SQLiteCommand(
                 "SELECT tickets.id, tickets.title, tickets.description, tickets.creationDate, " +
-                "tickets.status, users.name, questions.question, questions.answer, questions.creationDate " +
+                "tickets.status, users.email, users.name, questions.question, questions.answer, questions.creationDate " +
                 "FROM tickets INNER JOIN users ON tickets.author=users.id "+
                 "INNER JOIN questions ON tickets.id=questions.ticket_id WHERE tickets.status=\"Waiting\"", db);
 
@@ -389,10 +394,11 @@ namespace Database
                 string description = reader.GetString(2);
                 string ticketCreationDate = reader.GetString(3);
                 string status = reader.GetString(4);
-                string name = reader.GetString(5);
-                string question = reader.GetString(6);
-                string answer = reader.IsDBNull(7)? null: reader.GetString(7);
-                string questionCreationDate = reader.GetString(8);
+                string email = reader.GetString(5);
+                string name = reader.GetString(6);
+                string question = reader.GetString(7);
+                string answer = reader.IsDBNull(8)? null: reader.GetString(8);
+                string questionCreationDate = reader.GetString(9);
                 if (ticketsWithUnansQuest.ContainsKey(id)) // if ticket already has unans question
                 {
                     Ticket t = ticketsWithUnansQuest[id];
@@ -402,7 +408,7 @@ namespace Database
                 }
                 else if(answer == null) // new ticket with unans question
                 {
-                    Ticket t = new Ticket(id, name, title, description, ticketCreationDate, status, null, null);
+                    Ticket t = new Ticket(id, email, name, title, description, ticketCreationDate, status, null, null);
                     t.questions = new Question[1] { new Question(question, answer, questionCreationDate) };
                     ticketsWithUnansQuest.Add(id, t);
                 }

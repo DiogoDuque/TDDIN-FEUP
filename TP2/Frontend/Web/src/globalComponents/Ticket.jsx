@@ -8,7 +8,7 @@ export default class Ticket extends React.Component {
       <ListGroup>
         <ListGroupItem>
           <Row className="show-grid">
-            <Col md={5}>Author: {ticket.author}</Col>
+            <Col md={5}>Author: {ticket.authorname}</Col>
             <Col md={4}>{ticket.creationDate}</Col>
             <Col md={3}>{ticket.status}</Col>
           </Row>

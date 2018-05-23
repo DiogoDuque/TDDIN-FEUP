@@ -129,7 +129,8 @@ namespace ServiceLib
                 return null;
             }
 
-            return Db.GetInstance().GetAllTicketsAndQuestionsFromUser(solveremail);
+            Ticket[] result = Db.GetInstance().GetAllTicketsAndQuestionsFromUser(solveremail);
+            return result;
         }
     }
 }
