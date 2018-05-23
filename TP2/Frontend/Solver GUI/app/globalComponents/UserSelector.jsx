@@ -30,6 +30,7 @@ export default class UserSelector extends Component {
     }
 
     render() {
+        let id=0;
         return (
             <FormGroup>
                 <ControlLabel>Author</ControlLabel>
@@ -37,7 +38,7 @@ export default class UserSelector extends Component {
                     <option value="">Select your email...</option>;
                     {this.state.usersList.map(
                          function(user) {
-                             return <option value={user.email}>{user.email}</option>;
+                             return <option key={id++} value={user.email}>{user.email}</option>;
                     })}
                 </FormControl>
             </FormGroup>

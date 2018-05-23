@@ -7,41 +7,14 @@ export default class UnassignedTickets extends React.Component {
   constructor(props) {
     super(props);
     this.assignTicket = this.assignTicket.bind(this);
-    this.updateTickets = this.updateTickets.bind(this);
-    console.log("Unassigned Tickets constructor : " + this.props.useremail);
     this.state = {
-      tickets: null,
-      isLoading: true,
-      useremail: this.props.useremail,
+      tickets: props.tickets,
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(this.props.useremail != prevProps.useremail)
-      this.updateTickets(this.props.useremail);
-  }
-
-  componentDidMount() {
-    this.updateTickets(this.state.useremail);
-  }
-
-  updateTickets(useremail) {
-    axios.get('http://localhost:8000/GetUnassignedTickets')
-      .then(response => {
-        console.log({title:"Unassigned",response});
-        let tickets = response.data;
-        this.setState({
-          isLoading: false,
-          tickets,
-          useremail,
-        });
-      });
-  }
-
-  assignTicket(id) {
+  assignTicket(ticket) {
     let obj = {
-      solveremail: this.state.useremail,
-      ticketid: id
+      ticketid: ticket.id
     }
     axios({
       url: 'http://localhost:8000/AssignSolverToTicket',
@@ -55,30 +28,32 @@ export default class UnassignedTickets extends React.Component {
       } else {
         alert('Error. Ticket could not be assigned.');
       }
-      this.updateTickets(this.state.useremail);
+      this.props.updateTickets(this.state.ticket);
     })
   }
 
   render() {
-    console.log("Render Unassigned Tickets :" + this.state.useremail);
-    if (this.state.isLoading) {
+    let id=0;
+    if (this.props.isLoading) {
       return (
         <p>Loading</p>
       );
     }
+    if(!this.props.tickets)
+      alert(JSON.stringify(this.props.tickets));
 
-    if(this.state.tickets.length === 0 || this.state.useremail === "")
+    if(this.props.tickets.length === 0 || this.state.useremail === "")
       return(
         <p>No unassigned tickets available!</p>
       );
 
     return (
       <div>
-        {this.state.tickets.map(ticket => (
-          <ListGroup>
+        {this.props.tickets.map(ticket => (
+          <ListGroup key={id++}>
             <ListGroupItem>
               <Ticket key={ticket.id} data={ticket} />
-              <Button value={ticket.id} onClick={(e) => this.assignTicket(ticket.id, e)}>Assign me!</Button>
+              <Button value={ticket.id} onClick={() => this.assignTicket(ticket)}>Assign me!</Button>
             </ListGroupItem>
           </ListGroup>
         ))}

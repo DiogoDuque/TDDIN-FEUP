@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Grid, Col, Row, InputGroup, FormControl, Button } from 'react-bootstrap';
 import TicketsNavbar from '../globalComponents/TicketsNavbar';
 import AssignedTickets from './AssignedTicketsList';
@@ -15,7 +16,13 @@ export default class App extends Component {
     this.state = {
       solver: "",
       page: "VisualizeTickets",
+      isLoadingUnassigned: true,
+      isLoadingAssigned: true,
     };
+  }
+
+  componentDidMount() {
+    this.updateTickets();
   }
 
   handleChange(event) {
@@ -25,9 +32,6 @@ export default class App extends Component {
       solver: event.target.value,
       page: this.state.page
     })
-  }
-
-  componentDidUpdate(prevProps, prevState) {
   }
 
   changePage(key) {
@@ -40,6 +44,36 @@ export default class App extends Component {
     });
   }
 
+  updateUnassignedTickets() { // Unassigned
+    axios.get('http://localhost:8000/GetUnassignedTickets')
+      .then(response => {
+        console.log({ title: "Unassigned", response });
+        let unassignedTickets = response.data;
+        this.setState({
+          unassignedTickets,
+          isLoadingUnassigned: false,
+        });
+      });
+  }
+
+  updateAssignedTickets(useremail) {
+    console.log("Update Tickets (Assigned): " + useremail);
+    axios.get(`http://localhost:8000/GetTicketsAndQuestions?solveremail=${useremail}`)
+      .then(response => {
+        console.log({title:"Assigned",response});
+        let assignedTickets = response.data;
+        this.setState({
+          assignedTickets,
+          isLoadingAssigned: false,
+        });
+      });
+  }
+
+  updateTickets() {
+    this.updateUnassignedTickets();
+    this.updateUnassignedTickets(this.state.solver);
+  }
+
   render() {
     console.log("Render App : " + this.state.solver);
     return (
@@ -47,27 +81,27 @@ export default class App extends Component {
         <SolverNavbar changePage={this.changePage} />
 
         {this.state.page === 'VisualizeTickets' &&
-        <div className="container">
+          <div className="container">
 
-          <form>
-            <UserSelector userType="Solver" onChange={this.handleChange} value={this.state.solver} />
-          </form>
-          <Grid>
-            <Row className="show-grid">
-              <Col md={6}>
-                <h2>My Current Tickets</h2>
-                <AssignedTickets useremail={this.state.solver} page={this.state.page}/>
-              </Col>
-              <Col md={6}>
-                <h2>Unassigned Tickets</h2>
-                <UnassignedTickets useremail={this.state.solver} />
-              </Col>
-            </Row>
-          </Grid>
-        </div>
+            <form>
+              <UserSelector userType="Solver" onChange={this.handleChange} value={this.state.solver} />
+            </form>
+            <Grid>
+              <Row className="show-grid">
+                <Col md={6}>
+                  <h2>My Current Tickets</h2>
+                  <AssignedTickets useremail={this.state.solver} page={this.state.page} tickets={this.state.assignedTickets} updateTickets={ticket => this.updateTickets()} isLoading={this.state.isLoadingAssigned} />
+                </Col>
+                <Col md={6}>
+                  <h2>Unassigned Tickets</h2>
+                  <UnassignedTickets useremail={this.state.solver} tickets={this.state.unassignedTickets} updateTickets={ticket => this.updateTickets()} isLoading={this.state.isLoadingUnassigned} />
+                </Col>
+              </Row>
+            </Grid>
+          </div>
         }
         {this.state.page === 'AskDepartment' &&
-        <AskDepartment handleChange={this.handleChange} solver={this.state.solver} page={this.state.page}/>}
+          <AskDepartment handleChange={this.handleChange} solver={this.state.solver} page={this.state.page} />}
       </div>
     );
   }
