@@ -99,6 +99,7 @@ namespace ServiceLib
 
         public bool AnswerSpecializedQuestion(int ticketId, string answer)
         {
+            Console.WriteLine("Answer Specialized Question: " + ticketId.ToString() + " -> " + answer);
             Db.GetInstance().AnswerSpecializedQuestion(ticketId, answer);
             return true;
         }

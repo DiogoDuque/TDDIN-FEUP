@@ -46,8 +46,8 @@ export default class Ticket extends React.Component {
                 {(this.props.viewer === 'Department' && !q.answer) && (
                   <form>
                     <h4>Answer</h4>
-                    <FormControl key={id++} type="text" value={ticket.tmpAnswer} placeholder="Give an answer" onChange={this.props.onChangeAnswer} />
-                    <Button onClick={() => this.props.submitAnswerToQuestion(ticket.id, ticket.tmpAnswer)}>Submit</Button>
+                    <FormControl key={id++} type="text" value={ticket.tmpAnswer} placeholder="Give an answer" onChange={event => this.props.handleChangeForms(event, ticket.id)} />
+                    <Button onClick={() => this.props.submitAnswerToQuestion(ticket.id)}>Submit</Button>
                   </form>
                 )}
               </div>

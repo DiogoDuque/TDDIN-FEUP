@@ -11,15 +11,6 @@ export default class AskQuestion extends Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
-        {this.props.screenName && (
-          <Navbar.Collapse>
-              <Nav onSelect={(eventKey) => this.props.changePage(eventKey)}>
-                <NavItem eventKey={'Register'} href="#">Register</NavItem>
-                <NavItem eventKey={'AskQuestion'} href="#">Create Ticket</NavItem>
-                <NavItem eventKey={'VisualizeTickets'} href="#">Visualize</NavItem>
-              </Nav>
-          </Navbar.Collapse>
-        )}
       </Navbar>
     );
   }

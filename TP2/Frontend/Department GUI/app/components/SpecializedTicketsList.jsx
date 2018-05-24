@@ -7,9 +7,12 @@ export default class SpecializedTicketsList extends React.Component {
   constructor(props) {
     super(props);
     this.getQuestions = this.getQuestions.bind(this);
+    this.handleChangeForms = this.handleChangeForms.bind(this);
+    this.submitAnswerToQuestion = this.submitAnswerToQuestion.bind(this);
     this.state = {
       tickets: [],
       isLoading: true,
+      forms: {}, 
     };
   }
 
@@ -25,15 +28,17 @@ export default class SpecializedTicketsList extends React.Component {
       });
   }
 
-  submitAnswerToQuestion(ticketId, answer) {
+  submitAnswerToQuestion(ticketId) {
+    console.log("Answer: " + this.state.forms[ticketId].text);
     let obj = {
       ticketId,
-      answer,
+      answer : this.state.forms[ticketId].text
     }
     axios({
       url: 'http://localhost:8000/AnswerSpecializedQuestion',
       method: 'put',
       data: obj,
+      crossDomain: true,
     })
     .then(response => {
         alert('Submitted!');
@@ -70,17 +75,17 @@ export default class SpecializedTicketsList extends React.Component {
       });
     });
   }
-
-  editAnswer(text, index) {
-    const { tickets } = this.state;
-    const questions = tickets[index].questions;
-    for(let q of questions) {
-      if(!q.answer){
-        q.tmpAnswer=text;
-        break;
-      }
+  
+  handleChangeForms(event, ticketid){
+    var newforms = this.state.forms;
+    newforms[ticketid] = {
+      id: ticketid,
+      text: event.target.value,
     }
-    this.setState({tickets});
+    console.log(newforms);
+    this.setState({
+      forms : newforms,
+    })
   }
 
   render() {
@@ -98,7 +103,7 @@ export default class SpecializedTicketsList extends React.Component {
     return (
       <div>
         {this.state.tickets.map((ticket, index) => (
-          <Ticket key={ticket.description + ticket.creationDate} viewer="Department" data={ticket} solver={this.props.username} onChangeAnswer={e => this.editAnswer(e.target.value, index)} submitAnswerToQuestion={(ticketId, answer) => this.submitAnswerToQuestion(ticketId, answer)} />
+          <Ticket key={ticket.description + ticket.creationDate} viewer="Department" data={ticket} solver={this.props.username} submitAnswerToQuestion={this.submitAnswerToQuestion} handleChangeForms={this.handleChangeForms} />
         ))}
       </div>
     );
