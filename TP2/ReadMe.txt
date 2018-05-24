@@ -1,15 +1,21 @@
 ===== (Relevant) Folder Hierarchy Explained =====
 
 .
-├── Backend/				# folder containing the Visual Studio solution for the backend
+├── Backend/                            # folder containing the Visual Studio solution for the backend
 └── Frontend/
-	├── Department GUI/		# folder containing the NPM project for the Department GUI
-	├── Solver GUI/			# folder containing the NPM project for the Solver GUI
-	└── Web/				# folder containing the NPM project for the Web Application
+	├── Department GUI/             # folder containing the NPM project for the Department GUI
+	├── Solver GUI/                 # folder containing the NPM project for the Solver GUI
+	└── Web/                        # folder containing the NPM project for the Web Application
 
 
 
 ===== Setup =====
+
+
+=== RabbitMQ ===
+
+1. Install Erlang: https://www.rabbitmq.com/which-erlang.html
+2. Install RabbitMQ: https://www.rabbitmq.com/download.html
 
 
 === Visual Studio ===
