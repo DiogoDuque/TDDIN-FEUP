@@ -12,6 +12,12 @@
 ===== Setup =====
 
 
+=== RabbitMQ ===
+
+1. Install Erlang: https://www.rabbitmq.com/which-erlang.html
+2. Install RabbitMQ: https://www.rabbitmq.com/download.html
+
+
 === Visual Studio ===
 
 1. Install Visual Studio.
