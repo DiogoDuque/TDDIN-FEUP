@@ -1,4 +1,4 @@
-===== (Relevant) Folder Hierarchy Explained =====
+﻿===== (Relevant) Folder Hierarchy Explained =====
 
 .
 ├── Backend/                            # folder containing the Visual Studio solution for the backend
@@ -25,6 +25,11 @@
 3. Import project.
 4. Import NuGet packages. (NOTE: make sure you have an Internet connection on this step, as it may prevent installation of relevant packages)
 5. Run the Server project.
+
+OR
+
+1. Go to Backend/Server/bin/Debug
+2. Run Server.exe as administrator.
 
 
 === NPM Interfaces ===
